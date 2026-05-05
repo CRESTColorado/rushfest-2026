@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Presidents Cup NW 2026 — Field Binder QR Codes</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Arial,sans-serif;background:#fff;color:#111}
+    .screen-hdr{background:#07090f;color:#00d4ff;padding:20px 24px;display:flex;align-items:center;justify-content:space-between}
+    .screen-hdr h1{font-size:20px;font-weight:900;letter-spacing:.06em}
+    .screen-hdr p{font-size:13px;color:#7b8faf;margin-top:4px}
+    .btn-print{background:#00d4ff;color:#000;border:none;border-radius:8px;padding:10px 24px;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:.06em}
+    .instructions{background:#f0f8ff;border-left:4px solid #00d4ff;padding:14px 20px;margin:16px 24px;border-radius:0 8px 8px 0;font-size:13px;line-height:1.7;color:#333}
+    .instructions strong{color:#0066aa}
+    .grid{display:grid;grid-template-columns:repeat(4,1fr);padding:12px;gap:0}
+    .qr-card{border:1.5px solid #bbb;padding:14px 10px;text-align:center;page-break-inside:avoid;break-inside:avoid}
+    .card-top{font-size:8.5px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#666;margin-bottom:5px}
+    .field-num{font-size:44px;font-weight:900;color:#111;line-height:1;margin-bottom:2px}
+    .field-lbl{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#888;margin-bottom:10px}
+    .qr-wrap{display:flex;justify-content:center;margin-bottom:9px}
+    .card-url{font-size:7.5px;color:#aaa;word-break:break-all;line-height:1.4}
+    .card-inst{font-size:9px;color:#444;margin-top:6px;line-height:1.5;border-top:1px dashed #ddd;padding-top:6px}
+    @media print{
+      .screen-hdr,.instructions{display:none!important}
+      .grid{padding:4px}
+      .qr-card{border:1px solid #999;padding:10px 6px}
+      @page{margin:10mm;size:A4 portrait}
+    }
+  </style>
+</head>
+<body>
+<div class="screen-hdr">
+  <div>
+    <h1>FIELD BINDER QR CODES</h1>
+    <p>USYS Presidents Cup NW 2026 &middot; Simplot Sports Complex &middot; 20 Fields</p>
+  </div>
+  <button class="btn-print" onclick="window.print()">&#x1F5A8; PRINT ALL 20</button>
+</div>
+<div class="instructions">
+  <strong>How to use:</strong> Print this page (Ctrl+P). Cut and place one card inside the front cover of each field binder.
+  When the crew arrives at the tent, the Center Referee scans their field's code &mdash; one scan checks in all 4 officials instantly.
+  Same code is used for every game on that field all day &mdash; the system automatically detects which game by time.
+</div>
+<div class="grid" id="grid"></div>
+<script>
+var BASE = "https://coloradoreferee.github.io/presidents-cup-2026/checkin/";
+function build() {
+  var g = document.getElementById("grid");
+  for (var i = 1; i <= 20; i++) {
+    var url = BASE + "?field=" + i;
+    var d = document.createElement("div");
+    d.className = "qr-card";
+    d.innerHTML =
+      "<div class='card-top'>USYS Presidents Cup NW 2026</div>" +
+      "<div class='field-num'>" + i + "</div>" +
+      "<div class='field-lbl'>Field " + i + " &mdash; Binder Check-In</div>" +
+      "<div class='qr-wrap' id='q" + i + "'></div>" +
+      "<div class='card-url'>" + url + "</div>" +
+      "<div class='card-inst'>Center Referee scans with phone<br>One scan = all 4 crew checked in</div>";
+    g.appendChild(d);
+    new QRCode(document.getElementById("q"+i),{
+      text:url, width:116, height:116,
+      colorDark:"#000000", colorLight:"#ffffff",
+      correctLevel:QRCode.CorrectLevel.H
+    });
+  }
+}
+window.addEventListener("load", function(){
+  if(typeof QRCode!=="undefined"){ build(); }
+  else { setTimeout(build, 600); }
+});
+</script>
+</body>
+</html>
