@@ -23,21 +23,17 @@
       --fifa:#ffd700; --nat:#c8c8c8; --pro2:#9664ff;
     }
 
-    /* ── LIGHT MODE ── */
+    /* ── LIGHT MODE (outdoor / bright sunlight) ── */
     body.light {
       --bg:#f0f4f8; --surface:#ffffff; --card:#e8eef5; --card2:#dce6f0;
       --border:#b0c4d8; --text:#0d1a2e; --dim:#3a5070; --mute:#7a9ab8;
       --accent:#0077cc; --accent-d:rgba(0,119,204,0.12);
       --amber:#cc7700; --amber-d:rgba(204,119,0,0.12);
       --green:#007a3d; --green-d:rgba(0,122,61,0.12);
-      --red:#cc2233; --red-d:rgba(204,34,51,0.12);
+      --red:#cc2233;   --red-d:rgba(204,34,51,0.12);
     }
-    body.light #map-outer    { background:#c8d8e8; }
-    body.light .legend       { background:rgba(240,244,248,0.96); }
-    body.light #food-banner  { background:linear-gradient(135deg,#fff3e0,#ffe0b2); border-color:#e65100; color:#e65100; }
-    body.light .food-blink   { color:#e65100; }
-    body.light #gps-st       { background:rgba(240,244,248,.96); }
-    body.light .map-hint     { background:rgba(0,119,204,.1); border-color:rgba(0,119,204,.3); color:#0077cc; }
+    body.light #map-outer { background:#c8d8e8; }
+    body.light .legend    { background:rgba(240,244,248,0.96); }
 
     /* ── RESET ── */
     *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
@@ -54,6 +50,8 @@
     /* ── PILLS ── */
     .pill { border:1.5px solid var(--border); border-radius:30px; background:none; color:var(--dim); font-family:"Barlow Condensed",sans-serif; font-size:11px; font-weight:700; padding:5px 10px; cursor:pointer; white-space:nowrap; transition:all .15s; display:inline-flex; align-items:center; gap:4px; }
     .pill:active         { border-color:var(--accent); color:var(--accent); }
+    .pill.home-btn       { border-color:rgba(0,212,255,.4); color:var(--accent); font-size:13px; }
+    .pill.home-btn:active { background:var(--accent-d); }
     .pill.coach-p        { border-color:var(--accent); color:var(--accent); background:var(--accent-d); }
     .pill.ref-p          { border-color:#a8d8ff; color:#a8d8ff; background:rgba(168,216,255,.08); }
     .pill.gps-on         { border-color:var(--green); color:var(--green); background:var(--green-d); }
@@ -126,7 +124,7 @@
     #search-overlay { position:fixed; inset:0; background:var(--bg); z-index:60; display:none; flex-direction:column; }
     #search-overlay.open { display:flex; }
     .search-hdr   { display:flex; align-items:center; gap:10px; padding:12px 14px; background:var(--surface); border-bottom:1px solid var(--border); }
-    .search-back  { background:none; border:none; color:var(--dim); font-family:"Barlow Condensed",sans-serif; font-size:16px; font-weight:700; cursor:pointer; padding:4px 8px; }
+    .search-back  { background:var(--card); border:1.5px solid var(--border); border-radius:8px; color:var(--accent); font-family:"Barlow Condensed",sans-serif; font-size:15px; font-weight:800; cursor:pointer; padding:6px 14px; letter-spacing:.04em; }
     .search-input { flex:1; height:44px; background:var(--card); border:1.5px solid var(--border); border-radius:10px; padding:0 14px; color:var(--text); font-family:"Barlow",sans-serif; font-size:15px; outline:none; transition:border-color .15s; }
     .search-input:focus { border-color:var(--accent); }
     #search-results  { flex:1; overflow-y:auto; padding:8px 14px; }
@@ -279,10 +277,12 @@
     <div class="logo-ev">Presidents Cup NW</div>
   </div>
   <div class="hdr-r">
+    <button class="pill home-btn" id="home-btn" onclick="goHome()">&#x2302; MAP</button>
     <button class="pill" id="search-pill" onclick="openSearch()">&#x1F50D; SEARCH</button>
     <button class="pill" id="gps-btn"     onclick="toggleGPS()">&#x1F4CD;</button>
-    <button class="pill" id="theme-btn"   onclick="toggleTheme()" title="Toggle light/dark mode">&#x1F315;</button>
-    <button class="pill food-btn" id="food-deanna-btn" onclick="triggerFood()" style="display:none">&#x1F355; FOOD READY</button>
+    <button class="pill" id="theme-btn"   onclick="toggleTheme()" title="Light/dark">&#x1F315;</button>
+    <button class="pill food-btn" id="food-coaches-btn" onclick="triggerFoodCoaches()" style="display:none">&#x1F355; COACHES</button>
+    <button class="pill food-btn" id="food-refs-btn" onclick="triggerFoodRefs()" style="display:none">&#x1F355; REFS</button>
     <button class="pill" id="role-pill"   onclick="openModal('role-modal')">&#x1F464;</button>
   </div>
 </div>
@@ -309,10 +309,13 @@
           <feGaussianBlur stdDeviation="3" result="b"/>
           <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <pattern id="grass" patternUnits="userSpaceOnUse" width="6" height="12">
-          <rect width="6" height="12" fill="#16602a"/>
-          <rect width="6" height="6"  fill="#196e2e" opacity=".65"/>
-        </pattern>
+        <pattern id="grass" patternUnits="userSpaceOnUse" width="8" height="16">
+    <rect width="8" height="16" fill="#1d7a35"/>
+    <rect width="8" height="8"  fill="#1a6e30" opacity=".7"/>
+  </pattern>
+  <filter id="field-shadow" x="-8%" y="-8%" width="116%" height="116%">
+    <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#000" flood-opacity="0.55"/>
+  </filter>
         <radialGradient id="yg" cx="50%" cy="50%" r="50%">
           <stop offset="0%"   stop-color="#00e676" stop-opacity=".6"/>
           <stop offset="100%" stop-color="#00e676" stop-opacity="0"/>
@@ -321,7 +324,8 @@
 
       <!-- Background -->
       <rect width="900" height="620" fill="#050e07"/>
-      <ellipse cx="450" cy="320" rx="430" ry="295" fill="#081408" opacity=".95"/>
+      <ellipse cx="450" cy="320" rx="430" ry="295" fill="#0c1a0c" opacity=".95"/>
+      <ellipse cx="450" cy="320" rx="400" ry="268" fill="#112011" opacity=".6"/>
 
       <!-- Roads -->
       <rect x="0" y="60" width="900" height="20" fill="#1a2235" stroke="#253044" stroke-width=".8"/>
@@ -331,23 +335,37 @@
       <text x="455" y="560" text-anchor="middle" font-family="Barlow Condensed" font-size="8" fill="#3a4d66" font-weight="700" letter-spacing="1.5">GRAND FOREST DRIVE</text>
       <rect x="0" y="80" width="16" height="455" fill="#1a2235" stroke="#253044" stroke-width=".8"/>
 
-      <!-- Walkways -->
-      <rect x="390" y="80"  width="16" height="355" rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="264" y="156" width="210" height="14" rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="507" y="128" width="13"  height="270" rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="252" y="148" width="13"  height="220" rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="200" y="424" width="480" height="13"  rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="457" y="344" width="12"  height="92"  rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
-      <rect x="200" y="330" width="13"  height="108" rx="2" fill="#192619" stroke="#253544" stroke-width=".8"/>
+      <!-- Golf cart paths - warm asphalt -->
+      <rect x="388" y="80"  width="20" height="355" rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="262" y="154" width="214" height="16" rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="505" y="128" width="17"  height="270" rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="250" y="148" width="16"  height="220" rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="198" y="422" width="484" height="16"  rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="455" y="342" width="15"  height="95"  rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
+      <rect x="198" y="328" width="16"  height="110" rx="3" fill="#8a7055" stroke="#a08868" stroke-width="1.2"/>
 
-      <!-- Parking -->
-      <rect x="312" y="170" width="138" height="74" rx="4" fill="#101e10" stroke="#1e341e"/>
-      <text x="381" y="211" text-anchor="middle" font-family="Barlow Condensed" font-size="9" fill="#253a25" font-weight="700" letter-spacing="1">PARKING</text>
-      <line x1="322" y1="190" x2="440" y2="190" stroke="#1e341e" stroke-width=".7" stroke-dasharray="5,5"/>
-      <line x1="322" y1="210" x2="440" y2="210" stroke="#1e341e" stroke-width=".7" stroke-dasharray="5,5"/>
-      <line x1="322" y1="230" x2="440" y2="230" stroke="#1e341e" stroke-width=".7" stroke-dasharray="5,5"/>
-      <rect x="282" y="435" width="268" height="46" rx="4" fill="#101e10" stroke="#1e341e"/>
-      <text x="416" y="462" text-anchor="middle" font-family="Barlow Condensed" font-size="9" fill="#253a25" font-weight="700" letter-spacing="1">PARKING</text>
+      <!-- Parking - concrete gray -->
+      <rect x="312" y="170" width="138" height="74" rx="5" fill="#3a4a5a" stroke="#5a7090" stroke-width="1.5"/>
+      <line x1="322" y1="190" x2="440" y2="190" stroke="#5a7a9a" stroke-width=".8" stroke-dasharray="5,4"/>
+      <line x1="322" y1="208" x2="440" y2="208" stroke="#5a7a9a" stroke-width=".8" stroke-dasharray="5,4"/>
+      <line x1="322" y1="226" x2="440" y2="226" stroke="#5a7a9a" stroke-width=".8" stroke-dasharray="5,4"/>
+      <line x1="338" y1="172" x2="338" y2="242" stroke="#c4a820" stroke-width=".7" opacity=".5"/>
+      <line x1="360" y1="172" x2="360" y2="242" stroke="#c4a820" stroke-width=".7" opacity=".5"/>
+      <line x1="382" y1="172" x2="382" y2="242" stroke="#c4a820" stroke-width=".7" opacity=".5"/>
+      <line x1="404" y1="172" x2="404" y2="242" stroke="#c4a820" stroke-width=".7" opacity=".5"/>
+      <line x1="426" y1="172" x2="426" y2="242" stroke="#c4a820" stroke-width=".7" opacity=".5"/>
+      <text x="381" y="216" text-anchor="middle" font-family="Barlow Condensed" font-size="26" fill="#4a6080" font-weight="900" opacity=".35">P</text>
+      <rect x="282" y="435" width="268" height="50" rx="5" fill="#3a4a5a" stroke="#5a7090" stroke-width="1.5"/>
+      <line x1="292" y1="451" x2="540" y2="451" stroke="#5a7a9a" stroke-width=".8" stroke-dasharray="5,4"/>
+      <line x1="292" y1="467" x2="540" y2="467" stroke="#5a7a9a" stroke-width=".8" stroke-dasharray="5,4"/>
+      <line x1="310" y1="437" x2="310" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="335" y1="437" x2="335" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="360" y1="437" x2="360" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="385" y1="437" x2="385" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="410" y1="437" x2="410" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="435" y1="437" x2="435" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <line x1="460" y1="437" x2="460" y2="483" stroke="#c4a820" stroke-width=".7" opacity=".45"/>
+      <text x="416" y="466" text-anchor="middle" font-family="Barlow Condensed" font-size="22" fill="#4a6080" font-weight="900" opacity=".32">P</text>
 
       <!-- Maintenance building -->
       <rect x="218" y="318" width="48" height="38" rx="4" fill="#111d11" stroke="#253a25" stroke-width="1.5"/>
@@ -371,7 +389,7 @@
 
       <!-- F1  c(307,230) -->
       <g class="fg" onclick="tapField(1)">
-        <rect class="fr" x="281" y="194" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="281" y="194" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="287" y="200" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="287" y1="230" x2="327" y2="230" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="307" cy="230" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -380,7 +398,7 @@
 
       <!-- F2  c(180,247) -->
       <g class="fg" onclick="tapField(2)">
-        <rect class="fr" x="154" y="211" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="154" y="211" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="160" y="217" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="160" y1="247" x2="200" y2="247" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="180" cy="247" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -389,7 +407,7 @@
 
       <!-- F3  c(202,186) -->
       <g class="fg" onclick="tapField(3)">
-        <rect class="fr" x="176" y="150" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="176" y="150" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="182" y="156" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="182" y1="186" x2="222" y2="186" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="202" cy="186" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -398,7 +416,7 @@
 
       <!-- F4  c(310,139) -->
       <g class="fg" onclick="tapField(4)">
-        <rect class="fr" x="284" y="103" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="284" y="103" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="290" y="109" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="290" y1="139" x2="330" y2="139" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="310" cy="139" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -407,7 +425,7 @@
 
       <!-- F5  c(413,108) -->
       <g class="fg" onclick="tapField(5)">
-        <rect class="fr" x="387" y="72" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="387" y="72" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="393" y="78" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="393" y1="108" x2="433" y2="108" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="413" cy="108" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -416,7 +434,7 @@
 
       <!-- F6  c(474,108) -->
       <g class="fg" onclick="tapField(6)">
-        <rect class="fr" x="448" y="72" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="448" y="72" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="454" y="78" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="454" y1="108" x2="494" y2="108" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="474" cy="108" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -425,7 +443,7 @@
 
       <!-- F7  c(537,176) -->
       <g class="fg" onclick="tapField(7)">
-        <rect class="fr" x="511" y="140" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="511" y="140" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="517" y="146" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="517" y1="176" x2="557" y2="176" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="537" cy="176" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -434,7 +452,7 @@
 
       <!-- F8  c(598,158) -->
       <g class="fg" onclick="tapField(8)">
-        <rect class="fr" x="572" y="122" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="572" y="122" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="578" y="128" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="578" y1="158" x2="618" y2="158" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="598" cy="158" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -443,7 +461,7 @@
 
       <!-- F9  c(659,158) -->
       <g class="fg" onclick="tapField(9)">
-        <rect class="fr" x="633" y="122" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="633" y="122" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="639" y="128" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="639" y1="158" x2="679" y2="158" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <ellipse cx="659" cy="158" rx="14" ry="17" fill="rgba(0,0,0,.62)"/>
@@ -452,7 +470,7 @@
 
       <!-- F10 c(524,225) -->
       <g class="fg" onclick="tapField(10)">
-        <rect class="fr" x="498" y="189" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="498" y="189" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="504" y="195" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="504" y1="225" x2="544" y2="225" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="503" y="215" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -461,7 +479,7 @@
 
       <!-- F11 c(590,224) -->
       <g class="fg" onclick="tapField(11)">
-        <rect class="fr" x="564" y="188" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="564" y="188" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="570" y="194" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="570" y1="224" x2="610" y2="224" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="569" y="214" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -470,7 +488,7 @@
 
       <!-- F12 c(655,224) -->
       <g class="fg" onclick="tapField(12)">
-        <rect class="fr" x="629" y="188" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="629" y="188" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="635" y="194" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="635" y1="224" x2="675" y2="224" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="634" y="214" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -479,7 +497,7 @@
 
       <!-- F13 c(595,302) -->
       <g class="fg" onclick="tapField(13)">
-        <rect class="fr" x="569" y="266" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="569" y="266" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="575" y="272" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="575" y1="302" x2="615" y2="302" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="574" y="292" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -488,7 +506,7 @@
 
       <!-- F14 c(655,302) -->
       <g class="fg" onclick="tapField(14)">
-        <rect class="fr" x="629" y="266" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="629" y="266" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="635" y="272" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="635" y1="302" x2="675" y2="302" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="634" y="292" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -497,7 +515,7 @@
 
       <!-- F15 c(672,375) -->
       <g class="fg" onclick="tapField(15)">
-        <rect class="fr" x="646" y="339" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="646" y="339" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="652" y="345" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="652" y1="375" x2="692" y2="375" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="651" y="365" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -506,7 +524,7 @@
 
       <!-- F16 c(590,375) -->
       <g class="fg" onclick="tapField(16)">
-        <rect class="fr" x="564" y="339" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="564" y="339" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="570" y="345" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="570" y1="375" x2="610" y2="375" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="569" y="365" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -515,7 +533,7 @@
 
       <!-- F17 c(492,379) -->
       <g class="fg" onclick="tapField(17)">
-        <rect class="fr" x="466" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="466" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="472" y="349" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="472" y1="379" x2="512" y2="379" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="471" y="369" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -524,7 +542,7 @@
 
       <!-- F18 c(394,379) -->
       <g class="fg" onclick="tapField(18)">
-        <rect class="fr" x="368" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="368" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="374" y="349" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="374" y1="379" x2="414" y2="379" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="373" y="369" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -533,7 +551,7 @@
 
       <!-- F19 c(301,379) -->
       <g class="fg" onclick="tapField(19)">
-        <rect class="fr" x="275" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="275" y="343" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="281" y="349" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="281" y1="379" x2="321" y2="379" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="280" y="369" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -542,7 +560,7 @@
 
       <!-- F20 c(231,366) south of maintenance -->
       <g class="fg" onclick="tapField(20)">
-        <rect class="fr" x="205" y="330" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2"/>
+        <rect class="fr" x="205" y="330" width="52" height="72" rx="3" fill="url(#grass)" stroke="#00e676" stroke-width="2.5" filter="url(#field-shadow)"/>
         <rect x="211" y="336" width="40" height="60" fill="none" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <line x1="211" y1="366" x2="251" y2="366" stroke="rgba(255,255,255,.15)" stroke-width=".8"/>
         <rect x="210" y="356" width="42" height="19" rx="4" fill="rgba(0,0,0,.62)"/>
@@ -749,7 +767,7 @@
 ═══════════════════════════════════════════ -->
 <div id="search-overlay">
   <div class="search-hdr">
-    <button class="search-back" onclick="closeSearch()">&#x2190;</button>
+    <button class="search-back" onclick="closeSearch()">&#x2190; MAP</button>
     <input type="text" class="search-input" id="search-input"
            placeholder="Search referee by name..."
            oninput="doSearch(this.value)"
@@ -1092,6 +1110,7 @@ document.addEventListener("DOMContentLoaded", function() {
   buildCoachList();
   buildFlagsList("flags-card",    {}, false);
   buildFlagsList("qn-flags-card", {}, true);
+  initTheme();
   initPanZoom();
   setDiff(2);
   refreshRolePill();
@@ -1109,7 +1128,6 @@ document.addEventListener("DOMContentLoaded", function() {
     localStorage.setItem("endDayDone",     "false");
   }
 
-  initTheme();
   refreshFoodButton();
   checkStoredFoodAlert();
   setInterval(pollFoodStatus, 60000);
@@ -1287,9 +1305,12 @@ function refreshLangButtons() {
 
 // ── FOOD BUTTON (Deanna only) ────────────────────────────────────
 function refreshFoodButton() {
-  var btn   = document.getElementById("food-deanna-btn");
   var coach = findCoach(coachName);
-  btn.style.display = (coach && coach.isDeanna) ? "inline-flex" : "none";
+  var isD = coach && coach.isDeanna;
+  var cb = document.getElementById("food-coaches-btn");
+  var rb = document.getElementById("food-refs-btn");
+  if (cb) cb.style.display = isD ? "inline-flex" : "none";
+  if (rb) rb.style.display = isD ? "inline-flex" : "none";
 }
 
 // ── FIELD TAP ────────────────────────────────────────────────────
@@ -1402,30 +1423,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // ── THEME ────────────────────────────────────────────────────────
 function initTheme() {
-  var saved = localStorage.getItem("appTheme") || "dark";
-  applyTheme(saved);
+  applyTheme(localStorage.getItem("appTheme") || "dark");
 }
-
 function toggleTheme() {
-  var current = document.body.classList.contains("light") ? "light" : "dark";
-  var next    = current === "dark" ? "light" : "dark";
+  var next = document.body.classList.contains("light") ? "dark" : "light";
   applyTheme(next);
   localStorage.setItem("appTheme", next);
 }
-
 function applyTheme(theme) {
   if (theme === "light") {
     document.body.classList.add("light");
-    document.getElementById("theme-btn").innerHTML = "&#x1F31E;";
-    document.getElementById("theme-btn").title     = "Switch to dark mode";
+    document.getElementById("theme-btn").innerHTML = "&#x2600;&#xFE0F;";
+    document.getElementById("theme-btn").title = "Switch to dark mode";
   } else {
     document.body.classList.remove("light");
     document.getElementById("theme-btn").innerHTML = "&#x1F315;";
-    document.getElementById("theme-btn").title     = "Switch to light mode";
+    document.getElementById("theme-btn").title = "Switch to light mode";
   }
 }
 
 // ── SEARCH ───────────────────────────────────────────────────────
+function goHome() {
+  // Close every panel and overlay — always returns to the map
+  document.getElementById("field-panel").classList.remove("open");
+  document.getElementById("field-bg").classList.remove("open");
+  document.getElementById("fb-panel").classList.remove("open");
+  document.getElementById("qn-panel").classList.remove("open");
+  document.getElementById("search-overlay").classList.remove("open");
+  document.getElementById("success-overlay").classList.remove("open");
+  document.getElementById("welcome-overlay").classList.remove("open");
+  document.getElementById("reminder-toast").classList.remove("show");
+  document.querySelectorAll(".modal-bg").forEach(function(m) {
+    m.classList.remove("open");
+  });
+  window.scrollTo(0, 0);
+}
+
 function openSearch() {
   document.getElementById("search-overlay").classList.add("open");
   document.getElementById("search-input").value = "";
@@ -1672,12 +1705,10 @@ function openFeedback(official) {
   fbFlags     = {};
   diff        = 2;
 
-  // Header — use innerHTML to preserve child span structure
-  document.getElementById("fb-title-name").innerHTML =
-    official.name +
-    "<span id='fb-title-sub'>" +
-    official.label + " \u00B7 Field " + currentField +
-    "</span>";
+  // Header
+  document.getElementById("fb-title-name").textContent = official.name;
+  document.getElementById("fb-title-sub").textContent  =
+    official.label + " \u00B7 Field " + currentField;
 
   // Clear notes
   document.getElementById("ta-pub").value  = "";
@@ -1715,18 +1746,16 @@ function openQuickNote(official) {
   buildFlagsList("qn-flags-card", qnFlags, true);
 
   if (official) {
-    // use innerHTML to preserve child span
-    document.getElementById("qn-title-name").innerHTML =
-      official.name +
-      "<span id='qn-title-sub'> \u00B7 Field " + currentField + "</span>";
+    document.getElementById("qn-title-name").textContent = official.name;
+    document.getElementById("qn-title-sub").textContent  =
+      " \u00B7 Field " + currentField;
     document.getElementById("qn-ref-card").style.display  = "block";
     document.getElementById("qn-ref-name").textContent     = official.name;
     document.getElementById("qn-ref-meta").textContent     = official.label;
   } else {
-    // use innerHTML to preserve child span
-    document.getElementById("qn-title-name").innerHTML =
-      "Quick Note" +
-      "<span id='qn-title-sub'> \u00B7 Field " + currentField + "</span>";
+    document.getElementById("qn-title-name").textContent  = "Quick Note";
+    document.getElementById("qn-title-sub").textContent   =
+      " \u00B7 Field " + currentField;
     document.getElementById("qn-ref-card").style.display  = "none";
   }
   document.getElementById("qn-panel").classList.add("open");
@@ -2001,9 +2030,36 @@ function fetchGame(fieldNum) {
 // App polls every 60s → coaches see banner immediately
 // → refs see it 10 min later → clears after 90 min
 
-var FOOD_COACH_DELAY = 0;            // ms — coaches see it immediately
-var FOOD_REF_DELAY   = 10 * 60000;  // ms — refs see it 10 min later
-var FOOD_CLEAR_AFTER = 90 * 60000;  // ms — clears after 90 min
+var FOOD_CLEAR_AFTER = 90 * 60000;
+var foodCoachTime = null;
+var foodRefTime   = null;
+
+function triggerFoodCoaches() {
+  var now = Date.now();
+  foodAlertTime = now;
+  localStorage.setItem("foodCoachTime", String(now));
+  if (!DEMO && SCRIPT_URL) {
+    fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify({ action:"foodCoach", timestamp:now }) })
+      .catch(function(e) { console.warn(e); });
+  }
+  var btn = document.getElementById("food-coaches-btn");
+  if (btn) { btn.textContent = "COACHES NOTIFIED"; btn.style.opacity = ".6"; }
+  foodCoachTime = now;
+  checkFoodBanner();
+}
+
+function triggerFoodRefs() {
+  var now = Date.now();
+  foodRefTime = now;
+  localStorage.setItem("foodRefTime", String(now));
+  if (!DEMO && SCRIPT_URL) {
+    fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify({ action:"foodRefs", timestamp:now }) })
+      .catch(function(e) { console.warn(e); });
+  }
+  var btn = document.getElementById("food-refs-btn");
+  if (btn) { btn.textContent = "REFS NOTIFIED"; btn.style.opacity = ".6"; }
+  checkFoodBanner();
+}
 
 function triggerFood() {
   var now = Date.now();
@@ -2087,4 +2143,3 @@ function checkFoodBanner() {
 
 </body>
 </html>
-
