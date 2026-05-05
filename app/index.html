@@ -295,9 +295,10 @@
   <div id="gps-st">&#x1F50D; Finding you&hellip;</div>
 
   <!-- FOOD BANNER -->
-  <div id="food-banner">
+  <div id="food-banner" onclick="dismissFoodBanner()" style="cursor:pointer">
     <span class="food-blink">&#x1F355;</span>
     <span id="food-banner-text">FOOD IS READY &mdash; HEAD TO THE TENT!</span>
+    <span style="font-size:12px;opacity:.6;margin-left:8px">(tap to dismiss)</span>
     <span class="food-blink">&#x1F355;</span>
   </div>
 
@@ -2022,29 +2023,32 @@ function fetchGame(fieldNum) {
 
 <script>
 // ════════════════════════════════════════════════════════════════
-// SECTION 6 — FOOD NOTIFICATION + APPS SCRIPT
+// SECTION 6 - FOOD NOTIFICATION
+// Deanna controls two alerts manually:
+//   COACHES button = coaches eat first
+//   REFS button    = refs cleared to eat
+// Both auto-clear after 90 min. Banner tappable to dismiss.
 // ════════════════════════════════════════════════════════════════
 
-// ── FOOD NOTIFICATION ────────────────────────────────────────────
-// Deanna taps "FOOD READY" → timestamp written to Sheet via Apps Script
-// App polls every 60s → coaches see banner immediately
-// → refs see it 10 min later → clears after 90 min
-
-var FOOD_CLEAR_AFTER = 90 * 60000;
+var FOOD_CLEAR = 90 * 60000;
 var foodCoachTime = null;
 var foodRefTime   = null;
 
+function dismissFoodBanner() {
+  document.getElementById("food-banner").classList.remove("show");
+}
+
 function triggerFoodCoaches() {
   var now = Date.now();
-  foodAlertTime = now;
+  foodCoachTime = now;
   localStorage.setItem("foodCoachTime", String(now));
+  localStorage.removeItem("foodAlertTime"); // clear old key
   if (!DEMO && SCRIPT_URL) {
     fetch(SCRIPT_URL, { method:"POST", body:JSON.stringify({ action:"foodCoach", timestamp:now }) })
       .catch(function(e) { console.warn(e); });
   }
   var btn = document.getElementById("food-coaches-btn");
   if (btn) { btn.textContent = "COACHES NOTIFIED"; btn.style.opacity = ".6"; }
-  foodCoachTime = now;
   checkFoodBanner();
 }
 
@@ -2061,28 +2065,23 @@ function triggerFoodRefs() {
   checkFoodBanner();
 }
 
-function triggerFood() {
+function checkStoredFoodAlert() {
+  // Clear legacy key from old app versions
+  localStorage.removeItem("foodAlertTime");
+  var sc  = localStorage.getItem("foodCoachTime");
+  var sr  = localStorage.getItem("foodRefTime");
   var now = Date.now();
-  localStorage.setItem("foodAlertTime", String(now));
-  foodAlertTime = now;
-
-  if (!DEMO && SCRIPT_URL) {
-    fetch(SCRIPT_URL, {
-      method: "POST",
-      body:   JSON.stringify({ action:"foodAlert", timestamp:now })
-    }).catch(function(e) {
-      console.warn("Food alert write failed:", e);
-    });
+  if (sc) {
+    var t = parseInt(sc);
+    if ((now - t) < FOOD_CLEAR) { foodCoachTime = t; }
+    else { localStorage.removeItem("foodCoachTime"); }
+  }
+  if (sr) {
+    var t2 = parseInt(sr);
+    if ((now - t2) < FOOD_CLEAR) { foodRefTime = t2; }
+    else { localStorage.removeItem("foodRefTime"); }
   }
   checkFoodBanner();
-}
-
-function checkStoredFoodAlert() {
-  var stored = localStorage.getItem("foodAlertTime");
-  if (stored) {
-    foodAlertTime = parseInt(stored);
-    checkFoodBanner();
-  }
 }
 
 function pollFoodStatus() {
@@ -2090,56 +2089,49 @@ function pollFoodStatus() {
     fetch(SCRIPT_URL + "?action=foodStatus")
       .then(function(r) { return r.json(); })
       .then(function(d) {
-        if (d.foodAlertTime && d.foodAlertTime !== foodAlertTime) {
-          foodAlertTime = d.foodAlertTime;
-          localStorage.setItem("foodAlertTime", String(foodAlertTime));
-          checkFoodBanner();
+        var changed = false;
+        if (d.foodCoachTime && d.foodCoachTime !== foodCoachTime) {
+          foodCoachTime = d.foodCoachTime;
+          localStorage.setItem("foodCoachTime", String(foodCoachTime));
+          changed = true;
         }
+        if (d.foodRefTime && d.foodRefTime !== foodRefTime) {
+          foodRefTime = d.foodRefTime;
+          localStorage.setItem("foodRefTime", String(foodRefTime));
+          changed = true;
+        }
+        if (changed) { checkFoodBanner(); }
       }).catch(function() {});
-  } else {
-    checkFoodBanner();
   }
 }
 
 function checkFoodBanner() {
-  if (!foodAlertTime) return;
-  var elapsed = Date.now() - foodAlertTime;
-  var banner  = document.getElementById("food-banner");
-  var txt     = document.getElementById("food-banner-text");
-  var icon    = document.getElementById("food-map-icon");
-
-  // Clear after 90 min
-  if (elapsed > FOOD_CLEAR_AFTER) {
-    banner.classList.remove("show");
-    if (icon) icon.style.animation = "";
-    localStorage.removeItem("foodAlertTime");
-    foodAlertTime = null;
-    return;
+  var banner = document.getElementById("food-banner");
+  var txt    = document.getElementById("food-banner-text");
+  var icon   = document.getElementById("food-map-icon");
+  var now    = Date.now();
+  var cA = foodCoachTime && (now - foodCoachTime) < FOOD_CLEAR;
+  var rA = foodRefTime   && (now - foodRefTime)   < FOOD_CLEAR;
+  if (foodCoachTime && !cA) { foodCoachTime = null; localStorage.removeItem("foodCoachTime"); }
+  if (foodRefTime   && !rA) { foodRefTime   = null; localStorage.removeItem("foodRefTime"); }
+  var show = false;
+  var msg  = "";
+  if (userRole === "coach" && cA) {
+    show = true; msg = "&#x1F355; FOOD IS READY - COACHES FIRST! (tap to dismiss)";
+  } else if (userRole === "referee" && rA) {
+    show = true; msg = "&#x1F355; FOOD IS READY - HEAD TO THE TENT! (tap to dismiss)";
+  } else if (userRole === "coach" && rA) {
+    show = true; msg = "&#x1F355; FOOD OPEN TO ALL - REFS ARE EATING! (tap to dismiss)";
   }
-
-  var shouldShow = false;
-
-  if (userRole === "coach" && elapsed >= FOOD_COACH_DELAY) {
-    shouldShow = true;
-    txt.innerHTML = "\uD83C\uDF55 FOOD IS READY \u2014 COACHES FIRST!";
-  } else if (userRole === "referee" && elapsed >= FOOD_REF_DELAY) {
-    shouldShow = true;
-    txt.innerHTML = "\uD83C\uDF55 FOOD IS READY \u2014 HEAD TO THE TENT!";
-  } else if (userRole === "coach" && elapsed < FOOD_COACH_DELAY) {
-    // Coach but too early — shouldn't happen since delay is 0
-    shouldShow = true;
-  }
-
-  if (shouldShow) {
+  if (show) {
     banner.classList.add("show");
-    // Make the food icon on the map blink
-    if (icon) {
-      icon.style.animation = "foodpulse 1s ease-in-out infinite";
-    }
+    txt.innerHTML = msg;
+    if (icon) { icon.style.animation = "foodpulse 1s ease-in-out infinite"; }
+  } else {
+    banner.classList.remove("show");
+    if (icon) { icon.style.animation = ""; }
   }
 }
-
 </script>
-
 </body>
 </html>
