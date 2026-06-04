@@ -239,22 +239,36 @@ a { color: inherit; text-decoration: none; }
 .detail-sheet {
   position: absolute; left: 0; right: 0; bottom: 0;
   max-height: 92vh; overflow-y: auto;
-  background: #ffffff; color: var(--text);
+  background: var(--bg); color: var(--text);
   border-top-left-radius: 18px; border-top-right-radius: 18px;
   transform: translateY(100%); transition: transform .25s;
   padding-bottom: calc(20px + env(safe-area-inset-bottom));
   -webkit-overflow-scrolling: touch;
+  isolation: isolate;
+}
+.detail-sheet::before {
+  content: '';
+  position: absolute;
+  top: 80px; left: 50%;
+  transform: translateX(-50%);
+  width: min(72vw, 460px);
+  height: min(72vw, 460px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
 }
 .detail-panel.open .detail-sheet { transform: translateY(0); }
 .detail-handle {
-  width: 40px; height: 4px; background: var(--border);
+  width: 40px; height: 4px; background: rgba(15,42,86,.25);
   border-radius: 2px; margin: 10px auto 4px;
+  position: relative; z-index: 1;
 }
 .detail-header {
   display: flex; gap: 12px; align-items: flex-start;
   padding: 14px 22px 12px;
-  border-bottom: 1px solid var(--border-soft);
-  position: sticky; top: 0; background: #fff; z-index: 2;
+  border-bottom: 1px solid rgba(15,42,86,.15);
+  position: sticky; top: 0; background: var(--bg); z-index: 3;
 }
 .detail-header-text { flex: 1; min-width: 0; }
 .detail-eyebrow {
@@ -271,12 +285,15 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px; color: var(--text-soft); margin-top: 2px;
 }
 .detail-close {
-  width: 34px; height: 34px; border: none; background: var(--tint);
-  border-radius: 50%; font-size: 20px; line-height: 1;
+  width: 34px; height: 34px; border: 1px solid rgba(15,42,86,.25);
+  background: rgba(255,255,255,.55);
+  border-radius: 50%; font-size: 18px; line-height: 1;
   cursor: pointer; color: var(--navy); flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
 }
-.detail-body { padding: 18px 22px 30px; }
+.detail-close:hover { background: #ffffff; }
+.detail-body { padding: 18px 22px 30px; position: relative; z-index: 1; }
 
 /* Detail content blocks */
 .ds-block { margin-bottom: 20px; }
@@ -284,50 +301,52 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--bebas); font-size: 13px; font-weight: 800;
   letter-spacing: .18em; color: var(--red); text-transform: uppercase;
   margin-bottom: 8px;
-  padding-bottom: 4px; border-bottom: 2px solid var(--tint);
+  padding-bottom: 4px; border-bottom: 2px solid rgba(15,42,86,.18);
 }
-.ds-text { font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 8px; }
-.ds-text strong { color: var(--navy); font-weight: 700; }
-.ds-text em { color: var(--red); font-style: normal; font-weight: 600; }
+.ds-text { font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 8px; font-weight: 500; }
+.ds-text strong { color: var(--navy); font-weight: 800; }
+.ds-text em { color: var(--red); font-style: normal; font-weight: 700; }
 .bul {
   display: flex; gap: 8px; padding: 5px 0; font-size: 13px;
-  color: var(--text-soft); line-height: 1.5;
+  color: var(--text-soft); line-height: 1.5; font-weight: 500;
 }
 .bul::before { content: "●"; color: var(--gold); flex-shrink: 0; font-size: 10px; padding-top: 4px; }
-.bul strong { color: var(--navy); font-weight: 700; }
+.bul strong { color: var(--navy); font-weight: 800; }
 .chk {
   display: flex; gap: 8px; padding: 6px 0; font-size: 13px;
-  color: var(--text-soft); line-height: 1.5;
+  color: var(--text-soft); line-height: 1.5; font-weight: 500;
 }
 .chk::before { content: "✓"; color: var(--green); flex-shrink: 0; font-weight: 800; }
-.chk strong { color: var(--navy); font-weight: 700; }
+.chk strong { color: var(--navy); font-weight: 800; }
 .stp {
   display: flex; gap: 12px; padding: 9px 0;
-  border-bottom: 1px solid var(--tint);
+  border-bottom: 1px solid rgba(15,42,86,.12);
 }
 .stp-n {
   font-family: var(--bebas); font-size: 20px; font-weight: 800;
   color: var(--red); width: 24px; flex-shrink: 0; line-height: 1;
 }
 .stp-t {
-  font-size: 13px; color: var(--text-soft); line-height: 1.6;
+  font-size: 13px; color: var(--text-soft); line-height: 1.6; font-weight: 500;
 }
-.stp-t strong { color: var(--navy); font-weight: 700; }
+.stp-t strong { color: var(--navy); font-weight: 800; }
 .callout {
   display: flex; gap: 10px; align-items: flex-start;
   padding: 12px 14px; border-radius: 10px;
   margin: 10px 0; font-size: 13px; line-height: 1.55;
+  font-weight: 500;
 }
-.callout strong { color: var(--navy); font-weight: 700; }
-.callout-red    { background: rgba(213,43,59,.08); border: 1px solid rgba(213,43,59,.25); color: var(--text-soft); }
-.callout-gold   { background: rgba(212,160,23,.10); border: 1px solid rgba(212,160,23,.3); color: var(--text-soft); }
-.callout-blue   { background: rgba(77,122,217,.08); border: 1px solid rgba(77,122,217,.25); color: var(--text-soft); }
-.callout-green  { background: rgba(22,163,74,.08); border: 1px solid rgba(22,163,74,.25); color: var(--text-soft); }
+.callout strong { color: var(--navy); font-weight: 800; }
+.callout-red    { background: #f8dcd9; border: 1px solid rgba(213,43,59,.45); color: var(--navy); }
+.callout-gold   { background: #f7ecc6; border: 1px solid rgba(212,160,23,.55); color: var(--navy); }
+.callout-blue   { background: #dbe3f3; border: 1px solid rgba(77,122,217,.45); color: var(--navy); }
+.callout-green  { background: #d4ebd7; border: 1px solid rgba(22,163,74,.45); color: var(--navy); }
 .callout-ico { font-size: 16px; flex-shrink: 0; }
 
 /* Level cards (RAP) */
 .lvl-card {
-  border: 1px solid var(--border-soft); border-radius: 10px;
+  border: 1px solid rgba(15,42,86,.25); border-radius: 10px;
+  background: rgba(255,255,255,.35);
   padding: 12px 14px; margin-bottom: 8px;
 }
 .lvl-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
@@ -358,7 +377,7 @@ a { color: inherit; text-decoration: none; }
 .contact-card {
   display: grid; grid-template-columns: 1fr auto; gap: 6px 14px;
   padding: 12px 0;
-  border-bottom: 1px solid var(--tint);
+  border-bottom: 1px solid rgba(15,42,86,.12);
 }
 .contact-name { font-size: 14px; font-weight: 700; color: var(--navy); }
 .contact-role { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
@@ -527,31 +546,34 @@ var MODULES = [
     title:"Daily Schedule",
     sub:"Meeting times, game slots, education sessions",
     eyebrow:"Tournament",
-    keywords:"schedule meeting time daily slots kickoff",
+    keywords:"schedule meeting time daily slots kickoff national instruction check-in",
     build: function() {
       return ds("Thursday, June 18 — Move-In Day",
         sched([
-          ["All Day", "Travel & hotel check-in (Comfort Inn & Suites Boise Airport)"],
-          ["3:00 PM", "<strong>Mandatory check-in opens</strong> at HQ — referee badges, gear, welcome packets"],
-          ["5:30 PM", "<strong>Welcome briefing</strong> — Karen, Jeff, Deanna · meet the staff and ref coaches"],
-          ["7:00 PM", "Group dinner (location TBA)"]
+          ["All Day", "Travel &amp; hotel check-in (Comfort Inn &amp; Suites Boise Airport)"],
+          ["3:00 PM", "<strong>Referee Coach meeting</strong> with Admin"],
+          ["6:00 PM", "<strong>Mandatory check-in opens</strong> at <strong>Holiday Inn meeting room</strong> for ALL referees — badges, gear, welcome packets"],
+          ["7:00 PM", "<strong>Welcome briefing</strong> — Karen, Jeff, Deanna · meet the staff and ref coaches"]
         ])) +
       ds("Friday–Monday, June 19–22 — Game Days (template)",
         sched([
-          ["6:30 AM", "Breakfast at hotel (Comfort Inn breakfast bar)"],
-          ["6:45 AM", "Depart for Simplot Sports Complex (carpool times posted)"],
-          ["7:00 AM", "<strong>CR crew meeting</strong> for 8:00 AM slot — HQ tent"],
+          ["6:00 AM", "Breakfast at hotel (Comfort Inn breakfast bar)"],
+          ["6:40 AM", "Depart for Simplot Sports Complex (carpool times posted)"],
+          ["7:00 AM", "<strong>Crew check-in &amp; pre-game</strong> for 8:00 AM slot — HQ tent"],
           ["8:00 AM", "<strong>Slot 1</strong> kickoff"],
-          ["9:10 AM", "CR crew meeting for 10:10 slot"],
+          ["9:10 AM", "Crew check-in &amp; pre-game for 10:10 slot"],
           ["10:10 AM", "<strong>Slot 2</strong> kickoff"],
-          ["11:20 AM", "CR crew meeting for 12:20 slot"],
+          ["10:30 AM", "<strong>National Instruction #1</strong> — Ref HQ"],
+          ["11:20 AM", "Crew check-in &amp; pre-game for 12:20 slot"],
           ["12:20 PM", "<strong>Slot 3</strong> kickoff"],
-          ["1:20 PM", "CR crew meeting for 2:20 slot"],
+          ["12:30 PM", "<strong>National Instruction #2</strong>"],
+          ["1:20 PM", "Crew check-in &amp; pre-game for 2:20 slot"],
           ["2:20 PM", "<strong>Slot 4</strong> kickoff"],
-          ["~4:30 PM", "End of games · meet at HQ for ref coach debriefs"],
-          ["5:30 PM", "<strong>Education session</strong> — rotating topics with the ref coaches"],
-          ["7:00 PM", "Dinner / free time"]
+          ["~4:00 PM", "End of games · meet at HQ for ref coach debriefs"],
+          ["6:00 PM", "<strong>Education session</strong> — rotating topics with the ref coaches"],
+          ["7:30 PM", "Dinner / free time"]
         ])) +
+      callout("blue", "📍", "<strong>Holiday Inn is 0.4 miles from the Comfort Inn</strong> — short walk or quick drive. The Comfort Inn doesn't have meeting space, so all group meetings happen at the Holiday Inn down the street.") +
       callout("blue", "ℹ️", "<strong>Check-in is per game.</strong> The CR signs in the whole crew at the HQ binder one hour before kickoff. Back-to-back games are handled manually by admin.") +
       callout("gold", "⏰", "Times shift slightly on Sunday for semifinals and Monday for finals. Watch your Ref Portal and announcements at HQ.");
     }
@@ -561,36 +583,36 @@ var MODULES = [
     title:"What to Bring",
     sub:"Uniform, gear, and travel checklist",
     eyebrow:"Tournament",
-    keywords:"bring gear uniform equipment checklist whistle cards flags",
+    keywords:"bring gear uniform equipment checklist whistle cards flags pink USSF badge",
     build: function() {
-      return ds("Uniform — All Four USYS Colors",
-        chk("Primary <strong>yellow</strong> jersey · plus <strong>black, red, blue, and green</strong> alternates") +
+      return ds("Uniform — All USYS Colors",
+        chk("Primary <strong>yellow</strong> jersey · <strong>black, red, blue, green, and pink</strong> alternates") +
         chk("Black referee shorts (USYS-standard)") +
         chk("Black socks with white stripes (USYS-standard)") +
-        chk("Black firm-ground referee shoes") +
-        chk("USYS referee badge (current registration)")) +
+        chk("Black referee shoes") +
+        chk("<strong>USSF referee badge</strong> (current registration)")) +
       ds("Match Equipment",
-        chk("<strong>Two whistles minimum</strong> — different tones") +
+        chk("<strong>Two whistles</strong> — different tones") +
         chk("Watch with timing capability (countdown + added time)") +
         chk("<strong>Yellow & red cards</strong> with player number recording") +
-        chk("Notebook + 2 pencils/pens") +
+        chk("Notebook + pencils/pens") +
         chk("Coin (for coin toss)") +
-        chk("Set of <strong>linesman flags</strong> for AR work")) +
-      ds("Heat & Hydration — Boise in June",
+        chk("Set of <strong>flags</strong> for AR work")) +
+      ds("Heat & Hydration — Boise in June is HOT",
         chk("<strong>Large water bottle</strong> (1L+) — fill at HQ hydration station") +
-        chk("Electrolyte tabs or sports drink mix") +
-        chk("<strong>High-SPF sunscreen</strong> (50+) — reapply every 2 hours") +
+        chk("Electrolyte tabs or sports drink mix — <strong>HQ will have some</strong>") +
+        chk("<strong>High-SPF sunscreen</strong> (50+) — reapply every 2 hours or every game") +
         chk("Hat or visor for between games") +
-        chk("Sunglasses (for off-field; remove on field)") +
+        chk("Sunglasses (for off-field; <strong>please remove on field</strong>)") +
         chk("Towel for sweat / cooldown")) +
       ds("Personal & Travel",
-        chk("Government ID + USYS license info") +
+        chk("Government ID") +
         chk("Cell phone + charger (battery pack recommended for full days)") +
         chk("Hotel confirmation") +
         chk("Casual evening clothes (multiple sets — laundry options limited)") +
-        chk("Energy snacks — bananas, granola bars, jerky") +
+        chk("Energy snacks — bananas, granola bars, jerky · <strong>HQ will have some also</strong>") +
         chk("Basic first aid: bandaids, blister care, ibuprofen")) +
-      callout("red", "⚠️", "Forget something? <strong>HQ has limited backup gear.</strong> Pack smart, check the night before.");
+      callout("red", "⚠️", "<strong>Forget something?</strong> HQ has limited backup. Pack smart, check the night before.");
     }
   },
   {
@@ -598,31 +620,27 @@ var MODULES = [
     title:"Hotel — Comfort Inn & Suites",
     sub:"Address, breakfast, transit to Simplot",
     eyebrow:"Tournament",
-    keywords:"hotel comfort inn boise airport elder street breakfast parking",
+    keywords:"hotel comfort inn boise airport elder street breakfast parking shuttle carpool",
     build: function() {
       return ds("Location",
         dt("<strong>Comfort Inn &amp; Suites Boise Airport</strong>") +
         dt("3625 W Elder Street · Boise, ID 83705") +
-        dt("Roughly 1 mile from Boise Airport (BOI). Ride-share to hotel is typically &lt;$15.")) +
+        dt("Roughly 1 mile from Boise Airport (BOI). <strong>Contact SRC for pickup arrangements</strong> at the hotel, or use the shuttle provided by the hotel. <em>Please take care of the driver — you are representing us all.</em>")) +
       ds("Breakfast",
         dt("Full hot breakfast included with stay. Served <strong>6:00–9:30 AM</strong> in the lobby breakfast room.") +
         bul("Eggs, breakfast meats, pancakes/waffles") +
         bul("Yogurt, fruit, granola, oatmeal") +
         bul("Coffee, juice, milk") +
-        callout("gold", "☕", "On the road by 6:45? Grab a coffee + breakfast burrito to-go from the front desk station.")) +
+        callout("gold", "☕", "On the road by 6:30? Grab a coffee + breakfast burrito to-go from the front desk station.")) +
       ds("Parking & Pool",
         chk("Free on-site parking") +
-        chk("Indoor pool & fitness area") +
-        chk("Pet-friendly")) +
+        chk("Indoor pool &amp; fitness area") +
+        chk("Pet-friendly — but we ask <strong>PLEASE NO PETS</strong>")) +
       ds("Getting to Simplot Sports Complex",
-        dt("<strong>Simplot is on the opposite side of Boise from the hotel.</strong> Plan ~25 minutes drive time, longer in morning traffic.") +
+        dt("<strong>Simplot is 6 miles from the hotel.</strong> Plan <strong>15 to 20 minutes</strong> drive time, longer in morning traffic.") +
         bul("<strong>By car:</strong> I-84 east, exit Gowen Rd → E Grand Forest Dr → S Quamash Way") +
-        bul("<strong>Carpool sign-ups</strong> in the lobby and on the Hub. Vans run for crews without rental cars.") +
-        bul("Ride-share works but adds up over 4 days — carpool first.")) +
-      ds("Hotel Contacts",
-        contact("Anne Bohr", "Hotel Group Contact", "[ADD]") +
-        contact("Ryan Conn", "On Location", "[ADD]")) +
-      callout("blue", "ℹ️", "Need to extend your stay or change rooms? Contact <strong>Anne Bohr</strong> directly — On Location holds the group block.");
+        bul("<strong>Carpools will be created the night before</strong> in the meetings.")) +
+      callout("blue", "🛏", "<strong>Room change requests:</strong> Go to <strong>Deanna first</strong>, then Jeff, then Karen. Don't ask the front desk — On Location manages the group block.");
     }
   },
   {
@@ -633,12 +651,9 @@ var MODULES = [
     keywords:"contact emergency phone HQ tent karen jeff deanna medical",
     build: function() {
       return ds("Tournament Leadership",
-        contact("Karen Abt Coulson", "Lead Referee Administrator", "[ADD]") +
-        contact("Jeff Arthurholtz", "Assistant Lead RA", "[ADD]") +
-        contact("Deanna Duncan-Allen", "Referee Liaison · Check-in", "[ADD]")) +
-      ds("USYS &amp; Local",
-        contact("Daniel Radford", "USYS Director of Referees", "[ADD]") +
-        contact("Bailey Watson", "Idaho Youth Soccer · Director of Ops", "[ADD]")) +
+        contact("Karen Abt Coulson", "Lead Referee Administrator", "Call Jeff first") +
+        contact("Jeff Arthurholtz", "Assistant Lead RA", "Call Deanna first") +
+        contact("Deanna Duncan-Allen", "Referee Liaison · Check-in", "Disconnected")) +
       ds("Medical & Emergency",
         contact("Emergency", "Life threatening", "911") +
         contact("St. Luke's Boise Medical Center", "Nearest hospital", "208.381.2222") +
@@ -655,33 +670,33 @@ var MODULES = [
   {
     id:"gd-pregame", cat:"gameday", icon:"🕒",
     title:"Pre-Game Procedures",
-    sub:"Arrival, crew meeting, inspections, captains",
+    sub:"Arrival, crew pre-game, inspections, captains",
     eyebrow:"Game Day",
-    keywords:"pregame arrival crew meeting inspection captain coin toss equipment field check",
+    keywords:"pregame arrival crew meeting inspection captain coin toss field check QR",
     build: function() {
       return ds("Arrival",
-        stp(1, "Arrive at HQ <strong>1 hour before kickoff</strong>. Find your CR or be your crew's CR.") +
-        stp(2, "Sign in at the <strong>QR binder</strong> for your field — the CR signs the whole crew in.") +
-        stp(3, "Grab water, gather your crew, head to the field.")) +
-      ds("Crew Meeting",
-        bul("Confirm <strong>positions</strong> — CR, AR1, AR2, 4th if applicable") +
-        bul("Set <strong>signals</strong> — substitution, offside, advantage protocol") +
-        bul("Discuss <strong>foul recognition</strong> — what each AR will flag vs let CR handle") +
-        bul("<strong>Match-specific</strong> — known issues, prior cards, weather considerations") +
-        bul("Pre-game stretch and walk-on as a unit")) +
+        stp(1, "Arrive at HQ <strong>more than 1 hour before kickoff</strong>. Find your crew at the table and check in <strong>EXACTLY 1 hour before kick off</strong>.") +
+        stp(2, "Check in using the <strong>QR code on your binder</strong>. Referee will check in the whole crew.") +
+        stp(3, "Grab water, do a solid pre-game, head to the field <strong>30 minutes before kick off</strong>.")) +
+      ds("Crew Pre-Game",
+        bul("Confirm <strong>positions and expectations</strong> of each crew member") +
+        bul("Set <strong>signal standards</strong> for substitution, offside, advantage protocol") +
+        bul("Discuss <strong>foul selection</strong> and when each AR will be expected to be involved — and what information is needed if a conference happens") +
+        bul("<strong>Match-specific</strong> or any known issues, prior cards, weather considerations") +
+        bul("Pre-game stretch together and walk on as <strong>ONE team</strong>")) +
       ds("Field Inspection",
         chk("Goals secure (anchored or weighted)") +
         chk("Nets intact, free of holes") +
-        chk("Flags at corners (not pointed)") +
+        chk("Flags at corners") +
         chk("Field markings clear and legal") +
         chk("Field free of hazards (sprinkler heads, debris, water)") +
         chk("Tech areas defined")) +
       ds("Captains & Coin Toss",
-        stp(1, "Captains and CR meet at center circle ~5 min before kickoff") +
-        stp(2, "Verify <strong>player equipment</strong> (no jewelry, casts wrapped, etc.)") +
-        stp(3, "Coin toss — winning team picks <strong>which goal</strong> they attack first") +
-        stp(4, "Other team kicks off")) +
-      callout("gold", "⏱️", "Be on the field <strong>3 minutes before kickoff</strong> — captains' meeting takes ~2 minutes. Don't rush this.");
+        stp(1, "Captains and crew meet at midfield — <strong>10 minutes before kickoff</strong>") +
+        stp(2, "<strong>Verify Captains</strong>") +
+        stp(3, "Coin toss — winning team gets pick of <strong>which goal they attack first</strong> or <strong>kick off</strong>") +
+        stp(4, "Shake hands and <strong>LET'S GO!</strong>")) +
+      callout("gold", "⏱️", "Be on the field <strong>3 minutes before kickoff, ready to go.</strong> Set the example for the teams to follow.");
     }
   },
   {
@@ -689,29 +704,29 @@ var MODULES = [
     title:"During the Game",
     sub:"Positioning, signals, communication, management",
     eyebrow:"Game Day",
-    keywords:"during game positioning signals diagonal offside communication management substitution",
+    keywords:"during game positioning signals S system diagonal offside communication management substitution proximity",
     build: function() {
-      return ds("CR Positioning — Diagonal System",
-        bul("Move on a <strong>diagonal</strong> with the play — keep the ball between yourself and the lead AR") +
-        bul("Stay <strong>5–10 yards</strong> from active play whenever possible") +
+      return ds("CR Positioning — \"S\" System of Control (Diagonal System)",
+        bul("Move on an <strong>\"S\" pattern</strong> with the play, keeping the ball between yourself and the lead AR") +
+        bul("Stay <strong>10–15 yards</strong> from active play whenever possible. <strong>Proximity will lead to your credibility.</strong>") +
         bul("Sprint to gain position when transition happens fast") +
         bul("Be in the penalty area for crosses and corner kicks")) +
       ds("AR Positioning",
         bul("Stay <strong>level with the second-to-last defender</strong> OR the ball — whichever is closer to goal line") +
-        bul("Face the field at all times") +
-        bul("Run sideways or backwards — never turn your back to play")) +
+        bul("Be <strong>square to the field</strong> when a decision needs to be made") +
+        bul("Sidestep — <strong>never turn your back to play</strong>")) +
       ds("Standard Signals",
         bul("<strong>Offside:</strong> flag up vertical, then point: far / center / near") +
         bul("<strong>Substitution:</strong> AR raises both hands above head with flag") +
         bul("<strong>Throw-in direction:</strong> point along touch line") +
         bul("<strong>Foul:</strong> AR holds flag still; CR makes the decision")) +
       ds("Game Management",
-        chk("<strong>Communicate early</strong> — preventive language stops fouls before they happen") +
+        chk("<strong>Communicate early to players.</strong> Preventive language stops fouls before they happen") +
         chk("Be firm and consistent — don't change standards within the match") +
         chk("Stay calm under pressure — your tone sets the tone") +
         chk("Use the <strong>stepped approach</strong>: prevent → warn → caution → send-off") +
-        chk("Manage <strong>injuries quickly</strong> — get the player off, get the game restarted")) +
-      callout("blue", "💬", "<strong>Talk to your AR.</strong> Eye contact at every restart. Confirm goals, set restart positions, signal time additions.");
+        chk("Manage <strong>injuries quickly</strong>, get the player off <strong>RESPECTFULLY</strong>, get the game restarted")) +
+      callout("blue", "💬", "<strong>Talk to your AR.</strong> Eye contact at every <strong>dead ball and restart</strong>. Confirm goals, set restart positions, signal time additions.");
     }
   },
   {
@@ -722,25 +737,25 @@ var MODULES = [
     keywords:"postgame final whistle report debrief send-off card report",
     build: function() {
       return ds("Final Whistle",
-        stp(1, "<strong>Three blasts</strong> — long, short, long — signal end of match") +
-        stp(2, "Acknowledge captains. Shake hands with crew.") +
-        stp(3, "Walk off as a unit — head to HQ to settle the match.")) +
+        stp(1, "Acknowledge captains. <strong>Shake hands with teams and coaches.</strong>") +
+        stp(2, "Walk off as a unit, gather things and head to <strong>HQ to do paperwork</strong>.") +
+        stp(3, "Meet with <strong>Ref Coach for debriefing</strong> and cold waters!")) +
       ds("Match Report",
-        bul("<strong>Score</strong> — final, accurate, both halves") +
-        bul("<strong>Cautions</strong> — player number, team, time, reason") +
-        bul("<strong>Send-offs</strong> — same detail + <strong>supplemental incident report</strong> within 24 hours") +
+        bul("<strong>Score</strong> — confirm final, accurate, both halves") +
+        bul("<strong>Cautions</strong> — time, team, player number, reason") +
+        bul("<strong>Send-offs</strong> — same detail + supplemental incident report <strong>IMMEDIATELY</strong> to Deanna") +
         bul("<strong>Notable incidents</strong> — injuries, weather stops, equipment issues") +
-        bul("Submit per tournament process — Deanna will collect at HQ")) +
+        bul("Submit <strong>game card</strong> per tournament process — Deanna will collect at HQ")) +
       ds("Send-Off / Red Card Reporting",
-        callout("red", "⚠️", "<strong>Every send-off requires a written supplemental report.</strong> Be detailed, factual, neutral. Include witness statements if relevant. Submit within 24 hours.") +
+        callout("red", "⚠️", "<strong>Every send-off requires a written supplemental report.</strong> Be detailed, factual, neutral. <strong>Must be submitted immediately after the game.</strong>") +
         bul("Capture <strong>exact words</strong> used (if verbal offense)") +
         bul("Describe the action precisely — no opinion, no editorialization") +
         bul("Include preceding circumstances if relevant") +
         bul("Note other players' or coaches' involvement")) +
-      ds("Crew Debrief",
-        bul("Quick 2–3 minute debrief with your crew — what went well, what we'd change") +
+      ds("Crew Debrief with Referee Coaches",
+        bul("Quick <strong>10-minute debrief</strong> with your crew — what went well and what we'd do different") +
         bul("Acknowledge each other — this is a team craft") +
-        bul("Ref coach feedback may follow — be open to it"));
+        bul("<strong>Ref coach feedback will follow — be open to it!</strong>"));
     }
   },
   {
@@ -748,31 +763,34 @@ var MODULES = [
     title:"Game Day Pocket Guide",
     sub:"Quick-reference for the field",
     eyebrow:"Game Day",
-    keywords:"pocket guide quick reference field checklist",
+    keywords:"pocket guide quick reference field checklist countdown",
     build: function() {
       return ds("60 Minutes Before",
-        chk("Arrive at HQ · sign in at QR binder") +
-        chk("Crew meeting with positions and protocols") +
-        chk("Walk to field as a unit")) +
+        chk("Arrive at HQ · check in at QR binder") +
+        chk("Crew meeting with positions and protocols")) +
+      ds("30 Minutes Before",
+        chk("Walk to field as a unit and inspect field") +
+        chk("Check in teams") +
+        chk("Warmup as a crew")) +
       ds("15 Minutes Before",
-        chk("Field inspection (goals, nets, lines, hazards)") +
         chk("Confirm tech areas") +
-        chk("Begin warmup")) +
+        chk("Wish coaches <strong>Good Luck</strong>")) +
+      ds("10 Minutes Before",
+        chk("Coin toss with Captains")) +
       ds("5 Minutes Before",
-        chk("Captains meet at center · coin toss") +
-        chk("Equipment check on both teams") +
-        chk("Crew in position")) +
-      ds("Kickoff",
-        chk("CR signal · single long whistle") +
-        chk("Confirm AR ready · play begins")) +
+        chk("Crew takes positions")) +
+      ds("Kickoff — ON TIME",
+        chk("Protect players") +
+        chk("Call fouls") +
+        chk("Have fun")) +
       ds("Halftime",
-        chk("End signal · long whistle") +
-        chk("Walk off with crew — short break") +
-        chk("Restart second half · same protocol")) +
+        chk("Walk off with crew") +
+        chk("Discuss moments in first half") +
+        chk("Get to midfield with 2 min left") +
+        chk("Restart second half <strong>ON TIME</strong>")) +
       ds("End of Match",
-        chk("Three whistles · long, short, long") +
-        chk("Acknowledge captains and crew") +
-        chk("Walk off — head to HQ for report"));
+        chk("Acknowledge captains and coaches") +
+        chk("Walk off as a team, collect things and head to HQ for report"));
     }
   },
   {
@@ -782,7 +800,7 @@ var MODULES = [
     eyebrow:"Game Day",
     keywords:"penalty kick PK kicks from the mark shootout procedure goalkeeper line encroachment",
     build: function() {
-      return ds("In-Match Penalty Kick",
+      return ds("In-Game Penalty Kick",
         stp(1, "Ball placed on penalty mark (11m / 12 yards)") +
         stp(2, "<strong>Kicker</strong> identified and positioned behind the ball") +
         stp(3, "<strong>Goalkeeper</strong> on goal line between posts, facing kicker, at least one foot on or in line with line") +
@@ -1149,7 +1167,7 @@ var MODULES = [
         dt("<strong>BBQ for Life</strong> — Smoked meats, sides, big portions.") +
         dt("<strong>Jimmy John's</strong> — Subs, fast, predictable. When you need food in 8 minutes.") +
         dt("<strong>Cold Stone Creamery</strong> — Ice cream for when the day calls for it.")) +
-      callout("gold", "🚗", "<strong>Carpool to dinner.</strong> Group up in the lobby around 6:30 PM — way easier than separate Uber rides to the same place.");
+      callout("gold", "🚗", "<strong>Carpool to dinner.</strong> Group up <strong>after the PM meeting</strong>, way easier than separate Uber rides to the same place.");
     }
   },
   {
@@ -1170,7 +1188,7 @@ var MODULES = [
         dt("<strong>Albertson's Deli</strong> — Great grab-and-go sandwiches and lunch options. Sneaky-good for a grocery store.") +
         dt("<strong>Café Capri</strong> — Coffee and pastries. Good between-games pick-me-up.")) +
       callout("red", "🚫", "<strong>McDonald's — PLEASE NO!</strong> You will die on the field. Save it for after the tournament. We mean it.") +
-      callout("gold", "🥡", "<strong>Pro tip:</strong> Pack a cooler. The HQ tent has shade and chairs — that's your dining room between slots.");
+      callout("gold", "🥡", "<strong>Pro tip:</strong> The HQ tent has shade and chairs, <strong>snacks and water</strong> — that's your dining room between games.");
     }
   },
   {
