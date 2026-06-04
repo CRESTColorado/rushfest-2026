@@ -924,14 +924,14 @@ var COACHES = [
     btnText:    "LET\u2019S GO \u2192"
   },
   {
-    name:       "Harlan Matthews",
+    name:       "Ray Moffatte Jr",
     title:      "National Referee Coach",
     state:      "NAT",
     badge:      "NAT",
     icon:       "\u26BD",
-    welcomeMsg: "Harlan \u2014 we are genuinely honored you\u2019re here.<br><br>" +
-                "Your reputation as a National Referee Coach precedes you, and the referees on these fields may not fully understand yet what it means to be evaluated by someone of your caliber. We do.<br><br>" +
-                "You bring a national perspective that sharpens everything it touches. Thank you for making the trip to Boise. These referees are about to get better \u2014 and it\u2019s because of you.",
+    welcomeMsg: "Ray \u2014 welcome to the USYS Presidents Cup Northwest.<br><br>" +
+                "Having a National Referee Coach of your caliber on these fields raises the standard for every official here. The depth of experience and the national perspective you bring is exactly what sharpens these referees fastest.<br><br>" +
+                "Karen and Jeff are grateful you\u2019re here. Let\u2019s make these referees better today.",
     btnText:    "LET\u2019S GO \u2192"
   },
   {
@@ -966,11 +966,8 @@ var COACHES = [
   { name:"Wain Jackson",   title:"Referee Coach \u00B7 SDI",  state:"WA", badge:"WA", icon:"\uD83D\uDCCB" },
   { name:"Kyle Greenwood", title:"Referee Coach \u00B7 SYRA", state:"WA", badge:"WA", icon:"\uD83D\uDCCB" },
   { name:"Riley Jones",    title:"Referee Coach \u00B7 SYRA", state:"ID", badge:"ID", icon:"\uD83D\uDCCB" },
-  { name:"Justin Harcrow", title:"Referee Coach \u00B7 SYRA", state:"MT", badge:"MT", icon:"\uD83D\uDCCB" },
   { name:"Liam Hayes",     title:"Referee Coach \u00B7 SDI",  state:"OR", badge:"OR", icon:"\uD83D\uDCCB" },
   { name:"Kevin Autio",    title:"Referee Coach \u00B7 SYRA", state:"OR", badge:"OR", icon:"\uD83D\uDCCB" },
-  { name:"Roger Brown",    title:"Referee Coach \u00B7 SYRA", state:"WY", badge:"WY", icon:"\uD83D\uDCCB" },
-  { name:"Mark Fisk",      title:"Referee Coach \u00B7 SYRA", state:"AK", badge:"AK", icon:"\uD83D\uDCCB" },
   { name:"Other",          title:"Guest Coach",               state:"",   badge:"",   icon:"\u270F\uFE0F" }
 ];
 
@@ -1117,6 +1114,18 @@ document.addEventListener("DOMContentLoaded", function() {
   refreshRolePill();
   refreshNamePill();
 
+  // ── URL role hint from hub coach door ──
+  // If we arrived via /app/?role=refcoach (or ?role=coach), force coach mode
+  // and skip the "WHO ARE YOU?" modal. Returning coaches still see their
+  // saved name & welcome message; new arrivals jump straight to name picker.
+  var urlRoleParam   = new URLSearchParams(window.location.search).get("role");
+  var fromCoachDoor  = (urlRoleParam === "refcoach" || urlRoleParam === "coach");
+  if (fromCoachDoor && userRole !== "coach") {
+    userRole = "coach";
+    localStorage.setItem("userRole", "coach");
+    refreshRolePill();
+  }
+
   // Reset daily trackers at midnight
   var today = new Date().toDateString();
   if (localStorage.getItem("feedbackDate") !== today) {
@@ -1149,6 +1158,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
     }
+  } else if (userRole === "coach") {
+    // Role known (coach) but no name selected yet — open the picker.
+    // Hits this branch when arriving via ?role=refcoach for the first time.
+    setTimeout(function() { openModal("name-modal"); }, 400);
   }
 });
 
