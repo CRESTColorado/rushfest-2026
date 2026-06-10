@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a5b8d4">
+<title>Boise Check-In. USYS Presidents Cup NW 2026.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #a5b8d4;
+  --card:       #243859;
+  --card-soft:  #2d4470;
+  --navy:       #0F2A56;
+  --red:        #D52B3B;
+  --red-bri:    #e63946;
+  --blue:       #4d7ad9;
+  --green:      #16a34a;
+  --green-bri:  #22c55e;
+  --gold:       #d4a017;
+  --gold-bri:   #ecbf3e;
+  --text:       #0F2A56;
+  --text-soft:  #1c2a47;
+  --text-dim:   #3a4b6b;
+  --shadow:     0 4px 14px rgba(15,42,86,.2);
+  --shadow-lg:  0 10px 24px rgba(15,42,86,.3);
+  --bebas:      'Barlow Condensed', sans-serif;
+  --font:       'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font); font-weight: 500;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  position: relative; overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed;
+  top: 50%; left: 50%; transform: translate(-50%, -45%);
+  width: min(85vw, 760px); height: min(85vw, 760px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.18; pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* ── DARK MODE ── */
+body.dark {
+  --bg:        #0F2A56;
+  --navy:      #ffffff;
+  --text:      #ffffff;
+  --text-soft: rgba(255,255,255,.85);
+  --text-dim:  rgba(255,255,255,.6);
+}
+body.dark::before { opacity: 0.10; }
+body { transition: background-color .25s, color .25s; }
+
+/* ── HEADER ── */
+.page-header {
+  background: var(--card); color: #fff;
+  padding: 14px 16px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 3px solid var(--red);
+  box-shadow: var(--shadow);
+  position: relative; z-index: 2;
+}
+.back-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--card-soft); color: #fff;
+  font-size: 24px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.back-btn:active { background: var(--navy); }
+.header-info { flex: 1; min-width: 0; }
+.header-title {
+  font-family: var(--bebas); font-size: 22px; font-weight: 900;
+  letter-spacing: .04em; color: #fff; line-height: 1.05;
+  text-transform: uppercase;
+}
+.header-sub {
+  font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600;
+  letter-spacing: .04em; margin-top: 2px;
+}
+
+/* ── THEME TOGGLE ── */
+.theme-toggle-wrap {
+  position: relative; z-index: 5;
+  text-align: center;
+  padding: 10px 16px 4px;
+}
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  cursor: pointer;
+  background: rgba(15,42,86,.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,42,86,.15);
+  border-radius: 22px;
+  padding: 5px 10px;
+}
+body.dark .theme-toggle {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+}
+.theme-toggle-icon { font-size: 13px; }
+.toggle-track {
+  width: 28px; height: 16px;
+  background: rgba(15,42,86,.45);
+  border-radius: 9px;
+  position: relative;
+  transition: background .25s;
+}
+body.dark .toggle-track { background: var(--gold); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  transition: transform .25s;
+}
+body.dark .toggle-thumb { transform: translateX(12px); }
+
+/* ── JAREFEREE SPONSOR BLOCK ── */
+.sponsor-block {
+  text-align: center;
+  padding: 20px 16px 10px;
+  position: relative; z-index: 1;
+}
+.sponsor-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: .26em;
+  color: #d4a017;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+body.dark .sponsor-eyebrow { color: #ecbf3e; opacity: 0.8; }
+.jareferee-mark {
+  display: inline-block;
+  background: #243859;
+  border-radius: 6px;
+  padding: 7px 16px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(15,42,86,.18);
+  transition: transform .15s, box-shadow .2s;
+}
+.jareferee-mark:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,42,86,.25); }
+.jareferee-mark img { height: 18px; width: auto; display: block; }
+
+/* ── BODY CONTENT ── */
+.content {
+  position: relative; z-index: 1;
+  max-width: 560px; margin: 0 auto;
+  padding: 18px 18px 40px;
+}
+
+.intro-card {
+  background: var(--card); color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+  margin-bottom: 16px;
+}
+.intro-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--red);
+}
+.intro-eyebrow {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .2em; color: var(--gold-bri); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.intro-title {
+  font-family: var(--bebas); font-size: 26px; font-weight: 900;
+  letter-spacing: .04em; color: #fff;
+  text-transform: uppercase; line-height: 1.05; margin-bottom: 10px;
+}
+.intro-copy {
+  font-size: 14px; color: rgba(255,255,255,.85);
+  line-height: 1.5; margin-bottom: 12px;
+}
+.meeting-block {
+  background: rgba(255,255,255,.06);
+  border-left: 3px solid var(--gold);
+  border-radius: 6px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 13px;
+  color: rgba(255,255,255,.85);
+  line-height: 1.5;
+}
+.meeting-block strong {
+  color: #fff;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+.meeting-block a {
+  color: var(--gold-bri);
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+  background: var(--card); color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.form-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--green);
+}
+.form-label {
+  display: block;
+  font-family: var(--bebas);
+  font-size: 12px; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.78);
+  margin-bottom: 8px;
+}
+.form-input {
+  width: 100%;
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.18);
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-family: var(--font);
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  transition: border-color .2s, background .2s;
+}
+.form-input::placeholder { color: rgba(255,255,255,.4); }
+.form-input:focus {
+  outline: none;
+  border-color: var(--gold-bri);
+  background: rgba(255,255,255,.12);
+}
+
+.method-group {
+  margin-top: 16px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.method-btn {
+  background: rgba(255,255,255,.08);
+  border: 1.5px solid rgba(255,255,255,.18);
+  border-radius: 8px;
+  padding: 10px 6px;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .1em;
+  color: rgba(255,255,255,.82);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all .2s;
+  line-height: 1.15;
+}
+.method-btn:active { transform: scale(.97); }
+.method-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 18px;
+  background: var(--green);
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  font-family: var(--bebas);
+  font-size: 16px; font-weight: 900; letter-spacing: .14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+  box-shadow: 0 4px 10px rgba(22,163,74,.3);
+}
+.submit-btn:active { transform: scale(.98); background: #138a3f; }
+.submit-btn:disabled {
+  background: rgba(255,255,255,.18);
+  color: rgba(255,255,255,.5);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.form-error {
+  color: var(--red-bri);
+  font-size: 13px;
+  font-weight: 700;
+  margin-top: 10px;
+  min-height: 18px;
+}
+
+/* ── SUCCESS STATE ── */
+.success-card {
+  background: var(--card); color: #fff;
+  border-radius: 12px;
+  padding: 30px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-lg);
+  position: relative; overflow: hidden;
+}
+.success-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0;
+  height: 4px; background: var(--green);
+}
+.success-icon {
+  width: 64px; height: 64px;
+  background: var(--green);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 32px;
+  margin: 0 auto 16px;
+  box-shadow: 0 4px 14px rgba(22,163,74,.4);
+}
+.success-eyebrow {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .22em; color: var(--green-bri); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.success-name {
+  font-family: var(--bebas); font-size: 30px; font-weight: 900;
+  letter-spacing: .03em; color: #fff;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.success-msg {
+  font-size: 14px; color: rgba(255,255,255,.85);
+  line-height: 1.5; margin-bottom: 20px;
+}
+.success-back {
+  display: inline-block;
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,.3);
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-family: var(--bebas);
+  font-size: 12px; font-weight: 800; letter-spacing: .16em;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.hidden { display: none !important; }
+
+/* ── FOOTER ── */
+.app-footer {
+  text-align: center;
+  font-size: 11px; color: var(--text-dim); font-weight: 600;
+  padding: 24px 16px;
+  letter-spacing: .04em;
+  position: relative; z-index: 1;
+}
+.app-footer .dot { color: var(--red); margin: 0 6px; }
+
+@media (max-width: 380px) {
+  .method-group { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <a class="back-btn" href="../referee-portal/index.html" title="Back to Portal">‹</a>
+  <div class="header-info">
+    <div class="header-title">Boise Check-In</div>
+    <div class="header-sub">Confirm you're with us for the tournament</div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle-wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark mode">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+</div>
+
+<div class="content">
+
+  <!-- INTRO / MEETING INFO -->
+  <div class="intro-card" id="intro-card">
+    <div class="intro-eyebrow">Welcome Meeting</div>
+    <div class="intro-title">Thursday, June 18</div>
+    <div class="intro-copy">
+      Confirm you're in town and ready for the tournament. One tap. Whether you're at the welcome meeting in person, or joining by Zoom from home.
+    </div>
+    <div class="meeting-block">
+      <strong>In Person</strong>
+      7:00 PM at the Holiday Inn meeting room. 0.4 miles from the Comfort Inn.
+    </div>
+    <div class="meeting-block" style="margin-top: 8px;">
+      <strong>By Zoom</strong>
+      <a href="#" id="zoom-link" target="_blank" rel="noopener">Zoom link will be posted here by Wednesday June 17.</a>
+    </div>
+  </div>
+
+  <!-- FORM -->
+  <div class="form-card" id="form-card">
+    <label class="form-label" for="ref-name">Your Full Name</label>
+    <input class="form-input" id="ref-name" type="text" placeholder="First Last" autocomplete="name" autocapitalize="words">
+
+    <label class="form-label" style="margin-top: 18px;">How Are You Joining?</label>
+    <div class="method-group">
+      <button class="method-btn" data-method="In-Person" onclick="pickMethod(this)">In Person</button>
+      <button class="method-btn" data-method="Zoom" onclick="pickMethod(this)">By Zoom</button>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" onclick="submitCheckin()" disabled>Check In to Boise</button>
+    <div class="form-error" id="form-error"></div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div class="success-card hidden" id="success-card">
+    <div class="success-icon">✓</div>
+    <div class="success-eyebrow">Checked In</div>
+    <div class="success-name" id="success-name">Name</div>
+    <div class="success-msg">
+      You're all set for Boise. Karen and Jeff have you on the roster. See you Thursday.
+    </div>
+    <a class="success-back" href="../referee-portal/index.html">Back to Portal</a>
+  </div>
+
+</div>
+
+<div class="app-footer">
+  <strong>2026 USYS Presidents Cup</strong> <span class="dot">•</span> NW Regional Qualifier
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// CONFIG. Apps Script URL pasted in below.
+// ════════════════════════════════════════════════════════════════
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+
+var state = { method: '', submitting: false };
+
+function pickMethod(btn) {
+  document.querySelectorAll('.method-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  state.method = btn.getAttribute('data-method');
+  refreshSubmit();
+}
+
+document.getElementById('ref-name').addEventListener('input', refreshSubmit);
+
+function refreshSubmit() {
+  var name = document.getElementById('ref-name').value.trim();
+  document.getElementById('submit-btn').disabled = !(name.length > 1 && state.method);
+}
+
+function submitCheckin() {
+  if (state.submitting) { return; }
+  var name = document.getElementById('ref-name').value.trim();
+  if (!name || !state.method) { return; }
+
+  state.submitting = true;
+  var btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+  document.getElementById('form-error').textContent = '';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify({
+      action: 'boiseCheckin',
+      name: name,
+      method: state.method,
+      timestamp: new Date().toISOString()
+    })
+  }).then(function() {
+    document.getElementById('intro-card').classList.add('hidden');
+    document.getElementById('form-card').classList.add('hidden');
+    document.getElementById('success-name').textContent = name;
+    document.getElementById('success-card').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  }).catch(function() {
+    state.submitting = false;
+    btn.disabled = false;
+    btn.textContent = 'Check In to Boise';
+    document.getElementById('form-error').textContent = 'Could not submit. Check your connection and try again.';
+  });
+}
+
+// ── THEME TOGGLE ──
+(function initTheme() {
+  var stored = '';
+  try { stored = localStorage.getItem('pcup-theme') || ''; } catch (e) {}
+  if (stored === 'dark') { document.body.classList.add('dark'); }
+  updateThemeIcon();
+})();
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  try {
+    localStorage.setItem('pcup-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  } catch (e) {}
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var el = document.getElementById('theme-icon');
+  if (el) { el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️'; }
+}
+</script>
+
+</body>
+</html>
