@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#a5b8d4">
+<title>Bulletins. USYS Presidents Cup NW 2026.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #a5b8d4;
+  --card:       #243859;
+  --card-soft:  #2d4470;
+  --navy:       #0F2A56;
+  --red:        #D52B3B;
+  --red-bri:    #e63946;
+  --blue:       #4d7ad9;
+  --blue-bri:   #6b95e6;
+  --gold:       #d4a017;
+  --gold-bri:   #ecbf3e;
+  --text:       #0F2A56;
+  --text-soft:  #1c2a47;
+  --text-dim:   #3a4b6b;
+  --shadow:     0 4px 14px rgba(15,42,86,.2);
+  --shadow-lg:  0 10px 24px rgba(15,42,86,.3);
+  --bebas:      'Barlow Condensed', sans-serif;
+  --font:       'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font); font-weight: 500;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  position: relative; overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed;
+  top: 50%; left: 50%; transform: translate(-50%, -45%);
+  width: min(85vw, 760px); height: min(85vw, 760px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.14; pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+/* ── DARK MODE ── */
+body.dark {
+  --bg:        #0F2A56;
+  --navy:      #ffffff;
+  --text:      #ffffff;
+  --text-soft: rgba(255,255,255,.85);
+  --text-dim:  rgba(255,255,255,.6);
+}
+body.dark::before { opacity: 0.10; }
+body { transition: background-color .25s, color .25s; }
+
+/* ── HEADER ── */
+.page-header {
+  background: var(--card); color: #fff;
+  padding: 14px 16px;
+  padding-top: calc(14px + env(safe-area-inset-top));
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 3px solid var(--red);
+  box-shadow: var(--shadow);
+  position: relative; z-index: 2;
+}
+.back-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--card-soft); color: #fff;
+  font-size: 24px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.back-btn:active { background: var(--navy); }
+.header-info { flex: 1; min-width: 0; }
+.header-title {
+  font-family: var(--bebas); font-size: 22px; font-weight: 900;
+  letter-spacing: .04em; color: #fff; line-height: 1.05;
+  text-transform: uppercase;
+}
+.header-sub {
+  font-size: 12px; color: rgba(255,255,255,.7); font-weight: 600;
+  letter-spacing: .04em; margin-top: 2px;
+}
+.icon-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--card-soft); color: #fff;
+  font-size: 18px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.icon-btn:active { background: var(--navy); }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle-wrap {
+  position: relative; z-index: 5;
+  text-align: center;
+  padding: 10px 16px 4px;
+}
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  cursor: pointer;
+  background: rgba(15,42,86,.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,42,86,.15);
+  border-radius: 22px;
+  padding: 5px 10px;
+}
+body.dark .theme-toggle {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+}
+.theme-toggle-icon { font-size: 13px; }
+.toggle-track {
+  width: 28px; height: 16px;
+  background: rgba(15,42,86,.45);
+  border-radius: 9px;
+  position: relative;
+  transition: background .25s;
+}
+body.dark .toggle-track { background: var(--gold); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  transition: transform .25s;
+}
+body.dark .toggle-thumb { transform: translateX(12px); }
+
+/* ── CONTENT ── */
+.content {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: 0 auto;
+  padding: 14px 16px 40px;
+}
+
+.sync-info {
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 11px; color: var(--text-dim); font-weight: 600;
+  margin-bottom: 12px; letter-spacing: .04em;
+}
+.sync-info button {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .14em; color: var(--red);
+  text-transform: uppercase;
+}
+
+.bulletin-list {
+  display: flex; flex-direction: column;
+  gap: 12px;
+}
+.bulletin-card {
+  background: var(--card); color: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+  border-left: 5px solid var(--blue);
+}
+.bulletin-card.sev-warning { border-left-color: var(--gold); }
+.bulletin-card.sev-urgent  {
+  border-left-color: var(--red);
+  box-shadow: var(--shadow), 0 0 0 1.5px rgba(213,43,59,.25);
+}
+.bulletin-top {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin-bottom: 8px;
+}
+.bulletin-badge {
+  display: inline-block;
+  padding: 4px 10px; border-radius: 5px;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .16em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.bulletin-badge.sev-info    { background: var(--blue); color: #fff; }
+.bulletin-badge.sev-warning { background: var(--gold); color: var(--navy); }
+.bulletin-badge.sev-urgent  { background: var(--red);  color: #fff; }
+.bulletin-title {
+  font-family: var(--bebas); font-size: 22px; font-weight: 900;
+  letter-spacing: .03em; color: #fff;
+  text-transform: uppercase; line-height: 1.15;
+  flex: 1; min-width: 0;
+}
+.bulletin-body {
+  font-size: 14px; color: rgba(255,255,255,.9);
+  line-height: 1.55; white-space: pre-wrap;
+  margin-bottom: 10px;
+}
+.bulletin-meta {
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,.1);
+  font-size: 11px;
+  color: rgba(255,255,255,.55);
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+
+.empty-state {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 50px 24px;
+  text-align: center;
+  color: rgba(255,255,255,.7);
+  box-shadow: var(--shadow);
+}
+.empty-icon { font-size: 40px; opacity: .55; margin-bottom: 10px; }
+.empty-title {
+  font-family: var(--bebas); font-size: 18px; font-weight: 800;
+  letter-spacing: .12em; color: #fff;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.empty-msg { font-size: 13px; line-height: 1.5; }
+
+.app-footer {
+  text-align: center;
+  font-size: 11px; color: var(--text-dim); font-weight: 600;
+  padding: 24px 16px;
+  letter-spacing: .04em;
+  position: relative; z-index: 1;
+}
+.app-footer .dot { color: var(--red); margin: 0 6px; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="page-header">
+  <a class="back-btn" href="../referee-portal/index.html" title="Back to Portal">‹</a>
+  <div class="header-info">
+    <div class="header-title">📢 Bulletins</div>
+    <div class="header-sub">Live announcements from the ref tent</div>
+  </div>
+  <button class="icon-btn" onclick="loadBulletins()" title="Refresh">↻</button>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle-wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark mode">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+</div>
+
+<div class="content">
+
+  <div class="sync-info">
+    <span id="sync-status">Loading...</span>
+    <button onclick="loadBulletins()">REFRESH ↻</button>
+  </div>
+
+  <div id="bulletin-container">
+    <div class="empty-state">
+      <div class="empty-icon">⏳</div>
+      <div class="empty-title">Loading</div>
+      <div class="empty-msg">Pulling latest bulletins.</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="app-footer">
+  <strong>2026 USYS Presidents Cup</strong> <span class="dot">•</span> Bulletins
+</div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+
+function loadBulletins() {
+  fetch(SCRIPT_URL + '?action=bulletinActive')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data && data.status === 'ok') {
+        renderBulletins(data.data.bulletins || []);
+        var t = new Date();
+        document.getElementById('sync-status').textContent =
+          'Last synced ' + t.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      } else {
+        renderError((data && data.message) || 'Could not load.');
+      }
+    })
+    .catch(function(){
+      renderError('Connection problem.');
+    });
+}
+
+function renderBulletins(bulletins) {
+  var container = document.getElementById('bulletin-container');
+  if (!bulletins.length) {
+    container.innerHTML =
+      '<div class="empty-state">' +
+        '<div class="empty-icon">🌤️</div>' +
+        '<div class="empty-title">All Clear</div>' +
+        '<div class="empty-msg">No active bulletins. Check back here for live updates from the ref tent.</div>' +
+      '</div>';
+    return;
+  }
+
+  var html = '<div class="bulletin-list">';
+  bulletins.forEach(function(b){
+    var sevClass = b.severity === 'Urgent' ? 'sev-urgent'
+                : b.severity === 'Warning' ? 'sev-warning'
+                : 'sev-info';
+    var meta = formatTs(b.timestamp) + (b.postedBy ? ' . posted by ' + escapeHtml(b.postedBy) : '');
+    html += '<div class="bulletin-card ' + sevClass + '">' +
+              '<div class="bulletin-top">' +
+                '<span class="bulletin-badge ' + sevClass + '">' + escapeHtml(b.severity) + '</span>' +
+                '<div class="bulletin-title">' + escapeHtml(b.title) + '</div>' +
+              '</div>' +
+              '<div class="bulletin-body">' + escapeHtml(b.body) + '</div>' +
+              '<div class="bulletin-meta">' + meta + '</div>' +
+            '</div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function renderError(msg) {
+  document.getElementById('bulletin-container').innerHTML =
+    '<div class="empty-state">' +
+      '<div class="empty-icon">⚠️</div>' +
+      '<div class="empty-title">Couldn\'t Load</div>' +
+      '<div class="empty-msg">' + escapeHtml(msg) + ' Pull down to refresh or tap the ↻ icon.</div>' +
+    '</div>';
+}
+
+function formatTs(iso) {
+  try {
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) { return iso; }
+    var m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return m[d.getMonth()] + ' ' + d.getDate() + ' . ' +
+      d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  } catch (e) { return iso; }
+}
+
+function escapeHtml(s) {
+  return String(s || '')
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// ── THEME TOGGLE ──
+(function initTheme() {
+  var stored = '';
+  try { stored = localStorage.getItem('pcup-theme') || ''; } catch (e) {}
+  if (stored === 'dark') { document.body.classList.add('dark'); }
+  updateThemeIcon();
+})();
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  try {
+    localStorage.setItem('pcup-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  } catch (e) {}
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var el = document.getElementById('theme-icon');
+  if (el) { el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️'; }
+}
+
+// Boot + auto-refresh every 60s
+loadBulletins();
+setInterval(loadBulletins, 60000);
+</script>
+
+</body>
+</html>
