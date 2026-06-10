@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Print QR Code. USYS Presidents Cup NW 2026.</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=Barlow:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: #a5b8d4;
+    min-height: 100vh;
+    padding: 24px;
+    color: #0F2A56;
+  }
+  .print-card {
+    max-width: 520px; margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 30px rgba(15,42,86,.25);
+    text-align: center;
+  }
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px; font-weight: 900;
+    letter-spacing: .22em; color: #D52B3B;
+    text-transform: uppercase;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #D52B3B;
+    display: inline-block;
+  }
+  h1 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px; font-weight: 900;
+    letter-spacing: .03em; color: #0F2A56;
+    margin-top: 14px;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+  .sub {
+    font-size: 13px; color: #3a4b6b; font-weight: 600;
+    margin-top: 6px;
+  }
+  .qr-box {
+    margin: 24px auto;
+    background: #fff;
+    padding: 14px;
+    border: 3px solid #0F2A56;
+    border-radius: 8px;
+    display: inline-block;
+  }
+  .qr-box img {
+    display: block;
+    width: 360px; height: 360px;
+    image-rendering: pixelated;
+  }
+  .url-line {
+    font-family: monospace;
+    font-size: 11px;
+    color: #3a4b6b;
+    word-break: break-all;
+    background: #f0f4f8;
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin: 16px 0 8px;
+  }
+  .instructions {
+    text-align: left;
+    background: #f0f4f8;
+    border-left: 4px solid #d4a017;
+    border-radius: 6px;
+    padding: 14px 16px;
+    margin-top: 18px;
+    font-size: 13px;
+    line-height: 1.55;
+    color: #1c2a47;
+  }
+  .instructions strong {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px; font-weight: 900;
+    letter-spacing: .14em;
+    color: #D52B3B;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .instructions ol {
+    padding-left: 18px;
+  }
+  .instructions li {
+    margin-bottom: 4px;
+  }
+  .print-btn {
+    background: #0F2A56;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px; font-weight: 900;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-top: 18px;
+  }
+  .print-btn:active { transform: scale(.98); }
+  .footer-strip {
+    margin-top: 26px;
+    padding-top: 14px;
+    border-top: 1px solid #cdd9eb;
+    font-size: 11px; color: #6478a0; font-weight: 600;
+    letter-spacing: .04em;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .print-card { box-shadow: none; max-width: 100%; }
+    .print-btn, .instructions { display: none; }
+    .qr-box img { width: 500px; height: 500px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-card">
+  <span class="eyebrow">Pre-Game Check-In</span>
+  <h1>Scan to Check In Crew</h1>
+  <div class="sub">Center Referees: scan this QR at the HQ tent before every match.</div>
+
+  <div class="qr-box">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=500x500&margin=0&data=https%3A%2F%2Fcoloradoreferee.github.io%2Fpresidents-cup-2026%2Fcheckin%2F" alt="Pre-Game Check-In QR Code">
+  </div>
+
+  <div class="url-line">https://coloradoreferee.github.io/presidents-cup-2026/checkin/</div>
+
+  <button class="print-btn" onclick="window.print()">Print This Page</button>
+
+  <div class="instructions">
+    <strong>Posting Instructions</strong>
+    <ol>
+      <li>Print this page on standard letter paper.</li>
+      <li>Post in a clearly visible spot at the Ref HQ tent.</li>
+      <li>Center Refs scan with their phone camera 60 minutes before kickoff.</li>
+      <li>One scan per game per crew. CR confirms whole crew presence.</li>
+    </ol>
+  </div>
+
+  <div class="footer-strip">
+    2026 USYS Presidents Cup. NW Regional Qualifier. Simplot Sports Complex, Boise.
+  </div>
+</div>
+
+</body>
+</html>
