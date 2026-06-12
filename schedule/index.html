@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="theme-color" content="#a5b8d4">
+<title>Schedule . 2026 USYS Presidents Cup NW Regional</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --steel: #a5b8d4;
+  --steel-light: #c5d3e6;
+  --navy: #0F2A56;
+  --navy-d: #243859;
+  --card: #243859;
+  --card-light: #f1f5fb;
+  --border: #c4d2e6;
+  --border-soft: #e0e8f1;
+  --red: #D52B3B;
+  --red-bri: #ef4a5b;
+  --gold: #d4a017;
+  --gold-bri: #ecbf3e;
+  --green: #16a34a;
+  --green-bri: #22c55e;
+  --blue: #4d7ad9;
+  --text: #0F2A56;
+  --text-dim: #4a6082;
+  --text-mute: #788ba8;
+  --bg: var(--steel);
+  --bebas: 'Barlow Condensed', sans-serif;
+  --body: 'Barlow', sans-serif;
+  --shadow: 0 2px 8px rgba(15,42,86,0.10);
+  --shadow-strong: 0 4px 16px rgba(15,42,86,0.18);
+}
+
+body.dark {
+  --bg: #0F2A56;
+  --navy: #ffffff;
+  --card: #1c3d70;
+  --card-light: #243859;
+  --border: #3a4f73;
+  --border-soft: #2d4470;
+  --text: #ffffff;
+  --text-dim: #a9bbd5;
+  --text-mute: #7d92b3;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: var(--body);
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.5;
+  position: relative;
+}
+body::before {
+  content: ''; position: fixed; inset: 0;
+  background: url('../assets/prescup-white.webp') center center / 80% no-repeat;
+  opacity: 0.18; pointer-events: none; z-index: 0;
+}
+body.dark::before { opacity: 0.10; }
+
+/* ── TOP STRIP ── */
+.top-strip {
+  background: var(--navy-d);
+  border-bottom: 2px solid var(--red);
+  padding: 12px 16px;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 8px;
+}
+body.dark .top-strip { background: #0a1e3f; }
+.top-strip-left { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.hub-link {
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .18em;
+  color: rgba(255,255,255,.7);
+  text-decoration: none;
+  padding: 6px 11px;
+  border: 1.5px solid rgba(255,255,255,.18);
+  border-radius: 30px;
+  flex-shrink: 0;
+}
+.hub-link:active { color: #fff; border-color: rgba(255,255,255,.45); }
+.top-strip-title {
+  font-family: var(--bebas);
+  font-size: 16px; font-weight: 800;
+  color: #fff; letter-spacing: .04em;
+  text-transform: uppercase;
+  line-height: 1.1;
+  min-width: 0; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap;
+}
+.top-strip-title .gold {
+  color: var(--gold-bri); font-size: 10px;
+  display: block; letter-spacing: .22em; margin-bottom: 1px; font-weight: 800;
+}
+.theme-toggle-wrap {
+  display: flex; justify-content: center;
+  padding: 10px 16px 0;
+  position: relative; z-index: 1;
+}
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,.55);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  padding: 5px 11px 5px 7px;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-transform: uppercase;
+}
+body.dark .theme-toggle { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.16); color: #fff; }
+.theme-toggle-icon { font-size: 13px; }
+.toggle-track { width: 24px; height: 12px; background: var(--border); border-radius: 8px; position: relative; }
+.toggle-thumb { width: 10px; height: 10px; background: var(--navy-d); border-radius: 50%; position: absolute; top: 1px; left: 1px; transition: transform .15s; }
+body.dark .toggle-track { background: rgba(255,255,255,.2); }
+body.dark .toggle-thumb { background: var(--gold-bri); transform: translateX(12px); }
+
+/* ── PAGE WRAPPER ── */
+.wrap {
+  max-width: 760px; margin: 0 auto;
+  padding: 14px 16px 40px;
+  position: relative; z-index: 1;
+}
+.eyebrow {
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .28em;
+  color: var(--red); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+body.dark .eyebrow { color: var(--gold-bri); }
+.h1 {
+  font-family: var(--bebas);
+  font-size: 30px; font-weight: 900;
+  color: var(--text);
+  margin: 0 0 6px;
+  letter-spacing: .02em;
+  line-height: 1.1;
+}
+.sub {
+  font-size: 13px; color: var(--text-dim); font-weight: 500;
+  margin-bottom: 18px;
+}
+.sync-row {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 11px; color: var(--text-mute); font-weight: 600;
+  letter-spacing: .04em;
+  margin-bottom: 14px;
+}
+.sync-row button {
+  font-family: var(--bebas);
+  font-size: 10px; font-weight: 800; letter-spacing: .14em;
+  color: var(--blue); background: none; border: none;
+  cursor: pointer; padding: 0;
+}
+body.dark .sync-row button { color: var(--gold-bri); }
+
+/* ── VIEW TOGGLE (LIST / GRID) ── */
+.view-toggle {
+  display: flex;
+  background: var(--card-light);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 4px;
+  margin-bottom: 14px;
+  gap: 4px;
+  box-shadow: var(--shadow);
+}
+body.dark .view-toggle { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+.view-btn {
+  flex: 1;
+  padding: 11px 14px;
+  background: transparent;
+  border: none;
+  font-family: var(--bebas);
+  font-size: 14px; font-weight: 800;
+  letter-spacing: .14em;
+  color: var(--text-dim);
+  cursor: pointer;
+  border-radius: 8px;
+  text-transform: uppercase;
+  transition: background .15s, color .15s;
+}
+.view-btn.active {
+  background: var(--navy-d);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+body.dark .view-btn.active { background: var(--gold); color: var(--navy-d); }
+.view-btn-icon { font-size: 12px; margin-right: 4px; }
+
+/* ── DAY TABS ── */
+.day-tabs {
+  display: flex; gap: 6px;
+  margin-bottom: 14px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.day-tabs::-webkit-scrollbar { display: none; }
+.day-tab {
+  flex: 1; min-width: 78px;
+  padding: 9px 8px;
+  background: var(--card-light);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 10px;
+  font-family: var(--bebas);
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: var(--text-dim);
+  cursor: pointer;
+  text-align: center;
+  line-height: 1.15;
+  transition: all .15s;
+}
+body.dark .day-tab { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.12); color: var(--text-dim); }
+.day-tab.active {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  box-shadow: var(--shadow);
+}
+body.dark .day-tab.active { background: var(--gold); border-color: var(--gold); color: var(--navy-d); }
+.day-tab.today:not(.active) {
+  border-color: var(--gold);
+  background: rgba(212,160,23,.08);
+}
+.day-tab-name { font-size: 14px; font-weight: 800; }
+.day-tab-count { font-size: 10px; opacity: .75; font-weight: 600; letter-spacing: .08em; }
+
+/* ── FILTERS (LIST view only) ── */
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.filters.with-search {
+  grid-template-columns: 1fr;
+}
+.filter-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-family: var(--body);
+  font-size: 14px;
+  background: var(--card-light);
+  border: 1.5px solid var(--border-soft);
+  border-radius: 8px;
+  color: var(--text);
+  outline: none;
+}
+body.dark .filter-input { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); color: #fff; }
+.filter-input::placeholder { color: var(--text-mute); }
+.filter-input:focus { border-color: var(--red); }
+body.dark .filter-input:focus { border-color: var(--gold); }
+
+/* ── LIST VIEW ── */
+.slot-block { margin-bottom: 22px; }
+.slot-header {
+  display: flex; align-items: baseline; gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--border-soft);
+}
+.slot-time {
+  font-family: var(--bebas);
+  font-size: 22px; font-weight: 900;
+  color: var(--text);
+  letter-spacing: .02em;
+}
+body.dark .slot-time { color: #fff; }
+.slot-meta {
+  font-size: 11px;
+  color: var(--text-mute);
+  font-weight: 600;
+  letter-spacing: .04em;
+}
+.slot-meta strong { color: var(--green); font-weight: 800; }
+body.dark .slot-meta strong { color: var(--green-bri); }
+
+.game-card {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  background: var(--card-light);
+  border: 1px solid var(--border-soft);
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  text-decoration: none;
+  color: var(--text);
+  cursor: pointer;
+  transition: transform .12s, box-shadow .15s;
+}
+body.dark .game-card { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+.game-card:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.game-card:active { transform: translateY(0); }
+.game-card-field {
+  background: var(--navy-d);
+  color: #fff;
+  border-radius: 7px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: var(--bebas);
+}
+body.dark .game-card-field { background: var(--gold); color: var(--navy-d); }
+.game-card-field-lbl { font-size: 9px; font-weight: 700; letter-spacing: .18em; opacity: .75; }
+.game-card-field-num { font-size: 23px; font-weight: 900; line-height: 1; }
+.game-card-info { min-width: 0; }
+.game-card-div {
+  font-family: var(--bebas);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 2px;
+  display: flex; align-items: center; gap: 8px;
+}
+body.dark .game-card-div { color: var(--gold-bri); }
+.game-card-num {
+  background: var(--border);
+  color: var(--text);
+  font-size: 9px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+body.dark .game-card-num { background: rgba(255,255,255,.15); color: #fff; }
+.game-card-teams {
+  font-size: 13px;
+  color: var(--text);
+  line-height: 1.35;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.game-card-teams .vs {
+  color: var(--text-mute);
+  font-weight: 500;
+  font-style: italic;
+  margin: 0 4px;
+}
+
+.empty-state {
+  padding: 30px 16px;
+  text-align: center;
+  color: var(--text-mute);
+  font-size: 14px;
+  background: var(--card-light);
+  border-radius: 10px;
+}
+body.dark .empty-state { background: rgba(255,255,255,.04); }
+
+/* ── GRID VIEW (field rows x time-slot cells) ── */
+.grid-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 -16px 18px;
+  padding: 0 16px 4px;
+  scrollbar-width: thin;
+}
+.grid-scroll::-webkit-scrollbar { height: 6px; }
+.grid-scroll::-webkit-scrollbar-thumb { background: rgba(15,42,86,.2); border-radius: 4px; }
+
+.grid-table {
+  display: grid;
+  gap: 4px;
+  min-width: 100%;
+}
+.grid-row {
+  display: grid;
+  gap: 4px;
+  align-items: stretch;
+}
+.grid-row-header {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--navy-d);
+  color: #fff;
+  border-radius: 7px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: var(--bebas);
+  min-height: 64px;
+  width: 56px;
+}
+body.dark .grid-row-header { background: var(--gold); color: var(--navy-d); }
+.grid-row-header.header-row { background: var(--card-light); color: var(--text-dim); }
+body.dark .grid-row-header.header-row { background: rgba(255,255,255,.08); color: #fff; }
+.grid-row-header-lbl { font-size: 9px; font-weight: 700; letter-spacing: .16em; opacity: .8; }
+.grid-row-header-val { font-size: 17px; font-weight: 900; line-height: 1; margin-top: 2px; }
+
+.grid-col-header {
+  background: var(--card-light);
+  border-radius: 7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--bebas);
+  font-size: 12px; font-weight: 800;
+  color: var(--text-dim);
+  letter-spacing: .08em;
+  text-align: center;
+  min-height: 30px;
+  padding: 0 4px;
+}
+body.dark .grid-col-header { background: rgba(255,255,255,.05); color: var(--text-dim); }
+
+.grid-cell {
+  background: var(--card-light);
+  border: 1px solid var(--border-soft);
+  border-radius: 7px;
+  padding: 6px 8px;
+  cursor: pointer;
+  text-align: left;
+  min-width: 110px;
+  display: flex; flex-direction: column;
+  justify-content: center;
+  transition: transform .12s, box-shadow .15s;
+}
+body.dark .grid-cell { background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1); }
+.grid-cell:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
+.grid-cell:active { transform: translateY(0); }
+.grid-cell.empty {
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border);
+  color: var(--text-mute);
+  cursor: default;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--bebas);
+  font-size: 13px;
+  opacity: .6;
+}
+body.dark .grid-cell.empty { border-color: rgba(255,255,255,.12); }
+.grid-cell:hover.empty { transform: none; box-shadow: none; }
+.grid-cell-div {
+  font-family: var(--bebas);
+  font-size: 10px; font-weight: 800;
+  color: var(--red);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
+body.dark .grid-cell-div { color: var(--gold-bri); }
+.grid-cell-teams {
+  font-size: 11px;
+  color: var(--text);
+  line-height: 1.3;
+  margin-top: 3px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ── GAME DETAIL MODAL ── */
+.gm-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,42,86,.7);
+  display: none;
+  align-items: flex-end; justify-content: center;
+  z-index: 200;
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.gm-overlay.open { display: flex; }
+.gm-card {
+  background: var(--card-light);
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 560px;
+  padding: 22px 22px 28px;
+  box-shadow: 0 -4px 24px rgba(0,0,0,.3);
+  position: relative;
+  animation: gm-rise .25s;
+  max-height: 86vh;
+  overflow-y: auto;
+}
+@media (min-width: 600px) {
+  .gm-overlay { align-items: center; }
+  .gm-card { border-radius: 16px; }
+}
+body.dark .gm-card { background: var(--navy-d); }
+@keyframes gm-rise {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}
+.gm-close {
+  position: absolute; top: 12px; right: 12px;
+  background: rgba(15,42,86,.1);
+  border: none;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  font-size: 18px;
+  color: var(--text);
+  cursor: pointer;
+  font-weight: 700;
+}
+body.dark .gm-close { background: rgba(255,255,255,.1); color: #fff; }
+.gm-eyebrow {
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .24em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+body.dark .gm-eyebrow { color: var(--gold-bri); }
+.gm-h {
+  font-family: var(--bebas);
+  font-size: 24px; font-weight: 900;
+  color: var(--text);
+  letter-spacing: .02em;
+  margin-bottom: 8px;
+  line-height: 1.15;
+}
+body.dark .gm-h { color: #fff; }
+.gm-meta {
+  display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+  font-family: var(--bebas);
+  font-size: 13px; font-weight: 700;
+  letter-spacing: .04em;
+}
+.gm-pill {
+  background: var(--navy-d);
+  color: #fff;
+  border-radius: 5px;
+  padding: 4px 9px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+body.dark .gm-pill { background: var(--gold); color: var(--navy-d); }
+.gm-pill.alt { background: var(--border); color: var(--text); }
+body.dark .gm-pill.alt { background: rgba(255,255,255,.1); color: #fff; }
+.gm-teams {
+  background: rgba(15,42,86,.06);
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+body.dark .gm-teams { background: rgba(255,255,255,.04); }
+.gm-team-line { font-size: 14px; color: var(--text); padding: 4px 0; font-weight: 600; }
+body.dark .gm-team-line { color: #fff; }
+.gm-vs { font-family: var(--bebas); color: var(--text-mute); font-size: 11px; font-weight: 700; letter-spacing: .18em; padding: 5px 0; }
+.gm-crew {
+  border-top: 1px solid var(--border-soft);
+  padding-top: 12px;
+  font-size: 13px;
+}
+body.dark .gm-crew { border-top-color: rgba(255,255,255,.1); }
+.gm-crew-label {
+  font-family: var(--bebas);
+  font-size: 10px; font-weight: 800; letter-spacing: .2em;
+  color: var(--text-mute);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.gm-crew-line { padding: 3px 0; color: var(--text); }
+body.dark .gm-crew-line { color: #fff; }
+.gm-crew-line strong { color: var(--text-mute); font-weight: 700; margin-right: 6px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.gm-crew-empty { color: var(--text-mute); font-style: italic; }
+
+/* ── JAREFEREE SPONSOR BLOCK ── */
+.sponsor-block { text-align: center; padding: 20px 16px 10px; position: relative; z-index: 1; }
+.sponsor-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: .26em;
+  color: #d4a017; text-transform: uppercase;
+  margin-bottom: 8px; opacity: 0.85;
+}
+body.dark .sponsor-eyebrow { color: #ecbf3e; opacity: 0.8; }
+.jareferee-mark {
+  display: inline-block;
+  background: #243859;
+  border-radius: 6px;
+  padding: 7px 16px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(15,42,86,.18);
+  transition: transform .15s, box-shadow .2s;
+}
+.jareferee-mark:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,42,86,.25); }
+.jareferee-mark img { height: 18px; width: auto; display: block; }
+
+/* ── FOOTER ── */
+.app-footer {
+  position: relative; z-index: 1;
+  text-align: center;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 700;
+  letter-spacing: .14em;
+  color: var(--text-mute);
+  padding: 4px 16px 18px;
+  text-transform: uppercase;
+}
+.app-footer .dot { color: var(--red); margin: 0 6px; }
+.app-footer strong { color: var(--text-dim); font-weight: 800; }
+
+/* ── PRINT ── */
+@media print {
+  body::before { display: none; }
+  .top-strip, .theme-toggle-wrap, .view-toggle, .sync-row, .filters, .sponsor-block, .app-footer { display: none; }
+  .grid-cell, .game-card { box-shadow: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP STRIP -->
+<div class="top-strip">
+  <div class="top-strip-left">
+    <a class="hub-link" href="../index.html">&lsaquo; HUB</a>
+    <div class="top-strip-title">
+      <span class="gold">2026 USYS Presidents Cup</span>
+      Northwest Regional
+    </div>
+  </div>
+</div>
+
+<!-- THEME TOGGLE -->
+<div class="theme-toggle-wrap">
+  <div class="theme-toggle" onclick="toggleTheme()">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <span id="theme-label">LIGHT</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="eyebrow">Tournament Schedule</div>
+  <h1 class="h1">All Matches</h1>
+  <div class="sub" id="sub-line">Loading...</div>
+
+  <div class="sync-row">
+    <span id="last-sync">Loading schedule...</span>
+    <button onclick="loadSchedule()">REFRESH ↻</button>
+  </div>
+
+  <!-- VIEW TOGGLE -->
+  <div class="view-toggle">
+    <button class="view-btn active" id="vb-list" onclick="setView('list')"><span class="view-btn-icon">≡</span>LIST</button>
+    <button class="view-btn" id="vb-grid" onclick="setView('grid')"><span class="view-btn-icon">▦</span>GRID</button>
+  </div>
+
+  <!-- DAY TABS -->
+  <div class="day-tabs" id="day-tabs"></div>
+
+  <!-- FILTERS (LIST view only) -->
+  <div class="filters" id="filters">
+    <input class="filter-input" id="f-search" type="search" placeholder="Search team..." oninput="renderCurrentView()">
+    <select class="filter-input" id="f-div" onchange="renderCurrentView()">
+      <option value="">All divisions</option>
+    </select>
+  </div>
+
+  <!-- VIEW CONTAINER -->
+  <div id="view-content">
+    <div class="empty-state">Loading...</div>
+  </div>
+</div>
+
+<!-- GAME DETAIL MODAL -->
+<div class="gm-overlay" id="gm" onclick="closeGameModal(event)">
+  <div class="gm-card" onclick="event.stopPropagation();">
+    <button class="gm-close" onclick="closeGameModal()">✕</button>
+    <div class="gm-eyebrow" id="gm-eyebrow">Game</div>
+    <div class="gm-h" id="gm-h">Match</div>
+    <div class="gm-meta" id="gm-meta"></div>
+    <div class="gm-teams" id="gm-teams"></div>
+    <div class="gm-crew" id="gm-crew"></div>
+  </div>
+</div>
+
+<!-- JAREFEREE SPONSOR BLOCK -->
+<div class="sponsor-block">
+  <div class="sponsor-eyebrow">Powered By</div>
+  <a class="jareferee-mark" href="https://jareferee.com" target="_blank" rel="noopener">
+    <img src="../assets/jareferee-wordmark.png" alt="JAReferee">
+  </a>
+</div>
+
+<div class="app-footer">
+  <strong>2026 USYS Presidents Cup</strong> <span class="dot">•</span> Schedule
+</div>
+
+<script>
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec";
+
+var S = {
+  data: null,
+  view: 'list',
+  day: null,
+  search: '',
+  division: ''
+};
+
+// ── THEME ──
+function initTheme() {
+  var saved = null;
+  try { saved = localStorage.getItem('pcup-theme'); } catch(e) {}
+  applyTheme(saved || 'light');
+}
+function toggleTheme() {
+  var next = document.body.classList.contains('dark') ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem('pcup-theme', next); } catch(e) {}
+}
+function applyTheme(theme) {
+  if (theme === 'dark') { document.body.classList.add('dark'); }
+  else { document.body.classList.remove('dark'); }
+  var icon = document.getElementById('theme-icon');
+  var label = document.getElementById('theme-label');
+  if (icon)  { icon.textContent  = theme === 'dark' ? '🌙' : '☀️'; }
+  if (label) { label.textContent = theme === 'dark' ? 'DARK' : 'LIGHT'; }
+}
+
+// ── ESCAPING ──
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// ── LOAD ──
+function loadSchedule() {
+  document.getElementById('view-content').innerHTML = '<div class="empty-state">Loading schedule...</div>';
+  fetch(SCRIPT_URL + '?action=schedule')
+    .then(function(r) { return r.json(); })
+    .then(function(resp) {
+      if (resp && resp.status === 'ok' && resp.data) {
+        S.data = resp.data;
+        onDataLoaded();
+        document.getElementById('last-sync').textContent =
+          'Last synced ' + new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      } else {
+        document.getElementById('view-content').innerHTML =
+          '<div class="empty-state">Could not load schedule.</div>';
+      }
+    })
+    .catch(function() {
+      document.getElementById('view-content').innerHTML =
+        '<div class="empty-state">Could not load schedule. Check your connection.</div>';
+    });
+}
+
+function onDataLoaded() {
+  var days = S.data.days || [];
+
+  // Set sub-line
+  document.getElementById('sub-line').textContent =
+    S.data.totalGames + ' matches across ' + days.length + ' days, ' +
+    (S.data.divisions || []).length + ' age groups, ' + (S.data.fields || []).length + ' fields.';
+
+  // Build day tabs
+  if (!S.day || !days.find(function(d){ return d.dateSortable === S.day; })) {
+    var todayDay = days.find(function(d){ return d.isToday; });
+    S.day = todayDay ? todayDay.dateSortable : (days[0] ? days[0].dateSortable : null);
+  }
+  var tabsHtml = '';
+  days.forEach(function(d) {
+    var classes = 'day-tab';
+    if (d.dateSortable === S.day) { classes += ' active'; }
+    if (d.isToday) { classes += ' today'; }
+    tabsHtml += '<button class="' + classes + '" onclick="setDay(' + JSON.stringify(d.dateSortable) + ')">' +
+                  '<div class="day-tab-name">' + esc(d.dateShort) + '</div>' +
+                  '<div class="day-tab-count">' + d.totalGames + ' games</div>' +
+                '</button>';
+  });
+  document.getElementById('day-tabs').innerHTML = tabsHtml;
+
+  // Build division filter
+  var divSel = document.getElementById('f-div');
+  divSel.innerHTML = '<option value="">All divisions</option>';
+  (S.data.divisions || []).forEach(function(div) {
+    var opt = document.createElement('option');
+    opt.value = div;
+    opt.textContent = div;
+    divSel.appendChild(opt);
+  });
+
+  renderCurrentView();
+}
+
+function setDay(dateSortable) {
+  S.day = dateSortable;
+  // Update tab UI
+  var tabs = document.querySelectorAll('.day-tab');
+  tabs.forEach(function(t){ t.classList.remove('active'); });
+  var idx = (S.data.days || []).findIndex(function(d){ return d.dateSortable === dateSortable; });
+  if (idx >= 0 && tabs[idx]) { tabs[idx].classList.add('active'); }
+  renderCurrentView();
+}
+
+function setView(view) {
+  S.view = view;
+  document.getElementById('vb-list').classList.toggle('active', view === 'list');
+  document.getElementById('vb-grid').classList.toggle('active', view === 'grid');
+  document.getElementById('filters').style.display = (view === 'list') ? 'grid' : 'none';
+  renderCurrentView();
+}
+
+function getCurrentDay() {
+  if (!S.data || !S.data.days) return null;
+  return S.data.days.find(function(d){ return d.dateSortable === S.day; }) || null;
+}
+
+function renderCurrentView() {
+  if (!S.data) return;
+  S.search = document.getElementById('f-search').value.trim().toLowerCase();
+  S.division = document.getElementById('f-div').value;
+  if (S.view === 'list') { renderList(); }
+  else { renderGrid(); }
+}
+
+function passesFilter(game) {
+  if (S.division && game.division !== S.division) return false;
+  if (S.search) {
+    var q = S.search;
+    if (game.home.toLowerCase().indexOf(q) < 0 &&
+        game.away.toLowerCase().indexOf(q) < 0) return false;
+  }
+  return true;
+}
+
+// ── LIST VIEW ──
+function renderList() {
+  var day = getCurrentDay();
+  var container = document.getElementById('view-content');
+  if (!day) {
+    container.innerHTML = '<div class="empty-state">No games for this day.</div>';
+    return;
+  }
+
+  var html = '';
+  var anyMatched = false;
+
+  day.timeslots.forEach(function(slot) {
+    var games = slot.games.filter(passesFilter);
+    if (!games.length) return;
+    anyMatched = true;
+    html += '<div class="slot-block">' +
+              '<div class="slot-header">' +
+                '<div class="slot-time">' + esc(slot.time) + '</div>' +
+                '<div class="slot-meta"><strong>' + games.length + '</strong> game' + (games.length === 1 ? '' : 's') + '</div>' +
+              '</div>';
+    games.forEach(function(g, i) {
+      var fieldDisp = g.field > 0 ? g.field : (g.fieldDisplay || '-');
+      html += '<div class="game-card" onclick="openGame(' + day.timeslots.indexOf(slot) + ',' + slot.games.indexOf(g) + ')">' +
+                '<div class="game-card-field">' +
+                  '<div class="game-card-field-lbl">Field</div>' +
+                  '<div class="game-card-field-num">' + esc(fieldDisp) + '</div>' +
+                '</div>' +
+                '<div class="game-card-info">' +
+                  '<div class="game-card-div">' +
+                    esc(g.division) +
+                    '<span class="game-card-num">#' + esc(g.gameNum) + '</span>' +
+                  '</div>' +
+                  '<div class="game-card-teams">' +
+                    esc(g.home || 'TBD') +
+                    '<span class="vs">vs</span>' +
+                    esc(g.away || 'TBD') +
+                  '</div>' +
+                '</div>' +
+              '</div>';
+    });
+    html += '</div>';
+  });
+
+  if (!anyMatched) {
+    container.innerHTML = '<div class="empty-state">No games match your filters.</div>';
+    return;
+  }
+  container.innerHTML = html;
+}
+
+// ── GRID VIEW (field rows × time-slot cells) ──
+function renderGrid() {
+  var day = getCurrentDay();
+  var container = document.getElementById('view-content');
+  if (!day) {
+    container.innerHTML = '<div class="empty-state">No games for this day.</div>';
+    return;
+  }
+
+  var fields = day.uniqueFields || [];
+  var slots = day.timeslots || [];
+
+  if (!fields.length || !slots.length) {
+    container.innerHTML = '<div class="empty-state">No games for this day.</div>';
+    return;
+  }
+
+  // Build a lookup: gamesByFieldTime[fieldNum][timeMins] = game
+  var lookup = {};
+  slots.forEach(function(slot) {
+    slot.games.forEach(function(g) {
+      if (g.field > 0) {
+        if (!lookup[g.field]) lookup[g.field] = {};
+        lookup[g.field][slot.timeMins] = g;
+      }
+    });
+  });
+
+  // Grid: 1 + slot count columns. col 1 = field label, rest = slot cells
+  var colWidth = '110px';
+  var gridStyle = 'grid-template-columns: 56px repeat(' + slots.length + ', minmax(' + colWidth + ', 1fr));';
+
+  var html = '<div class="grid-scroll"><div class="grid-table">';
+
+  // Header row: blank corner + slot times
+  html += '<div class="grid-row" style="' + gridStyle + '">';
+  html += '<div class="grid-row-header header-row" style="font-size:10px">FIELD</div>';
+  slots.forEach(function(slot) {
+    html += '<div class="grid-col-header">' + esc(slot.time) + '</div>';
+  });
+  html += '</div>';
+
+  // Field rows
+  fields.forEach(function(f) {
+    html += '<div class="grid-row" style="' + gridStyle + '">';
+    html += '<div class="grid-row-header">' +
+              '<div class="grid-row-header-lbl">FIELD</div>' +
+              '<div class="grid-row-header-val">' + f + '</div>' +
+            '</div>';
+    slots.forEach(function(slot) {
+      var g = lookup[f] && lookup[f][slot.timeMins];
+      if (g) {
+        var slotIdx = day.timeslots.indexOf(slot);
+        var gameIdx = slot.games.indexOf(g);
+        var teamLine = (g.home || 'TBD') + ' vs ' + (g.away || 'TBD');
+        html += '<div class="grid-cell" onclick="openGame(' + slotIdx + ',' + gameIdx + ')">' +
+                  '<div class="grid-cell-div">' + esc(g.division) + '</div>' +
+                  '<div class="grid-cell-teams">' + esc(teamLine) + '</div>' +
+                '</div>';
+      } else {
+        html += '<div class="grid-cell empty">-</div>';
+      }
+    });
+    html += '</div>';
+  });
+
+  html += '</div></div>';
+  container.innerHTML = html;
+}
+
+// ── GAME DETAIL MODAL ──
+function openGame(slotIdx, gameIdx) {
+  var day = getCurrentDay();
+  if (!day) return;
+  var slot = day.timeslots[slotIdx];
+  if (!slot) return;
+  var g = slot.games[gameIdx];
+  if (!g) return;
+
+  document.getElementById('gm-eyebrow').textContent = day.date + ' . ' + slot.time;
+  document.getElementById('gm-h').textContent = g.division + ' (Game #' + g.gameNum + ')';
+
+  var metaHtml = '<span class="gm-pill">Field ' + (g.fieldDisplay || g.field) + '</span>';
+  if (g.round) { metaHtml += '<span class="gm-pill alt">' + esc(g.round) + '</span>'; }
+  document.getElementById('gm-meta').innerHTML = metaHtml;
+
+  document.getElementById('gm-teams').innerHTML =
+    '<div class="gm-team-line"><strong style="color:var(--text-mute);font-size:10px;letter-spacing:.14em;font-family:var(--bebas);">HOME</strong> ' + esc(g.home || 'TBD') + '</div>' +
+    '<div class="gm-vs">VS</div>' +
+    '<div class="gm-team-line"><strong style="color:var(--text-mute);font-size:10px;letter-spacing:.14em;font-family:var(--bebas);">AWAY</strong> ' + esc(g.away || 'TBD') + '</div>';
+
+  var crewLines = '<div class="gm-crew-label">Crew Assignment</div>';
+  var crew = [
+    { lbl: 'Center', val: g.referee },
+    { lbl: 'AR 1',   val: g.ar1 },
+    { lbl: 'AR 2',   val: g.ar2 },
+    { lbl: '4th',    val: g.fourth }
+  ];
+  var anyCrew = false;
+  crew.forEach(function(c) {
+    if (c.val && c.val.trim()) {
+      anyCrew = true;
+      crewLines += '<div class="gm-crew-line"><strong>' + c.lbl + '</strong>' + esc(c.val) + '</div>';
+    }
+  });
+  if (!anyCrew) {
+    crewLines += '<div class="gm-crew-line gm-crew-empty">Crew not yet assigned</div>';
+  }
+  document.getElementById('gm-crew').innerHTML = crewLines;
+
+  document.getElementById('gm').classList.add('open');
+}
+function closeGameModal(e) {
+  if (e && e.target.id !== 'gm' && !e.target.classList.contains('gm-close')) return;
+  document.getElementById('gm').classList.remove('open');
+}
+
+// ── BOOT ──
+initTheme();
+loadSchedule();
+</script>
+</body>
+</html>
