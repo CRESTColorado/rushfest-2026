@@ -470,6 +470,23 @@ function submitCheckin() {
   btn.textContent = 'Submitting...';
   document.getElementById('form-error').textContent = '';
 
+  function showSuccess() {
+    try {
+      var intro = document.getElementById('intro-card');
+      var form  = document.getElementById('form-card');
+      var card  = document.getElementById('success-card');
+      var who   = document.getElementById('success-name');
+      if (intro) intro.classList.add('hidden');
+      if (form)  form.classList.add('hidden');
+      if (who)   who.textContent = name;
+      if (card)  card.classList.remove('hidden');
+      else console.error('boise-checkin: #success-card not found in DOM');
+      window.scrollTo(0, 0);
+    } catch (e) {
+      console.error('boise-checkin: showSuccess threw', e);
+    }
+  }
+
   fetch(SCRIPT_URL, {
     method: 'POST',
     mode: 'no-cors',
@@ -481,12 +498,10 @@ function submitCheckin() {
       timestamp: new Date().toISOString()
     })
   }).then(function() {
-    document.getElementById('intro-card').classList.add('hidden');
-    document.getElementById('form-card').classList.add('hidden');
-    document.getElementById('success-name').textContent = name;
-    document.getElementById('success-card').classList.remove('hidden');
-    window.scrollTo(0, 0);
-  }).catch(function() {
+    console.log('boise-checkin: fetch resolved, showing success');
+    showSuccess();
+  }).catch(function(err) {
+    console.error('boise-checkin: fetch rejected', err);
     state.submitting = false;
     btn.disabled = false;
     btn.textContent = 'Check In to Boise';
