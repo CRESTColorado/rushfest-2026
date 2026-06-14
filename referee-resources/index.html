@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Referee Resources for the 2026 USYS Presidents Cup Northwest Regional Qualifier. Boise, Idaho">
+<meta name="theme-color" content="#a5b8d4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Referee Resources. USYS Presidents Cup NW 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #a5b8d4;
+  --bg-soft:     #b5c5dc;
+  --surface:     #243859;
+  --tint:        #dde6f1;
+  --card:        #243859;
+  --card-hover:  #2d4470;
+  --navy:        #0F2A56;
+  --navy-mid:    #1c3d70;
+  --navy-panel:  #243859;
+  --red:         #D52B3B;
+  --red-bri:     #e63946;
+  --blue:        #4d7ad9;
+  --blue-bri:    #6b95e6;
+  --green:       #16a34a;
+  --green-bri:   #22c55e;
+  --gold:        #d4a017;
+  --gold-bri:    #ecbf3e;
+  --teal:        #0891b2;
+  --teal-bri:    #22b8d4;
+  --text:        #0F2A56;
+  --text-soft:   #1c2a47;
+  --text-dim:    #3a4b6b;
+  --text-light:       #ffffff;
+  --text-light-soft:  rgba(255,255,255,.82);
+  --text-light-dim:   rgba(255,255,255,.58);
+  --border:      #7c93b2;
+  --border-soft: #93a8c2;
+  /* category color tokens */
+  --c-tournament: var(--blue);
+  --c-gameday:    var(--green);
+  --c-rules:      var(--gold);
+  --c-safety:     var(--red);
+  --c-offfield:   var(--teal);
+  --bebas:       'Barlow Condensed', sans-serif;
+  --font:        'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font);
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed;
+  top: 50%; left: 50%; transform: translate(-50%, -45%);
+  width: min(85vw, 760px); height: min(85vw, 760px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.18; pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+
+/* ── DARK MODE OVERRIDES ── */
+body.dark {
+  --bg:        #0F2A56;
+  --navy:      #ffffff;
+  --text:      #ffffff;
+  --text-soft: rgba(255,255,255,.85);
+  --text-dim:  rgba(255,255,255,.6);
+}
+body.dark::before { opacity: 0.10; }
+
+/* ── DARK MODE CONTENT BLOCK OVERRIDES ──
+   Several content blocks have hardcoded light pastel/translucent
+   backgrounds that pair with `color: var(--navy)`. In dark mode
+   var(--navy) flips to white → invisible white-on-light. These
+   overrides give them dark-themed tinted backgrounds with the
+   accent border preserved, and force a real navy text color so
+   they're still readable. */
+body.dark .callout-red    { background: rgba(213,43,59,.18);  border-color: rgba(213,43,59,.55); }
+body.dark .callout-gold   { background: rgba(212,160,23,.20); border-color: rgba(212,160,23,.60); }
+body.dark .callout-blue   { background: rgba(77,122,217,.20); border-color: rgba(77,122,217,.55); }
+body.dark .callout-green  { background: rgba(22,163,74,.20);  border-color: rgba(22,163,74,.55); }
+body.dark .callout,
+body.dark .callout strong { color: #ffffff; }
+
+body.dark .lvl-card {
+  background: rgba(255,255,255,.06);
+  border-color: rgba(255,255,255,.16);
+}
+
+body.dark .detail-close {
+  background: rgba(255,255,255,.10);
+  border-color: rgba(255,255,255,.25);
+  color: #ffffff;
+}
+body.dark .detail-close:hover { background: rgba(255,255,255,.20); }
+
+/* Faint dividers that fall back to invisible dark-on-dark in dark mode */
+body.dark .ds-title { border-bottom-color: rgba(255,255,255,.18); }
+body.dark .stp      { border-bottom-color: rgba(255,255,255,.12); }
+
+body { transition: background-color .25s, color .25s; }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle-wrap {
+  position: relative; z-index: 5;
+  text-align: center;
+  padding: 10px 16px 4px;
+}
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  cursor: pointer;
+  background: rgba(15,42,86,.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,42,86,.15);
+  border-radius: 22px;
+  padding: 5px 10px;
+  transition: background .2s, border-color .2s;
+}
+body.dark .theme-toggle {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+}
+.theme-toggle-icon { font-size: 13px; line-height: 1; }
+.toggle-track {
+  width: 28px; height: 16px;
+  background: rgba(15,42,86,.45);
+  border-radius: 9px;
+  position: relative;
+  transition: background .25s;
+}
+body.dark .toggle-track { background: var(--gold); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  transition: transform .25s;
+}
+body.dark .toggle-thumb { transform: translateX(12px); }
+
+/* ── JAREFEREE SPONSOR BLOCK ── */
+.sponsor-block {
+  text-align: center;
+  padding: 20px 16px 10px;
+  position: relative; z-index: 1;
+}
+.sponsor-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: .26em;
+  color: #d4a017;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+body.dark .sponsor-eyebrow { color: #ecbf3e; opacity: 0.8; }
+.jareferee-mark {
+  display: inline-block;
+  background: #243859;
+  border-radius: 6px;
+  padding: 7px 16px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(15,42,86,.18);
+  transition: transform .15s, box-shadow .2s;
+}
+.jareferee-mark:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,42,86,.25); }
+.jareferee-mark img { height: 18px; width: auto; display: block; }
+
+/* ── TOP STRIP ── */
+.top-strip {
+  position: relative; z-index: 3;
+  padding: 12px 20px 10px;
+  padding-top: calc(12px + env(safe-area-inset-top));
+  border-bottom: 2px solid var(--red);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; background: var(--bg);
+}
+.top-strip-left {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .14em; color: var(--navy); text-transform: uppercase;
+}
+.top-strip-back {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .14em; color: var(--navy); text-transform: uppercase;
+  padding: 5px 11px; border: 2px solid var(--navy); border-radius: 6px;
+  background: transparent; transition: all .15s;
+}
+.top-strip-back:hover { background: var(--navy); color: #fff; }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  padding: 28px 20px 22px; text-align: center;
+}
+.hero-eyebrow {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .24em; color: var(--red); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--bebas);
+  font-size: clamp(34px, 7vw, 48px); font-weight: 900;
+  line-height: .95; letter-spacing: .04em; color: var(--navy);
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.hero-flourish {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin: 4px auto 12px; max-width: 200px;
+}
+.hero-flourish .line { flex: 1; height: 2px; background: var(--gold); opacity: .85; }
+.hero-flourish .star { color: var(--gold); font-size: 14px; }
+.hero-sub {
+  font-size: 14px; color: var(--text-soft); line-height: 1.5;
+  max-width: 480px; margin: 0 auto; font-weight: 500;
+}
+
+/* ── FILTER BAR (sticky) ── */
+.filter-bar-wrap {
+  position: sticky; top: 0; z-index: 4;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border-soft);
+  padding: 12px 14px 10px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+}
+.filter-bar-wrap::-webkit-scrollbar { display: none; }
+.filter-bar {
+  display: inline-flex; gap: 6px;
+}
+.filter-pill {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 8px 14px; border-radius: 30px;
+  background: var(--card); color: var(--text-light-soft);
+  border: 1px solid var(--navy-mid); cursor: pointer;
+  transition: all .15s; flex-shrink: 0;
+  min-height: 36px; display: inline-flex; align-items: center; gap: 5px;
+}
+.filter-pill:hover { background: var(--card-hover); color: #fff; }
+.filter-pill.active {
+  background: var(--gold); color: var(--navy);
+  border-color: var(--gold); font-weight: 900;
+}
+
+/* ── MAIN ── */
+.main {
+  position: relative; z-index: 1;
+  max-width: 920px; margin: 0 auto;
+  padding: 20px 14px 30px;
+}
+
+/* Section header */
+.section-header {
+  display: flex; align-items: center; gap: 10px;
+  padding: 18px 4px 10px;
+}
+.section-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+}
+.section-title {
+  font-family: var(--bebas); font-size: 18px; font-weight: 900;
+  letter-spacing: .14em; color: var(--navy); text-transform: uppercase;
+}
+
+/* Card grid */
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 10px;
+}
+
+.module-card {
+  background: var(--card); border-radius: 12px;
+  padding: 16px 18px; cursor: pointer;
+  display: flex; flex-direction: column; gap: 6px;
+  transition: transform .15s, box-shadow .2s;
+  box-shadow: 0 4px 14px rgba(15,42,86,.2);
+  position: relative; overflow: hidden;
+  color: #fff; text-align: left;
+  min-height: 100px;
+}
+.module-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.module-card[data-cat="tournament"]::before { background: var(--c-tournament); }
+.module-card[data-cat="gameday"]::before    { background: var(--c-gameday); }
+.module-card[data-cat="rules"]::before      { background: var(--c-rules); }
+.module-card[data-cat="safety"]::before     { background: var(--c-safety); }
+.module-card[data-cat="offfield"]::before   { background: var(--c-offfield); }
+.module-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(15,42,86,.32);
+}
+.module-card:active { transform: scale(.98); }
+.card-row { display: flex; align-items: center; gap: 10px; margin-bottom: 2px; }
+.card-icon-wrap {
+  width: 34px; height: 34px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  background: rgba(255,255,255,.08);
+}
+.card-eyebrow {
+  font-family: var(--bebas); font-size: 9px; font-weight: 800;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--text-light-dim);
+}
+.module-card[data-cat="tournament"] .card-eyebrow { color: var(--blue-bri); }
+.module-card[data-cat="gameday"]    .card-eyebrow { color: var(--green-bri); }
+.module-card[data-cat="rules"]      .card-eyebrow { color: var(--gold-bri); }
+.module-card[data-cat="safety"]     .card-eyebrow { color: var(--red-bri); }
+.module-card[data-cat="offfield"]   .card-eyebrow { color: var(--teal-bri); }
+.card-title {
+  font-family: var(--bebas); font-size: 17px; font-weight: 800;
+  letter-spacing: .04em; line-height: 1.1; color: #fff;
+  text-transform: uppercase;
+}
+.card-sub {
+  font-size: 12px; color: var(--text-light-soft); line-height: 1.4;
+}
+
+/* No results */
+.no-results {
+  display: none;
+  text-align: center; padding: 40px 20px;
+  color: var(--text-soft); font-size: 14px;
+}
+.no-results.show { display: block; }
+.no-results-icon { font-size: 40px; margin-bottom: 10px; opacity: .5; }
+
+/* ── DETAIL PANEL ── */
+.detail-panel {
+  position: fixed; inset: 0; z-index: 100;
+  display: none; pointer-events: none;
+}
+.detail-panel.open { display: block; pointer-events: auto; }
+.detail-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(10, 18, 40, .65);
+  opacity: 0; transition: opacity .2s;
+}
+.detail-panel.open .detail-backdrop { opacity: 1; }
+.detail-sheet {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  max-height: 92vh; overflow-y: auto;
+  background: var(--bg); color: var(--text);
+  border-top-left-radius: 18px; border-top-right-radius: 18px;
+  transform: translateY(100%); transition: transform .25s;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  -webkit-overflow-scrolling: touch;
+  isolation: isolate;
+}
+.detail-sheet::before {
+  content: '';
+  position: absolute;
+  top: 80px; left: 50%;
+  transform: translateX(-50%);
+  width: min(72vw, 460px);
+  height: min(72vw, 460px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: 0;
+}
+.detail-panel.open .detail-sheet { transform: translateY(0); }
+.detail-handle {
+  width: 40px; height: 4px; background: rgba(15,42,86,.25);
+  border-radius: 2px; margin: 10px auto 4px;
+  position: relative; z-index: 1;
+}
+.detail-header {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 14px 22px 12px;
+  border-bottom: 1px solid rgba(15,42,86,.15);
+  position: sticky; top: 0; background: var(--bg); z-index: 3;
+}
+.detail-header-text { flex: 1; min-width: 0; }
+.detail-eyebrow {
+  font-family: var(--bebas); font-size: 10px; font-weight: 800;
+  letter-spacing: .2em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.detail-title {
+  font-family: var(--bebas); font-size: 22px; font-weight: 900;
+  letter-spacing: .03em; color: var(--navy); line-height: 1.05;
+  text-transform: uppercase;
+}
+.detail-sub {
+  font-size: 13px; color: var(--text-soft); margin-top: 2px;
+}
+.detail-close {
+  width: 34px; height: 34px; border: 1px solid rgba(15,42,86,.25);
+  background: rgba(255,255,255,.55);
+  border-radius: 50%; font-size: 18px; line-height: 1;
+  cursor: pointer; color: var(--navy); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: background .15s;
+}
+.detail-close:hover { background: #ffffff; }
+.detail-body { padding: 18px 22px 30px; position: relative; z-index: 1; }
+
+/* Detail content blocks */
+.ds-block { margin-bottom: 20px; }
+.ds-title {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .18em; color: var(--red); text-transform: uppercase;
+  margin-bottom: 8px;
+  padding-bottom: 4px; border-bottom: 2px solid rgba(15,42,86,.18);
+}
+.ds-text { font-size: 14px; color: var(--text-soft); line-height: 1.6; margin-bottom: 8px; font-weight: 500; }
+.ds-text strong { color: var(--navy); font-weight: 800; }
+.ds-text em { color: var(--red); font-style: normal; font-weight: 700; }
+.bul {
+  display: flex; gap: 8px; padding: 5px 0; font-size: 13px;
+  color: var(--text-soft); line-height: 1.5; font-weight: 500;
+}
+.bul::before { content: "●"; color: var(--gold); flex-shrink: 0; font-size: 10px; padding-top: 4px; }
+.bul strong { color: var(--navy); font-weight: 800; }
+.chk {
+  display: flex; gap: 8px; padding: 6px 0; font-size: 13px;
+  color: var(--text-soft); line-height: 1.5; font-weight: 500;
+}
+.chk::before { content: "✓"; color: var(--green); flex-shrink: 0; font-weight: 800; }
+.chk strong { color: var(--navy); font-weight: 800; }
+.stp {
+  display: flex; gap: 12px; padding: 9px 0;
+  border-bottom: 1px solid rgba(15,42,86,.12);
+}
+.stp-n {
+  font-family: var(--bebas); font-size: 20px; font-weight: 800;
+  color: var(--red); width: 24px; flex-shrink: 0; line-height: 1;
+}
+.stp-t {
+  font-size: 13px; color: var(--text-soft); line-height: 1.6; font-weight: 500;
+}
+.stp-t strong { color: var(--navy); font-weight: 800; }
+.callout {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; border-radius: 10px;
+  margin: 10px 0; font-size: 13px; line-height: 1.55;
+  font-weight: 500;
+}
+.callout strong { color: var(--navy); font-weight: 800; }
+.callout-red    { background: #f8dcd9; border: 1px solid rgba(213,43,59,.45); color: var(--navy); }
+.callout-gold   { background: #f7ecc6; border: 1px solid rgba(212,160,23,.55); color: var(--navy); }
+.callout-blue   { background: #dbe3f3; border: 1px solid rgba(77,122,217,.45); color: var(--navy); }
+.callout-green  { background: #d4ebd7; border: 1px solid rgba(22,163,74,.45); color: var(--navy); }
+.callout-ico { font-size: 16px; flex-shrink: 0; }
+
+/* Level cards (RAP) */
+.lvl-card {
+  border: 1px solid rgba(15,42,86,.25); border-radius: 10px;
+  background: rgba(255,255,255,.35);
+  padding: 12px 14px; margin-bottom: 8px;
+}
+.lvl-row { display: flex; justify-content: space-between; margin-bottom: 4px; }
+.lvl-name {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  color: var(--red); letter-spacing: .08em; text-transform: uppercase;
+}
+.lvl-tag { font-size: 11px; color: var(--text-dim); }
+.lvl-desc { font-size: 13px; color: var(--text-soft); margin-bottom: 4px; line-height: 1.5; }
+.lvl-pen {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  color: var(--gold); letter-spacing: .06em; text-transform: uppercase;
+}
+
+/* Schedule grid */
+.sched-table {
+  display: grid; grid-template-columns: 70px 1fr; gap: 8px 12px;
+  margin: 6px 0 12px;
+}
+.sched-time {
+  font-family: var(--bebas); font-size: 14px; font-weight: 800;
+  color: var(--red); letter-spacing: .04em; padding-top: 1px;
+}
+.sched-item { font-size: 13px; color: var(--text-soft); line-height: 1.4; }
+.sched-item strong { color: var(--navy); font-weight: 700; }
+
+/* Contact card */
+.contact-card {
+  display: grid; grid-template-columns: 1fr auto; gap: 6px 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(15,42,86,.12);
+}
+.contact-name { font-size: 14px; font-weight: 700; color: var(--navy); }
+.contact-role { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+.contact-num  {
+  font-family: var(--bebas); font-size: 16px; font-weight: 800;
+  color: var(--red); letter-spacing: .04em;
+  align-self: center; text-align: right;
+}
+
+/* Footer */
+.footer {
+  position: relative; z-index: 1;
+  background: var(--surface);
+  border-top: 2px solid var(--red);
+  padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  text-align: center; margin-top: 24px;
+}
+.footer p { font-size: 12px; color: var(--text-light-soft); max-width: 480px; margin: 0 auto; line-height: 1.8; }
+.footer strong { color: #fff; font-weight: 700; }
+
+@media (max-width: 480px) {
+  .modules-grid { grid-template-columns: 1fr; }
+  .main { padding: 18px 12px 24px; }
+  .detail-body { padding: 16px 18px 24px; }
+  .detail-header { padding: 12px 18px 10px; }
+  .detail-title { font-size: 19px; }
+}
+@media (max-width: 380px) {
+  .top-strip-left { font-size: 11px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-strip">
+  <div class="top-strip-left">2026 USYS Presidents Cup · Northwest</div>
+  <a class="top-strip-back" href="../index.html">← Hub</a>
+</div>
+
+<div class="theme-toggle-wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark mode">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+</div>
+
+<div class="hero">
+  <div class="hero-eyebrow">For Officials</div>
+  <h1 class="hero-title">Referee<br>Resources</h1>
+  <div class="hero-flourish">
+    <div class="line"></div><div class="star">★</div><div class="line"></div>
+  </div>
+  <p class="hero-sub">Everything you need for tournament week: schedule, rules, policies, where to eat, what to do, and who to call.</p>
+</div>
+
+<div class="filter-bar-wrap">
+  <div class="filter-bar">
+    <div class="filter-pill active" data-cat="all">All Modules</div>
+    <div class="filter-pill" data-cat="tournament">📅 Tournament</div>
+    <div class="filter-pill" data-cat="gameday">⚽ Game Day</div>
+    <div class="filter-pill" data-cat="rules">📜 Rules</div>
+    <div class="filter-pill" data-cat="safety">🛡 Safety &amp; Policy</div>
+    <div class="filter-pill" data-cat="offfield">🌄 Off Field</div>
+  </div>
+</div>
+
+<main class="main" id="main">
+
+  <div class="no-results" id="no-results">
+    <div class="no-results-icon">🔍</div>
+    No modules in this category.
+  </div>
+
+  <div class="section-header" data-section="tournament">
+    <div class="section-dot" style="background: var(--c-tournament)"></div>
+    <div class="section-title">Tournament</div>
+  </div>
+  <div class="modules-grid" id="grid-tournament"></div>
+
+  <div class="section-header" data-section="gameday">
+    <div class="section-dot" style="background: var(--c-gameday)"></div>
+    <div class="section-title">Game Day Procedures</div>
+  </div>
+  <div class="modules-grid" id="grid-gameday"></div>
+
+  <div class="section-header" data-section="rules">
+    <div class="section-dot" style="background: var(--c-rules)"></div>
+    <div class="section-title">Laws &amp; Rules</div>
+  </div>
+  <div class="modules-grid" id="grid-rules"></div>
+
+  <div class="section-header" data-section="safety">
+    <div class="section-dot" style="background: var(--c-safety)"></div>
+    <div class="section-title">Safety &amp; Policies</div>
+  </div>
+  <div class="modules-grid" id="grid-safety"></div>
+
+  <div class="section-header" data-section="offfield">
+    <div class="section-dot" style="background: var(--c-offfield)"></div>
+    <div class="section-title">Off the Field</div>
+  </div>
+  <div class="modules-grid" id="grid-offfield"></div>
+
+</main>
+
+<div class="footer">
+  <p>
+    <strong>Lead RAs:</strong> Karen Abt &amp; Jeff Arthurholtz &nbsp;·&nbsp;
+    <strong>Referee Liaison:</strong> Deanna Duncan-Allen<br>
+    Questions? Find us at the Referee Tent (HQ), south of Field 5.
+  </p>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="detail-backdrop" onclick="closeDetail()"></div>
+  <div class="detail-sheet">
+    <div class="detail-handle"></div>
+    <div class="detail-header">
+      <div class="detail-header-text">
+        <div class="detail-eyebrow" id="detail-eyebrow"></div>
+        <div class="detail-title" id="detail-title"></div>
+        <div class="detail-sub" id="detail-sub"></div>
+      </div>
+      <button class="detail-close" onclick="closeDetail()" aria-label="Close">✕</button>
+    </div>
+    <div class="detail-body" id="detail-body"></div>
+  </div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// HELPERS. content blocks
+// ════════════════════════════════════════════════════════════════
+function ds(title, html) {
+  return '<div class="ds-block"><div class="ds-title">' + title + '</div>' + html + '</div>';
+}
+function dt(t)   { return '<p class="ds-text">' + t + '</p>'; }
+function bul(t)  { return '<div class="bul"><span>' + t + '</span></div>'; }
+function chk(t)  { return '<div class="chk"><span>' + t + '</span></div>'; }
+function stp(n,t){ return '<div class="stp"><span class="stp-n">' + n + '</span><span class="stp-t">' + t + '</span></div>'; }
+function callout(tone, ico, t) {
+  return '<div class="callout callout-' + tone + '"><span class="callout-ico">' + ico + '</span><span>' + t + '</span></div>';
+}
+function lvl(name, tag, desc, pen) {
+  return '<div class="lvl-card">' +
+    '<div class="lvl-row"><span class="lvl-name">' + name + '</span><span class="lvl-tag">' + tag + '</span></div>' +
+    '<div class="lvl-desc">' + desc + '</div>' +
+    '<div class="lvl-pen">' + pen + '</div></div>';
+}
+function sched(rows) {
+  var html = '<div class="sched-table">';
+  rows.forEach(function(r) {
+    html += '<div class="sched-time">' + r[0] + '</div>';
+    html += '<div class="sched-item">' + r[1] + '</div>';
+  });
+  return html + '</div>';
+}
+function contact(name, role, num) {
+  return '<div class="contact-card"><div><div class="contact-name">' + name + '</div><div class="contact-role">' + role + '</div></div>' +
+    '<div class="contact-num">' + num + '</div></div>';
+}
+
+// ════════════════════════════════════════════════════════════════
+// MODULES
+// ════════════════════════════════════════════════════════════════
+var MODULES = [
+
+  /* ═══════ TOURNAMENT ═══════ */
+  {
+    id:"tour-schedule", cat:"tournament", icon:"📅",
+    title:"Daily Schedule",
+    sub:"Meeting times, game slots, education sessions",
+    eyebrow:"Tournament",
+    keywords:"schedule meeting time daily slots kickoff national instruction check-in",
+    build: function() {
+      return ds("Thursday, June 18: Move-In Day",
+        sched([
+          ["All Day", "Travel &amp; hotel check-in (Comfort Inn &amp; Suites Boise Airport)"],
+          ["3:00 PM", "<strong>Referee Coach meeting</strong> with Admin"],
+          ["6:00 PM", "<strong>Mandatory check-in opens</strong> at <strong>Holiday Inn meeting room</strong> for ALL referees. badges, gear, welcome packets"],
+          ["7:00 PM", "<strong>Welcome briefing</strong>. Karen, Jeff, Deanna · meet the staff and ref coaches"]
+        ])) +
+      ds("Friday–Monday, June 19–22. Game Days (template)",
+        sched([
+          ["6:00 AM", "Breakfast at hotel (Comfort Inn breakfast bar)"],
+          ["6:40 AM", "Depart for Simplot Sports Complex (carpool times posted)"],
+          ["7:00 AM", "<strong>Crew check-in &amp; pre-game</strong> for 8:00 AM slot. HQ tent"],
+          ["8:00 AM", "<strong>Slot 1</strong> kickoff"],
+          ["9:10 AM", "Crew check-in &amp; pre-game for 10:10 slot"],
+          ["10:10 AM", "<strong>Slot 2</strong> kickoff"],
+          ["10:30 AM", "<strong>National Instruction #1</strong>. Ref HQ"],
+          ["11:20 AM", "Crew check-in &amp; pre-game for 12:20 slot"],
+          ["12:20 PM", "<strong>Slot 3</strong> kickoff"],
+          ["12:30 PM", "<strong>National Instruction #2</strong>"],
+          ["1:20 PM", "Crew check-in &amp; pre-game for 2:20 slot"],
+          ["2:20 PM", "<strong>Slot 4</strong> kickoff"],
+          ["~4:00 PM", "End of games · meet at HQ for ref coach debriefs"],
+          ["6:00 PM", "<strong>Education session</strong>. rotating topics with the ref coaches"],
+          ["7:30 PM", "Dinner / free time"]
+        ])) +
+      callout("blue", "📍", "<strong>Holiday Inn is 0.4 miles from the Comfort Inn</strong>. short walk or quick drive. The Comfort Inn doesn't have meeting space, so all group meetings happen at the Holiday Inn down the street.") +
+      callout("blue", "ℹ️", "<strong>Check-in is per game.</strong> The CR signs in the whole crew at the HQ binder one hour before kickoff. Back-to-back games are handled manually by admin.") +
+      callout("gold", "⏰", "Times shift slightly on Sunday for semifinals and Monday for finals. Watch your Ref Portal and announcements at HQ.");
+    }
+  },
+  {
+    id:"tour-whatobring", cat:"tournament", icon:"🎒",
+    title:"What to Bring",
+    sub:"Uniform, gear, and travel checklist",
+    eyebrow:"Tournament",
+    keywords:"bring gear uniform equipment checklist whistle cards flags pink USSF badge",
+    build: function() {
+      return ds("Uniform: All USYS Colors",
+        chk("Primary <strong>yellow</strong> jersey · <strong>black, red, blue, green, and pink</strong> alternates") +
+        chk("Black referee shorts (USYS-standard)") +
+        chk("Black socks with white stripes (USYS-standard)") +
+        chk("Black referee shoes") +
+        chk("<strong>USSF referee badge</strong> (current registration)")) +
+      ds("Match Equipment",
+        chk("<strong>Two whistles</strong>. different tones") +
+        chk("Watch with timing capability (countdown + added time)") +
+        chk("<strong>Yellow & red cards</strong> with player number recording") +
+        chk("Notebook + pencils/pens") +
+        chk("Coin (for coin toss)") +
+        chk("Set of <strong>flags</strong> for AR work")) +
+      ds("Heat &amp; Hydration: Boise in June is HOT",
+        chk("<strong>Large water bottle</strong> (1L+). fill at HQ hydration station") +
+        chk("Electrolyte tabs or sports drink mix. <strong>HQ will have some</strong>") +
+        chk("<strong>High-SPF sunscreen</strong> (50+). reapply every 2 hours or every game") +
+        chk("Hat or visor for between games") +
+        chk("Sunglasses (for off-field; <strong>please remove on field</strong>)") +
+        chk("Towel for sweat / cooldown")) +
+      ds("Personal & Travel",
+        chk("Government ID") +
+        chk("Cell phone + charger (battery pack recommended for full days)") +
+        chk("Hotel confirmation") +
+        chk("Casual evening clothes (multiple sets. laundry options limited)") +
+        chk("Energy snacks. bananas, granola bars, jerky · <strong>HQ will have some also</strong>") +
+        chk("Basic first aid: bandaids, blister care, ibuprofen")) +
+      callout("red", "⚠️", "<strong>Forget something?</strong> HQ has limited backup. Pack smart, check the night before.");
+    }
+  },
+  {
+    id:"tour-hotel", cat:"tournament", icon:"🏨",
+    title:"Hotel. Comfort Inn & Suites",
+    sub:"Address, breakfast, transit to Simplot",
+    eyebrow:"Tournament",
+    keywords:"hotel comfort inn boise airport elder street breakfast parking shuttle carpool",
+    build: function() {
+      return ds("Location",
+        dt("<strong>Comfort Inn &amp; Suites Boise Airport</strong>") +
+        dt("3625 W Elder Street · Boise, ID 83705") +
+        dt("Roughly 1 mile from Boise Airport (BOI). <strong>Contact SRC for pickup arrangements</strong> at the hotel, or use the shuttle provided by the hotel. <em>Please take care of the driver. you are representing us all.</em>")) +
+      ds("Breakfast",
+        dt("Full hot breakfast included with stay. Served <strong>6:00–9:30 AM</strong> in the lobby breakfast room.") +
+        bul("Eggs, breakfast meats, pancakes/waffles") +
+        bul("Yogurt, fruit, granola, oatmeal") +
+        bul("Coffee, juice, milk") +
+        callout("gold", "☕", "On the road by 6:30? Grab a coffee + breakfast burrito to-go from the front desk station.")) +
+      ds("Parking & Pool",
+        chk("Free on-site parking") +
+        chk("Indoor pool &amp; fitness area") +
+        chk("Pet-friendly. but we ask <strong>PLEASE NO PETS</strong>")) +
+      ds("Getting to Simplot Sports Complex",
+        dt("<strong>Simplot is 6 miles from the hotel.</strong> Plan <strong>15 to 20 minutes</strong> drive time, longer in morning traffic.") +
+        bul("<strong>By car:</strong> I-84 east, exit Gowen Rd → E Grand Forest Dr → S Quamash Way") +
+        bul("<strong>Carpools will be created the night before</strong> in the meetings.")) +
+      callout("blue", "🛏", "<strong>Room change requests:</strong> Go to <strong>Deanna first</strong>, then Jeff, then Karen. Don't ask the front desk. On Location manages the group block.");
+    }
+  },
+  {
+    id:"tour-contacts", cat:"tournament", icon:"☎️",
+    title:"HQ & Emergency Contacts",
+    sub:"Tournament leadership, medical, and emergency lines",
+    eyebrow:"Tournament",
+    keywords:"contact emergency phone HQ tent karen jeff deanna medical",
+    build: function() {
+      return ds("Tournament Leadership",
+        contact("Karen Abt Coulson", "Lead Referee Administrator", "Call Jeff first") +
+        contact("Jeff Arthurholtz", "Assistant Lead RA", "Call Deanna first") +
+        contact("Deanna Duncan-Allen", "Referee Liaison · Check-in", "Disconnected")) +
+      ds("Medical & Emergency",
+        contact("Emergency", "Life threatening", "911") +
+        contact("St. Luke's Boise Medical Center", "Nearest hospital", "208.381.2222") +
+        contact("Saint Alphonsus Urgent Care", "Non-emergency injury", "208.367.3627")) +
+      ds("Field Locations",
+        dt("<strong>HQ Tent / Referee Tent:</strong> south of Field 5, Simplot Sports Complex") +
+        dt("<strong>Medical tent:</strong> next to HQ, west side") +
+        dt("<strong>Food tent:</strong> east of HQ")) +
+      callout("red", "⚠️", "<strong>For any life-threatening emergency, call 911 immediately.</strong> Notify HQ as soon as possible after. Do not delay 911 to contact tournament leadership first.");
+    }
+  },
+
+  /* ═══════ GAME DAY (lifted from CREST) ═══════ */
+  {
+    id:"gd-pregame", cat:"gameday", icon:"🕒",
+    title:"Pre-Game Procedures",
+    sub:"Arrival, crew pre-game, inspections, captains",
+    eyebrow:"Game Day",
+    keywords:"pregame arrival crew meeting inspection captain coin toss field check QR",
+    build: function() {
+      return ds("Arrival",
+        stp(1, "Arrive at HQ <strong>more than 1 hour before kickoff</strong>. Find your crew at the table and check in <strong>EXACTLY 1 hour before kick off</strong>.") +
+        stp(2, "Check in using the <strong>QR code on your binder</strong>. Referee will check in the whole crew.") +
+        stp(3, "Grab water, do a solid pre-game, head to the field <strong>30 minutes before kick off</strong>.")) +
+      ds("Crew Pre-Game",
+        bul("Confirm <strong>positions and expectations</strong> of each crew member") +
+        bul("Set <strong>signal standards</strong> for substitution, offside, advantage protocol") +
+        bul("Discuss <strong>foul selection</strong> and when each AR will be expected to be involved. and what information is needed if a conference happens") +
+        bul("<strong>Match-specific</strong> or any known issues, prior cards, weather considerations") +
+        bul("Pre-game stretch together and walk on as <strong>ONE team</strong>")) +
+      ds("Field Inspection",
+        chk("Goals secure (anchored or weighted)") +
+        chk("Nets intact, free of holes") +
+        chk("Flags at corners") +
+        chk("Field markings clear and legal") +
+        chk("Field free of hazards (sprinkler heads, debris, water)") +
+        chk("Tech areas defined")) +
+      ds("Captains & Coin Toss",
+        stp(1, "Captains and crew meet at midfield. <strong>10 minutes before kickoff</strong>") +
+        stp(2, "<strong>Verify Captains</strong>") +
+        stp(3, "Coin toss. winning team gets pick of <strong>which goal they attack first</strong> or <strong>kick off</strong>") +
+        stp(4, "Shake hands and <strong>LET'S GO!</strong>")) +
+      callout("gold", "⏱️", "Be on the field <strong>3 minutes before kickoff, ready to go.</strong> Set the example for the teams to follow.");
+    }
+  },
+  {
+    id:"gd-during", cat:"gameday", icon:"⚽",
+    title:"During the Game",
+    sub:"Positioning, signals, communication, management",
+    eyebrow:"Game Day",
+    keywords:"during game positioning signals S system diagonal offside communication management substitution proximity",
+    build: function() {
+      return ds("CR Positioning. \"S\" System of Control (Diagonal System)",
+        bul("Move on an <strong>\"S\" pattern</strong> with the play, keeping the ball between yourself and the lead AR") +
+        bul("Stay <strong>10–15 yards</strong> from active play whenever possible. <strong>Proximity will lead to your credibility.</strong>") +
+        bul("Sprint to gain position when transition happens fast") +
+        bul("Be in the penalty area for crosses and corner kicks")) +
+      ds("AR Positioning",
+        bul("Stay <strong>level with the second-to-last defender</strong> OR the ball. whichever is closer to goal line") +
+        bul("Be <strong>square to the field</strong> when a decision needs to be made") +
+        bul("Sidestep. <strong>never turn your back to play</strong>")) +
+      ds("Standard Signals",
+        bul("<strong>Offside:</strong> flag up vertical, then point: far / center / near") +
+        bul("<strong>Substitution:</strong> AR raises both hands above head with flag") +
+        bul("<strong>Throw-in direction:</strong> point along touch line") +
+        bul("<strong>Foul:</strong> AR holds flag still; CR makes the decision")) +
+      ds("Game Management",
+        chk("<strong>Communicate early to players.</strong> Preventive language stops fouls before they happen") +
+        chk("Be firm and consistent. don't change standards within the match") +
+        chk("Stay calm under pressure. your tone sets the tone") +
+        chk("Use the <strong>stepped approach</strong>: prevent → warn → caution → send-off") +
+        chk("Manage <strong>injuries quickly</strong>, get the player off <strong>RESPECTFULLY</strong>, get the game restarted")) +
+      callout("blue", "💬", "<strong>Talk to your AR.</strong> Eye contact at every <strong>dead ball and restart</strong>. Confirm goals, set restart positions, signal time additions.");
+    }
+  },
+  {
+    id:"gd-postgame", cat:"gameday", icon:"📋",
+    title:"Post-Game Procedures",
+    sub:"Final whistle, reporting, debrief",
+    eyebrow:"Game Day",
+    keywords:"postgame final whistle report debrief send-off card report",
+    build: function() {
+      return ds("Final Whistle",
+        stp(1, "Acknowledge captains. <strong>Shake hands with teams and coaches.</strong>") +
+        stp(2, "Walk off as a unit, gather things and head to <strong>HQ to do paperwork</strong>.") +
+        stp(3, "Meet with <strong>Ref Coach for debriefing</strong> and cold waters!")) +
+      ds("Match Report",
+        bul("<strong>Score</strong>. confirm final, accurate, both halves") +
+        bul("<strong>Cautions</strong>. time, team, player number, reason") +
+        bul("<strong>Send-offs</strong>. same detail + supplemental incident report <strong>IMMEDIATELY</strong> to Deanna") +
+        bul("<strong>Notable incidents</strong>. injuries, weather stops, equipment issues") +
+        bul("Submit <strong>game card</strong> per tournament process. Deanna will collect at HQ")) +
+      ds("Send-Off / Red Card Reporting",
+        callout("red", "⚠️", "<strong>Every send-off requires a written supplemental report.</strong> Be detailed, factual, neutral. <strong>Must be submitted immediately after the game.</strong>") +
+        bul("Capture <strong>exact words</strong> used (if verbal offense)") +
+        bul("Describe the action precisely. no opinion, no editorialization") +
+        bul("Include preceding circumstances if relevant") +
+        bul("Note other players' or coaches' involvement")) +
+      ds("Crew Debrief with Referee Coaches",
+        bul("Quick <strong>10-minute debrief</strong> with your crew. what went well and what we'd do different") +
+        bul("Acknowledge each other. this is a team craft") +
+        bul("<strong>Ref coach feedback will follow. be open to it!</strong>"));
+    }
+  },
+  {
+    id:"gd-pocketguide", cat:"gameday", icon:"📄",
+    title:"Game Day Pocket Guide",
+    sub:"Quick-reference for the field",
+    eyebrow:"Game Day",
+    keywords:"pocket guide quick reference field checklist countdown",
+    build: function() {
+      return ds("60 Minutes Before",
+        chk("Arrive at HQ · check in at QR binder") +
+        chk("Crew meeting with positions and protocols")) +
+      ds("30 Minutes Before",
+        chk("Walk to field as a unit and inspect field") +
+        chk("Check in teams") +
+        chk("Warmup as a crew")) +
+      ds("15 Minutes Before",
+        chk("Confirm tech areas") +
+        chk("Wish coaches <strong>Good Luck</strong>")) +
+      ds("10 Minutes Before",
+        chk("Coin toss with Captains")) +
+      ds("5 Minutes Before",
+        chk("Crew takes positions")) +
+      ds("Kickoff. ON TIME",
+        chk("Protect players") +
+        chk("Call fouls") +
+        chk("Have fun")) +
+      ds("Halftime",
+        chk("Walk off with crew") +
+        chk("Discuss moments in first half") +
+        chk("Get to midfield with 2 min left") +
+        chk("Restart second half <strong>ON TIME</strong>")) +
+      ds("End of Match",
+        chk("Acknowledge captains and coaches") +
+        chk("Walk off as a team, collect things and head to HQ for report"));
+    }
+  },
+  {
+    id:"gd-pk", cat:"gameday", icon:"🎯",
+    title:"Penalty Kick Procedure",
+    sub:"In-match PK and kicks from the mark",
+    eyebrow:"Game Day",
+    keywords:"penalty kick PK kicks from the mark shootout procedure goalkeeper line encroachment",
+    build: function() {
+      return ds("In-Game Penalty Kick",
+        stp(1, "Ball placed on penalty mark (11m / 12 yards)") +
+        stp(2, "<strong>Kicker</strong> identified and positioned behind the ball") +
+        stp(3, "<strong>Goalkeeper</strong> on goal line between posts, facing kicker, at least one foot on or in line with line") +
+        stp(4, "<strong>All other players</strong> outside penalty area, outside arc, behind penalty mark") +
+        stp(5, "CR signals with whistle when ready") +
+        stp(6, "Ball is in play when kicked and moves forward")) +
+      callout("red", "⚠️", "<strong>GK encroachment + goal not scored:</strong> retake the kick + caution GK. <strong>GK encroachment + goal scored:</strong> allow the goal.") +
+      ds("Kicks From the Mark (Shootout)",
+        bul("Five kicks per team alternating, then sudden death") +
+        bul("Only players on field at end of match (or extra time) are eligible") +
+        bul("Teams may make <strong>like-for-like substitution</strong> for an injured GK only") +
+        bul("All other players outside the penalty area in the center circle") +
+        bul("AR1 on goal line, AR2 in center circle managing players, 4th tracks order"));
+    }
+  },
+
+  /* ═══════ RULES. LAWS OF THE GAME (lifted from CREST) ═══════ */
+  {
+    id:"laws-1-2", cat:"rules", icon:"⚽",
+    title:"Laws 1 & 2. Field & Ball",
+    sub:"Dimensions, markings, ball specifications",
+    eyebrow:"IFAB Laws 1–2",
+    keywords:"law 1 2 field of play ball dimensions markings goal area penalty",
+    build: function() {
+      return ds("Law 1. The Field of Play",
+        bul("Field must be <strong>rectangular</strong>. Touch lines longer than goal lines.") +
+        bul("Goal area: <strong>5.5m</strong> (6 yards) from each goalpost extending into field") +
+        bul("Penalty area: <strong>16.5m</strong> (18 yards) from each goalpost extending into field") +
+        bul("Penalty mark: <strong>11m</strong> (12 yards) from goal line, equidistant from goalposts") +
+        bul("Center circle radius: <strong>9.15m</strong> (10 yards)")) +
+      ds("Law 2. The Ball",
+        bul("Spherical, leather or other suitable material") +
+        bul("Circumference: <strong>68–70 cm</strong> (27–28 inches)") +
+        bul("Weight: <strong>410–450 g</strong> at start of match") +
+        bul("Pressure: <strong>0.6–1.1 atmosphere</strong> at sea level"));
+    }
+  },
+  {
+    id:"laws-3-4", cat:"rules", icon:"👤",
+    title:"Laws 3 & 4. Players & Equipment",
+    sub:"Team size, substitutions, player equipment",
+    eyebrow:"IFAB Laws 3–4",
+    keywords:"law 3 4 players substitution equipment jewelry uniform",
+    build: function() {
+      return ds("Law 3. The Players",
+        bul("Maximum <strong>11 players</strong> per team on field, one must be GK") +
+        bul("Minimum <strong>7 players</strong>. match abandoned if a team drops below 7") +
+        bul("Substitutions: per competition rules · USYS Presidents Cup uses <strong>free substitution</strong>") +
+        bul("Subs enter at <strong>halfway line</strong>, only after the player they replace has left") +
+        bul("Subs require <strong>referee permission</strong> in most competitions")) +
+      ds("Law 4. Players' Equipment",
+        bul("<strong>Basic compulsory:</strong> jersey, shorts, socks, shin guards, footwear") +
+        bul("<strong>Shin guards:</strong> required, covered entirely by socks, made of suitable material") +
+        bul("<strong>No jewelry</strong>. including taped-over rings, earrings, tongue piercings") +
+        bul("GK must wear color distinguishable from teammates and other GK") +
+        bul("Casts: only allowed if <strong>well-padded</strong> and approved by referee")) +
+      callout("gold", "⚠️", "<strong>Equipment check happens at the coin toss.</strong> No exceptions on jewelry. tape is not a workaround.");
+    }
+  },
+  {
+    id:"laws-5-6-7", cat:"rules", icon:"🦺",
+    title:"Laws 5, 6 & 7. Officials & Time",
+    sub:"Referee authority, ARs, match duration",
+    eyebrow:"IFAB Laws 5–7",
+    keywords:"law 5 6 7 referee assistant time duration halftime added time stoppage",
+    build: function() {
+      return ds("Law 5. The Referee",
+        bul("The referee has <strong>full authority</strong> to enforce the Laws of the Game") +
+        bul("Referee decisions are <strong>final</strong> for the match") +
+        bul("Acts on advice of ARs only when seen or applicable") +
+        bul("Stops play for fouls, misconduct, injuries, outside interference")) +
+      ds("Law 6. Other Match Officials",
+        bul("<strong>Assistant Referees (ARs)</strong> signal when ball leaves the field, offside, fouls when better positioned, substitutions") +
+        bul("<strong>4th Official</strong> manages technical areas, sub board, added time display") +
+        bul("ARs do not whistle. they raise the flag and the referee makes the decision")) +
+      ds("Law 7. Duration of the Match",
+        bul("Two equal periods of <strong>45 minutes</strong> (or per competition for youth)") +
+        bul("Halftime no longer than <strong>15 minutes</strong>") +
+        bul("Referee adds time for: substitutions, injuries, time wasting, disciplinary action, drinks/cooling breaks") +
+        bul("4th displays added time at end of each half"));
+    }
+  },
+  {
+    id:"laws-8-9", cat:"rules", icon:"⚽",
+    title:"Laws 8 & 9. Restarts & Ball In Play",
+    sub:"Kick-off, dropped ball, ball in/out of play",
+    eyebrow:"IFAB Laws 8–9",
+    keywords:"law 8 9 kick-off restart dropped ball in play out of play",
+    build: function() {
+      return ds("Law 8. Start & Restart of Play",
+        bul("<strong>Kick-off</strong>: ball stationary on center mark, all players in own half, opponents 9.15m away") +
+        bul("Ball is in play once kicked and clearly moves") +
+        bul("<strong>Goal can be scored directly</strong> from kick-off") +
+        bul("<strong>Dropped ball:</strong> referee drops ball to one player (last player to touch it before stoppage, or GK if in penalty area)")) +
+      ds("Law 9. Ball In and Out of Play",
+        bul("Ball is <strong>out of play</strong> when entire ball crosses goal line or touch line (on ground or in air)") +
+        bul("Ball is <strong>out of play</strong> when play stopped by referee") +
+        bul("Ball is <strong>in play</strong> at all other times, including when it rebounds off goalpost, crossbar, or officials and remains on field"));
+    }
+  },
+  {
+    id:"laws-10-11", cat:"rules", icon:"🎯",
+    title:"Laws 10 & 11. Goals & Offside",
+    sub:"Method of scoring, offside law",
+    eyebrow:"IFAB Laws 10–11",
+    keywords:"law 10 11 goal scoring offside position offense interfering",
+    build: function() {
+      return ds("Law 10. Determining the Outcome of a Match",
+        bul("Goal scored when <strong>entire ball crosses entire goal line</strong>, between the posts, under the crossbar") +
+        bul("Provided no offense by attacking team before or during") +
+        bul("Team scoring more goals wins · equal goals = draw (or per competition tiebreakers)")) +
+      ds("Law 11. Offside Position",
+        dt("A player is in an offside position if <strong>any part of head, body, or feet is in the opponent's half</strong> AND <strong>closer to opponent's goal line than both the ball and the second-to-last opponent</strong>.") +
+        bul("Hands and arms (up to bottom of armpit) <strong>do not count</strong>") +
+        bul("Level with second-to-last opponent or last two opponents = NOT offside") +
+        bul("Cannot be offside in <strong>own half</strong>")) +
+      ds("Offside Offense",
+        dt("Being in an offside position is not an offense. The player must, at moment ball is played by teammate, become involved in active play by:") +
+        bul("<strong>Interfering with play</strong>. playing or touching the ball") +
+        bul("<strong>Interfering with an opponent</strong>. preventing opponent from playing or being able to play") +
+        bul("<strong>Gaining an advantage</strong> from being in offside position")) +
+      callout("blue", "ℹ️", "<strong>No offside</strong> from: goal kick, throw-in, or corner kick.");
+    }
+  },
+  {
+    id:"laws-12", cat:"rules", icon:"🚨",
+    title:"Law 12. Fouls & Misconduct",
+    sub:"DFK, IFK, cautions, send-offs, DOGSO, SPA",
+    eyebrow:"IFAB Law 12",
+    keywords:"foul misconduct DFK IFK direct indirect DOGSO SPA yellow red card caution send-off handling",
+    build: function() {
+      return ds("Direct Free Kick Offenses",
+        dt("Awarded for careless, reckless, or excessive force in: kicking, tripping, jumping at, charging, striking, pushing, tackling, holding, spitting, or handling the ball.") +
+        callout("gold", "⚠️", "If any of the 10 DFK offenses occur inside the offender's <em>own penalty area</em>, it is a <strong>penalty kick</strong>.")) +
+      ds("Indirect Free Kick Offenses",
+        bul("GK handling after deliberate back-pass from teammate's foot") +
+        bul("GK handling after receiving directly from a throw-in") +
+        bul("GK not releasing the ball within 6 seconds") +
+        bul("Dangerous play") +
+        bul("Impeding an opponent without going for the ball")) +
+      ds("DOGSO & SPA",
+        dt("<strong>DOGSO</strong>. Denying an Obvious Goal-Scoring Opportunity = <strong>red card send-off</strong>") +
+        dt("The 4 Ds: <strong>Distance</strong> to goal, <strong>Direction</strong> of play, number of <strong>Defenders</strong>, <strong>Destiny</strong> of the ball.") +
+        dt("<strong>SPA</strong>. Stopping a Promising Attack = <strong>yellow card caution</strong>")) +
+      ds("Cautions (Yellow Card)",
+        bul("Unsporting behaviour") + bul("Dissent") + bul("Persistent infringement") +
+        bul("Delaying restart") + bul("Encroachment") + bul("Entering/leaving without permission") + bul("Simulation")) +
+      ds("Send-Offs (Red Card)",
+        bul("Serious foul play") + bul("Violent conduct") + bul("Spitting at a person") +
+        bul("DOGSO") + bul("Two cautions in same match") +
+        bul("Offensive, insulting, or abusive language/gestures"));
+    }
+  },
+  {
+    id:"laws-13-17", cat:"rules", icon:"🚩",
+    title:"Laws 13–17. Restarts",
+    sub:"Free kicks, PKs, throw-ins, goal kicks, corners",
+    eyebrow:"IFAB Laws 13–17",
+    keywords:"free kick penalty kick throw-in goal kick corner kick encroachment wall restart",
+    build: function() {
+      return ds("Law 13. Free Kicks",
+        bul("<strong>Direct Free Kick (DFK):</strong> goal can be scored directly") +
+        bul("<strong>Indirect Free Kick (IFK):</strong> referee must hold arm up until a second player touches the ball") +
+        bul("Defending team must be 9.15m (10 yards) from the ball") +
+        bul("Ball is in play when it is kicked and clearly moves")) +
+      ds("Law 14. Penalty Kick",
+        bul("Ball on penalty mark (11m / 12 yards)") +
+        bul("GK on goal line between posts, facing kicker") +
+        bul("All other players: outside penalty area, outside arc, behind penalty mark") +
+        bul("Ball is in play when kicked and moves forward") +
+        callout("red", "⚠️", "GK moves off line before kick AND kick fails = retake + caution GK. If goal scored despite GK encroachment = allow the goal.")) +
+      ds("Law 15. Throw-In",
+        bul("Both feet on or behind the touch line at point of throw") +
+        bul("Ball released from behind and over the head with both hands") +
+        bul("Goal cannot be scored directly from a throw-in")) +
+      ds("Law 16. Goal Kick",
+        bul("Taken from anywhere in the goal area") +
+        bul("Ball is in play when it is kicked and clearly moves") +
+        bul("Opposing players must be outside the penalty area until ball is in play")) +
+      ds("Law 17. Corner Kick",
+        bul("Ball placed fully within the corner arc nearest to where it crossed the goal line") +
+        bul("Defending team must be 9.15m from the corner arc") +
+        bul("Goal can be scored directly from a corner kick"));
+    }
+  },
+  {
+    id:"rules-competition", cat:"rules", icon:"📋",
+    title:"Rules of Competition. Presidents Cup",
+    sub:"USYS National Championships & Presidents Cup rules",
+    eyebrow:"USYS Competition Rules",
+    keywords:"rules competition presidents cup national USYS roster substitution tournament format",
+    build: function() {
+      return ds("Source Document",
+        dt("Full rules: <strong>USYS National Championships and National Presidents Cup Competition Rules</strong> (effective March 2026 edition).") +
+        callout("blue", "📄", "The full PDF will be linked here when published to the hub. Until then, the highlights below cover what referees most need to know.")) +
+      ds("Match Length by Age Group",
+        bul("<strong>U13–U14:</strong> Two 35-minute halves (70 min total)") +
+        bul("<strong>U15–U16:</strong> Two 40-minute halves (80 min total)") +
+        bul("<strong>U17–U19:</strong> Two 45-minute halves (90 min total)") +
+        bul("Halftime: 5–10 minutes") +
+        bul("No overtime in pool play · ties stand")) +
+      ds("Substitutions",
+        bul("<strong>Free substitution</strong> permitted") +
+        bul("Subs can re-enter") +
+        bul("Substitutions at <strong>any stoppage</strong> with referee permission") +
+        bul("Subs enter at halfway line after player they replace leaves")) +
+      ds("Roster & Eligibility",
+        bul("<strong>22 players max</strong> on event roster") +
+        bul("<strong>18 players</strong> dressed and on bench per match") +
+        bul("Players must be properly registered through state association")) +
+      ds("Tournament Format",
+        bul("Pool play across the four days · top two from each pool advance") +
+        bul("Single-elimination knockout for finals") +
+        bul("Tiebreakers: head-to-head → goal difference → goals scored → fewest goals allowed → coin flip")) +
+      ds("Game Day Conduct",
+        bul("Coaches confined to <strong>technical area</strong>") +
+        bul("One coach standing at a time during play") +
+        bul("Sideline behavior governed by tournament code of conduct + RAP policy") +
+        bul("Red card to coach = removal from sideline + sit-out next match minimum")) +
+      callout("gold", "⚠️", "<strong>Specific competition rules can override these defaults.</strong> When in doubt, check the latest USYS rules PDF or ask Karen / Daniel Radford.");
+    }
+  },
+
+  /* ═══════ SAFETY & POLICIES ═══════ */
+  {
+    id:"policy-rap", cat:"safety", icon:"🛡",
+    title:"RAP. Referee Abuse Prevention",
+    sub:"U.S. Soccer Policy 531-9 · Penalty matrix · Reporting",
+    eyebrow:"Policy",
+    keywords:"RAP referee abuse prevention policy 531-9 respect the call penalty matrix levels report",
+    build: function() {
+      return ds("The Policy",
+        dt("<strong>U.S. Soccer Policy 531-9. Respect The Call</strong>. is in effect across ALL sanctioned matches including the USYS Presidents Cup. It covers coaches, players, spectators, and administrators.") +
+        callout("red", "⚠️", "<strong>90%</strong> of referees report abuse has increased. <strong>60%</strong> do not recertify because of harassment. <strong>This tournament stands behind you.</strong>")) +
+      ds("Abuse Levels and Mandatory Sanctions",
+        lvl("Level 1", "Non-Physical", "Offensive, insulting, belittling, taunting language", "2-game suspension minimum") +
+        lvl("Level 2", "Non-Physical", "Harassment, intimidation, threats, retaliation", "4-game suspension minimum") +
+        lvl("Level 3", "Non-Physical", "Aggression, physical threats, cyberbullying, doxing", "6 games + 6-12 month suspension") +
+        lvl("Level 4", "Physical", "Any physical contact, assault, physical violence", "Permanent ban + possible criminal charges")) +
+      ds("Penalty Multipliers",
+        bul("<strong>Second offense</strong> = double the minimum punishment") +
+        bul("<strong>Third offense</strong> = lifetime ban") +
+        bul("<strong>Any offense against a minor referee</strong> = TRIPLE punishment automatically")) +
+      ds("How to Report",
+        dt("<strong>During the game:</strong> handle per the Laws (caution or send-off if warranted).") +
+        dt("<strong>After the game:</strong> complete your match report AND a supplemental incident report. Submit to Karen or Deanna at HQ <strong>within 24 hours</strong>.") +
+        callout("red", "📞", "<strong>Urgent during tournament:</strong> Call Karen Abt directly. <strong>Off-tournament:</strong> Email Daniel Radford at USYS."));
+    }
+  },
+  {
+    id:"policy-coc", cat:"safety", icon:"📜",
+    title:"Code of Conduct",
+    sub:"Referee professionalism and expectations",
+    eyebrow:"Policy",
+    keywords:"code conduct professional behavior expectations integrity",
+    build: function() {
+      return ds("On-Field Expectations",
+        chk("Be in <strong>full USYS uniform</strong>. clean, complete, proper colors") +
+        chk("Arrive <strong>at least 60 minutes</strong> before kickoff") +
+        chk("Walk on and off the field <strong>as a crew</strong>") +
+        chk("No phones on the field except for emergencies or 4th-official use") +
+        chk("Maintain composure regardless of provocation")) +
+      ds("Off-Field Expectations",
+        chk("Represent the tournament, USYS, and yourself with professionalism in all venues") +
+        chk("No alcohol consumption within <strong>4 hours of your next game</strong>") +
+        chk("No social media posts about specific players, coaches, or incidents from your games") +
+        chk("Photos with players/coaches: not during the match, not in uniform on game day") +
+        chk("Respect the hotel, the venue, the community")) +
+      ds("Crew Conduct",
+        chk("Disagreements with crewmates: handled <strong>privately</strong>, never in front of teams") +
+        chk("If you have concerns about a crewmate's performance, bring it to your ref coach or to Karen/Jeff") +
+        chk("Support each other. this is a team craft") +
+        chk("If you're not feeling well (heat, illness, injury), <strong>tell someone immediately</strong>. we'll cover for you")) +
+      callout("gold", "⚖️", "<strong>You are an ambassador.</strong> How you carry yourself off the field shapes how referees are seen on it.");
+    }
+  },
+  {
+    id:"safety-heat", cat:"safety", icon:"🌡",
+    title:"Heat & Hydration Policy",
+    sub:"Boise in June. recognize, prevent, respond",
+    eyebrow:"Health & Safety",
+    keywords:"heat hydration water cooling break dehydration illness exhaustion stroke Boise summer",
+    build: function() {
+      return ds("Boise Weather Expectations",
+        dt("Late June in Boise commonly reaches <strong>90–95°F</strong>, with occasional days into the upper 90s. Mornings are cool, afternoons get hot fast. Low humidity but high sun exposure on open fields.") +
+        callout("red", "☀️", "<strong>The 2:20 PM slot is the hardest.</strong> Hydrate aggressively from the moment you wake up.")) +
+      ds("Hydration. Before, During, After",
+        chk("<strong>Before:</strong> 16–20 oz water 2 hours before first game") +
+        chk("<strong>During:</strong> Sip water at every stoppage. Use cooling breaks if granted.") +
+        chk("<strong>After:</strong> 16–24 oz water immediately, electrolytes if heavily sweating") +
+        chk("Avoid coffee/alcohol the night before back-to-back days") +
+        chk("Bring electrolyte tabs or sports drink mix")) +
+      ds("Cooling Breaks",
+        dt("<strong>Cooling breaks (separate from drinks breaks)</strong> are at the referee's discretion when conditions warrant. Typical thresholds:") +
+        bul("Approximately <strong>90°F+ ambient temperature</strong>") +
+        bul("WBGT (heat index) over <strong>82°F</strong>") +
+        bul("One per half · approximately 3 minutes · ~30 minutes into each half") +
+        bul("Coordinate with crew and HQ. if the conditions warrant it for one game, they likely warrant it for all")) +
+      ds("Recognize Heat Illness",
+        callout("gold", "🟡", "<strong>Heat exhaustion:</strong> heavy sweating, weakness, dizziness, nausea, cool clammy skin. <strong>Get the person into shade, cool them down, hydrate slowly.</strong>") +
+        callout("red", "🔴", "<strong>Heat stroke:</strong> hot dry skin (sweating may have stopped), confusion, rapid pulse, possible loss of consciousness. <strong>CALL 911 IMMEDIATELY.</strong> Cool aggressively with ice/water.")) +
+      ds("If You Feel Off",
+        chk("Tell your crew <strong>immediately</strong>") +
+        chk("Walk to the touch line. signal the 4th or AR") +
+        chk("Sit in shade, hydrate, get help to HQ") +
+        chk("Better to swap out and be fine for the next game than collapse on the field"));
+    }
+  },
+  {
+    id:"safety-injury", cat:"safety", icon:"🚑",
+    title:"Injury & Emergency Protocol",
+    sub:"What to do when a player goes down",
+    eyebrow:"Health & Safety",
+    keywords:"injury emergency player down concussion bleeding ambulance medical 911",
+    build: function() {
+      return ds("Player Down. Standard Response",
+        stp(1, "<strong>Stop play immediately</strong> if the injury looks serious. Use judgment for minor knocks.") +
+        stp(2, "Do <strong>NOT</strong> touch or move the player.") +
+        stp(3, "Wave on the team trainer / medical staff.") +
+        stp(4, "Clear other players away from the injured player.") +
+        stp(5, "Make sure ambulance access is unobstructed if needed.")) +
+      ds("When to Call 911",
+        callout("red", "📞", "<strong>Don't hesitate.</strong> If there is any doubt about a player's safety, call 911 and let the EMTs decide. You are not a doctor and shouldn't try to be.") +
+        chk("Loss of consciousness. even briefly") +
+        chk("Difficulty breathing") +
+        chk("Severe bleeding that won't stop with pressure") +
+        chk("Suspected neck or spine injury. DO NOT MOVE") +
+        chk("Severe limb deformity (suspected fracture)") +
+        chk("Seizure")) +
+      ds("Concussion Recognition",
+        dt("<strong>Possible signs of concussion</strong>. any single one is enough to require removal from play:") +
+        bul("Loss of consciousness, even momentarily") +
+        bul("Confusion, doesn't know score or opponent") +
+        bul("Vacant stare, slow to respond") +
+        bul("Memory loss surrounding the play") +
+        bul("Headache, dizziness, nausea reported") +
+        bul("Vomiting after head contact") +
+        bul("Slurred speech, balance problems") +
+        callout("red", "🧠", "<strong>If you suspect concussion, the player CANNOT return to play.</strong> Per US Soccer concussion policy, removal is mandatory. The player may not re-enter even if they 'feel fine.'")) +
+      ds("Blood & Bleeding",
+        bul("Player with bleeding wound <strong>must leave the field</strong> to be treated") +
+        bul("Player may return when bleeding is stopped and wound is covered") +
+        bul("If <strong>blood is on uniform</strong>, uniform must be changed before re-entry"));
+    }
+  },
+
+  /* ═══════ OFF FIELD ═══════ */
+  {
+    id:"off-food-hotel", cat:"offfield", icon:"🍴",
+    title:"Food. Near the Hotel",
+    sub:"Walking distance and a short drive up Vista",
+    eyebrow:"Off Field",
+    keywords:"food restaurant hotel comfort inn airport vista applebees dinner walking distance das alpenhaus german",
+    build: function() {
+      return ds("Walking Distance",
+        dt("<strong>Applebee's</strong>. The only spot you can walk to from the hotel. Familiar American chain, casual. Good fallback when nobody wants to drive.")) +
+      ds("Short 5-Minute Drive Up Vista",
+        dt("<strong>Willowcreek Grill &amp; Sushi</strong>. Local Boise spot with a full grill menu and a sushi side. Versatile if your crew can't agree on what to eat.") +
+        dt("<strong>Das Alpenhaus</strong>. <strong>Great German food!</strong> Schnitzel, brats, the real deal. A local highlight.") +
+        dt("<strong>TOV Curry &amp; Wing</strong>. Curry house and wing spot in one. Interesting menu, locals like it.") +
+        dt("<strong>Red Bench Pizza</strong>. Local pizza, brick-oven style. Good for a sit-down crew dinner.") +
+        dt("<strong>Bad Boy Burger</strong>. Boise's own. Same spot as the one near the venue. find the location that suits your route.") +
+        dt("<strong>Guthrie's Chicken</strong>. Chicken fingers and fries. Reliable comfort food.") +
+        dt("<strong>BBQ for Life</strong>. Smoked meats, sides, big portions.") +
+        dt("<strong>Jimmy John's</strong>. Subs, fast, predictable. When you need food in 8 minutes.") +
+        dt("<strong>Cold Stone Creamery</strong>. Ice cream for when the day calls for it.")) +
+      callout("gold", "🚗", "<strong>Carpool to dinner.</strong> Group up <strong>after the PM meeting</strong>, way easier than separate Uber rides to the same place.");
+    }
+  },
+  {
+    id:"off-food-venue", cat:"offfield", icon:"🍔",
+    title:"Food. Near the Venue",
+    sub:"Local-friend's ranked list for the Simplot area",
+    eyebrow:"Off Field",
+    keywords:"food restaurant simplot sports complex columbia village near venue lunch sandwich pizza fat guy deli",
+    build: function() {
+      return ds("Top Recommendations. In This Order",
+        dt("<strong>1. Fat Guy Deli</strong>. Great sandwiches, big portions. The local favorite, hands down.") +
+        dt("<strong>2. Happy Teriyaki</strong>. Rice bowls and Asian-style quick meals. Fast, filling, and a nice break from sandwiches.") +
+        dt("<strong>3. Mancino's Pizza &amp; Grinders</strong>. Pizza and oversized hot subs (their famous \"grinders\"). Solid value.") +
+        dt("<strong>4. Bad Boy Burger</strong>. Boise's own burger joint. Thick, fresh, worth the stop if you have time.") +
+        dt("<strong>5. Domino's</strong>. Reliable for takeout if you're feeding a crew between games.")) +
+      ds("Quick &amp; Easy",
+        dt("<strong>Starbucks</strong>. Inside the Albertson's grocery store. Quick coffee + breakfast sandwich run.") +
+        dt("<strong>Albertson's Deli</strong>. Great grab-and-go sandwiches and lunch options. Sneaky-good for a grocery store.") +
+        dt("<strong>Café Capri</strong>. Coffee and pastries. Good between-games pick-me-up.")) +
+      callout("red", "🚫", "<strong>McDonald's. PLEASE NO!</strong> You will die on the field. Save it for after the tournament. We mean it.") +
+      callout("gold", "🥡", "<strong>Pro tip:</strong> The HQ tent has shade and chairs, <strong>snacks and water</strong>. that's your dining room between games.");
+    }
+  },
+  {
+    id:"off-activities", cat:"offfield", icon:"🌄",
+    title:"Around Boise. Things to Do",
+    sub:"Local-friend's picks for downtime",
+    eyebrow:"Off Field",
+    keywords:"activities boise things to do greenbelt park downtown soccer match hike green acres hyde park camelsback table rock quinns pond",
+    build: function() {
+      return ds("The Boise Greenbelt",
+        dt("25-mile paved trail along the Boise River. the spine of the city. <strong>Grab a green scooter or rent a bike</strong> and ride. Half the best stuff in Boise is on or near the Greenbelt.")) +
+      ds("Green Acres &nbsp;★ Local Favorite",
+        dt("Live music and food trucks right on the Greenbelt, <strong>Thursday through Sunday evenings.</strong>") +
+        callout("gold", "⭐", "<strong>This is the personal favorite.</strong> If you have one free evening, this is the move. Casual, lively, great food.")) +
+      ds("Hyde Park & The Foothills",
+        dt("A short drive from downtown. easy hike + great food in one neighborhood. Make a half-day of it:") +
+        bul("<strong>Camel's Back Park</strong>. easy hike up the hill, panoramic views of Boise from the top") +
+        bul("<strong>Parrilla Grill</strong>. Tex-Mex / Latin fusion, lively, big portions") +
+        bul("<strong>Hyde Park Pub & Grill</strong>. neighborhood pub, solid food, good for a crew") +
+        bul("<strong>Java Hyde Park</strong>. coffee and breakfast spot") +
+        callout("gold", "⭐", "<strong>Goodies Old-School Ice Cream Fountain &amp; Candy</strong>. personal favorite. Step back in time. Ice cream sundaes, candy counter, soda fountain. <strong>Don't skip this.</strong>")) +
+      ds("AC Boise Soccer Match. Saturday Evening, June 20",
+        callout("green", "⚽", "<strong>Live pro soccer right in town.</strong> AC Boise plays at home Saturday evening, June 20. Going as a crew is a perfect mid-tournament reset. watch the game with fresh eyes after working all day. Check <strong>acboise.com</strong> for kickoff time and tickets.")) +
+      ds("Table Rock Hike",
+        dt("Iconic Boise hike up to the cross above the city. <strong>About 4 miles round trip, under an hour</strong> if you keep moving.") +
+        callout("gold", "🌅", "<strong>Best time:</strong> sunrise or just before sunset. <strong>Worst time:</strong> mid-afternoon. no shade, brutal heat. Bring more water than you think you need.")) +
+      ds("Quinn's Pond",
+        dt("Paddleboarding, kayak rentals, and a small sandy beach. right on the Greenbelt. Bring a swimsuit and a towel. Easy way to cool down on a hot afternoon.")) +
+      ds("Realms Arcade & Gaming",
+        dt("Old-school arcade plus modern gaming. Good rainy-day plan or evening crew hang.") +
+        dt("<strong>📍 109 S 23rd St Suite A, Boise, ID 83702</strong>")) +
+      ds("Top Golf Boise",
+        dt("Driving range bays with food, drinks, and group games. <strong>Great group activity</strong>. everyone can play regardless of skill, and you can settle in for a couple hours."));
+    }
+  },
+  {
+    id:"off-quick", cat:"offfield", icon:"⏱",
+    title:"If You Have 1 Hour",
+    sub:"Three quick downtime ideas between sessions",
+    eyebrow:"Off Field",
+    keywords:"quick activities 1 hour short break free time afternoon",
+    build: function() {
+      return ds("1. Greenbelt Walk",
+        dt("Park at <strong>Ann Morrison Park</strong>. Walk 20 minutes east on the Greenbelt, 20 minutes back. River, trees, calm. Best decompression after a hard game.")) +
+      ds("2. JUMP",
+        dt("<strong>Jack's Urban Meeting Place</strong> downtown. Free creative space with a giant slide on the side of a building. Yes, an actual slide. Anyone can ride. It's weird and great.")) +
+      ds("3. Capitol Building",
+        dt("<strong>Idaho State Capitol</strong> is free and stunning inside. 20-minute self-guided wander. Beautiful for photos.")) +
+      callout("gold", "💆", "<strong>What NOT to do with 1 hour:</strong> nap in your car. You'll wake up worse. Take a real walk, drink water, get your head right for the next game.");
+    }
+  }
+];
+
+// ════════════════════════════════════════════════════════════════
+// RENDERING
+// ════════════════════════════════════════════════════════════════
+var SECTIONS = ["tournament","gameday","rules","safety","offfield"];
+var currentFilter = "all";
+
+function renderGrids() {
+  SECTIONS.forEach(function(cat) {
+    var grid = document.getElementById("grid-" + cat);
+    var mods = MODULES.filter(function(m) { return m.cat === cat; });
+    grid.innerHTML = mods.map(function(m) {
+      return '<button class="module-card" data-cat="' + m.cat + '" data-id="' + m.id + '" onclick="openDetail(\'' + m.id + '\')">' +
+        '<div class="card-row">' +
+          '<div class="card-icon-wrap">' + m.icon + '</div>' +
+          '<div class="card-eyebrow">' + m.eyebrow + '</div>' +
+        '</div>' +
+        '<div class="card-title">' + m.title + '</div>' +
+        '<div class="card-sub">' + m.sub + '</div>' +
+        '</button>';
+    }).join("");
+  });
+  applyFilter();
+}
+
+function applyFilter() {
+  var anyShown = false;
+  SECTIONS.forEach(function(cat) {
+    var header = document.querySelector('.section-header[data-section="' + cat + '"]');
+    var grid = document.getElementById("grid-" + cat);
+    var show = (currentFilter === "all" || currentFilter === cat);
+    if (header) header.style.display = show ? "" : "none";
+    if (grid)   grid.style.display   = show ? "" : "none";
+    if (show) anyShown = true;
+  });
+  document.getElementById("no-results").classList.toggle("show", !anyShown);
+}
+
+document.querySelectorAll(".filter-pill").forEach(function(p) {
+  p.addEventListener("click", function() {
+    document.querySelectorAll(".filter-pill").forEach(function(x) { x.classList.remove("active"); });
+    p.classList.add("active");
+    currentFilter = p.dataset.cat;
+    applyFilter();
+  });
+});
+
+// ════════════════════════════════════════════════════════════════
+// DETAIL PANEL
+// ════════════════════════════════════════════════════════════════
+function openDetail(id) {
+  var m = MODULES.find(function(x) { return x.id === id; });
+  if (!m) return;
+  document.getElementById("detail-eyebrow").textContent = m.eyebrow;
+  document.getElementById("detail-title").textContent = m.title;
+  document.getElementById("detail-sub").textContent = m.sub;
+  document.getElementById("detail-body").innerHTML = m.build();
+  document.getElementById("detail-panel").classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function closeDetail() {
+  document.getElementById("detail-panel").classList.remove("open");
+  document.body.style.overflow = "";
+}
+document.addEventListener("keydown", function(e) {
+  if (e.key === "Escape") closeDetail();
+});
+
+renderGrids();
+
+// ════════════════════════════════════════════════════════════════
+// THEME TOGGLE
+// ════════════════════════════════════════════════════════════════
+(function initTheme() {
+  var stored = '';
+  try { stored = localStorage.getItem('pcup-theme') || ''; } catch (e) {}
+  if (stored === 'dark') { document.body.classList.add('dark'); }
+  updateThemeIcon();
+})();
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  try {
+    localStorage.setItem('pcup-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  } catch (e) {}
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var el = document.getElementById('theme-icon');
+  if (el) { el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️'; }
+}
+</script>
+
+</body>
+</html>
