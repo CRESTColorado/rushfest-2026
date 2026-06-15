@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Roommates. USYS Presidents Cup NW 2026.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800;900&display=swap">
+  <style>
+:root {
+  --steel:       #a5b8d4;
+  --navy:        #243859;
+  --card:        #243859;
+  --card-soft:   #2e466e;
+  --red:         #D52B3B;
+  --red-bri:     #FF4F5F;
+  --gold:        #d4a017;
+  --gold-bri:    #ecbf3e;
+  --green:       #16a34a;
+  --green-bri:   #22c55e;
+  --blue:        #4d7ad9;
+  --blue-bri:    #7da5f7;
+  --text:        var(--navy);
+  --text-soft:   #3d5275;
+  --text-dim:    #6b7d97;
+  --bg:          var(--steel);
+  --shadow:      0 4px 16px rgba(15,42,86,.12);
+  --bebas:       "Barlow Condensed", sans-serif;
+}
+body.dark {
+  --bg:        #0F2A56;
+  --navy:      #ffffff;
+  --text:      #ffffff;
+  --text-soft: rgba(255,255,255,.85);
+  --text-dim:  rgba(255,255,255,.6);
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: "Barlow", sans-serif; background: var(--bg); color: var(--text);
+  min-height: 100vh; position: relative;
+  transition: background-color .25s, color .25s;
+}
+body::before {
+  content: ""; position: fixed; inset: 0; background-image: url('../assets/prescup-white.webp');
+  background-size: 60% auto; background-position: center; background-repeat: no-repeat;
+  opacity: 0.18; pointer-events: none; z-index: 0;
+}
+body.dark::before { opacity: 0.10; }
+
+/* Header */
+.top-strip {
+  background: var(--navy); color: #fff; padding: 16px 20px;
+  display: flex; align-items: center; gap: 14px; position: relative; z-index: 2;
+}
+.top-strip-back {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800; letter-spacing: .14em;
+  color: #fff; text-decoration: none; text-transform: uppercase; padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.25); border-radius: 6px;
+  transition: background .15s;
+}
+.top-strip-back:hover { background: rgba(255,255,255,.1); }
+.top-strip-title { font-family: var(--bebas); font-size: 22px; font-weight: 900; letter-spacing: .04em; }
+.top-strip-sub { font-size: 12px; color: rgba(255,255,255,.6); margin-left: auto; }
+
+/* Theme toggle */
+.theme-toggle-wrap {
+  position: relative; z-index: 5; display: flex; justify-content: center; padding: 16px;
+}
+.theme-toggle {
+  background: rgba(255,255,255,.08); border: 1px solid rgba(15,42,86,.15); border-radius: 28px;
+  padding: 6px 10px; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: all .2s;
+}
+.theme-toggle:hover { background: rgba(255,255,255,.15); }
+.theme-toggle-icon { font-size: 16px; line-height: 1; }
+.toggle-track {
+  position: relative; width: 28px; height: 16px; background: rgba(15,42,86,.2);
+  border-radius: 12px; transition: background .25s;
+}
+body.dark .toggle-track { background: var(--gold); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: transform .25s;
+}
+body.dark .toggle-thumb { transform: translateX(12px); }
+
+/* Page body */
+.page {
+  max-width: 720px; margin: 0 auto; padding: 8px 16px 80px; position: relative; z-index: 1;
+}
+.page-eyebrow {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800; letter-spacing: .16em;
+  color: var(--gold); text-transform: uppercase; margin-bottom: 6px;
+}
+.page-title {
+  font-family: var(--bebas); font-size: 36px; font-weight: 900; letter-spacing: .03em;
+  color: var(--navy); margin: 0 0 8px;
+}
+.page-sub { font-size: 15px; color: var(--text-soft); margin: 0 0 24px; }
+
+/* Status banner */
+.status {
+  font-family: var(--bebas); font-size: 13px; font-weight: 700; letter-spacing: .08em;
+  color: var(--text-dim); margin-bottom: 14px; text-align: right;
+}
+.status.err { color: var(--red); }
+
+/* Room card */
+.room {
+  background: var(--card); color: #fff; border-radius: 14px; padding: 16px 18px 14px;
+  margin-bottom: 12px; box-shadow: var(--shadow); position: relative;
+}
+.room::before {
+  content: ""; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  background: var(--gold); border-radius: 14px 0 0 14px;
+}
+.room.room-female::before { background: var(--red-bri); }
+.room.room-male::before   { background: var(--blue-bri); }
+
+.room-hdr {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  font-family: var(--bebas); font-size: 18px; font-weight: 900; letter-spacing: .04em;
+}
+.room-num { color: var(--gold-bri); }
+.room-gender {
+  font-size: 11px; font-weight: 800; letter-spacing: .12em; padding: 2px 8px; border-radius: 6px;
+  background: rgba(255,255,255,.1); color: rgba(255,255,255,.7); margin-left: auto;
+}
+
+.occupants { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.occupant {
+  background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px; padding: 12px 14px;
+  display: flex; align-items: center; gap: 12px;
+}
+.occupant-info { flex: 1; min-width: 0; }
+.occupant-top { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.state-pill {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800; letter-spacing: .12em;
+  padding: 2px 7px; border-radius: 4px; background: rgba(212,160,23,.2); color: var(--gold-bri);
+  text-transform: uppercase;
+}
+.occupant-name {
+  font-size: 16px; font-weight: 700; color: #fff;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.occupant-phone {
+  font-family: var(--bebas); font-size: 14px; font-weight: 700; letter-spacing: .04em;
+  color: var(--blue-bri); text-decoration: none; padding: 8px 12px;
+  background: rgba(77,122,217,.15); border: 1px solid rgba(77,122,217,.4); border-radius: 8px;
+  display: inline-flex; align-items: center; gap: 6px; transition: all .15s;
+  white-space: nowrap;
+}
+.occupant-phone:hover { background: rgba(77,122,217,.3); }
+.occupant-phone.no-phone {
+  color: rgba(255,255,255,.4); background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.1);
+  cursor: default;
+}
+.occupant-phone.no-phone:hover { background: rgba(255,255,255,.05); }
+
+/* Privacy note */
+.privacy {
+  margin-top: 18px; padding: 14px; background: rgba(15,42,86,.05); border-radius: 10px;
+  border-left: 3px solid var(--gold);
+  font-size: 13px; color: var(--text-soft); line-height: 1.5;
+}
+body.dark .privacy { background: rgba(255,255,255,.04); }
+
+/* Empty / loading states */
+.state-msg {
+  text-align: center; padding: 40px 20px; color: var(--text-dim);
+  font-family: var(--bebas); font-size: 14px; font-weight: 700; letter-spacing: .08em;
+}
+
+/* Footer */
+.foot {
+  font-family: var(--bebas); font-size: 11px; font-weight: 700; letter-spacing: .14em;
+  color: rgba(255,255,255,.5); text-align: center; padding: 18px 16px; background: var(--navy);
+  position: relative; z-index: 2;
+}
+.foot a { color: var(--gold-bri); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<div class="top-strip">
+  <a href="../portal/index.html" class="top-strip-back">← Portal</a>
+  <div class="top-strip-title">Roommates</div>
+  <div class="top-strip-sub">2026 USYS Presidents Cup · NW Qualifier</div>
+</div>
+
+<div class="theme-toggle-wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark mode">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+</div>
+
+<div class="page">
+  <div class="page-eyebrow">Comfort Inn &amp; Suites Boise Airport</div>
+  <h1 class="page-title">Your Roommate List</h1>
+  <p class="page-sub">Pairs and contact numbers so you can reach your roommate. Single-occupancy admin and coach rooms are not listed.</p>
+
+  <div class="status" id="status">Loading…</div>
+  <div id="rooms-list"></div>
+
+  <div class="privacy">
+    <strong>Heads up:</strong> phone numbers shown here are for tournament coordination between roommates. Please respect each other's time — tap a number to call or text.
+  </div>
+</div>
+
+<div class="foot">Powered by · <a href="https://jareferee.com" target="_blank" rel="noopener">JaReferee</a></div>
+
+<script>
+(function initTheme() {
+  var stored = '';
+  try { stored = localStorage.getItem('pcup-theme') || ''; } catch (e) {}
+  if (stored === 'dark') { document.body.classList.add('dark'); }
+  updateThemeIcon();
+})();
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  try {
+    localStorage.setItem('pcup-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  } catch (e) {}
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var el = document.getElementById('theme-icon');
+  if (el) { el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️'; }
+}
+
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+
+// Map full state name → 2-letter abbreviation for the per-occupant pill.
+var STATE_ABBR = { 'Washington':'WA', 'Oregon':'OR', 'Idaho':'ID', 'Montana':'MT', 'Alaska':'AK', 'Wyoming':'WY', 'Other':'?' };
+
+function escHtml(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// Format any phone-ish input into a tel: href (digits only, leading +1 stripped)
+// and a human display ((206) 555-1234 if 10 digits, raw otherwise).
+function phoneHref(p) {
+  var digits = String(p || '').replace(/\D/g, '');
+  if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.substring(1);
+  return digits ? ('tel:+1' + digits) : '';
+}
+function phoneDisplay(p) {
+  var digits = String(p || '').replace(/\D/g, '');
+  if (digits.length === 11 && digits.charAt(0) === '1') digits = digits.substring(1);
+  if (digits.length === 10) {
+    return '(' + digits.substring(0,3) + ') ' + digits.substring(3,6) + '-' + digits.substring(6);
+  }
+  return String(p || '');
+}
+
+function loadRoommates() {
+  fetch(SCRIPT_URL + '?action=roommatesList')
+    .then(function(r){ return r.json(); })
+    .then(function(body){
+      if (!body || body.status !== 'ok' || !body.data) {
+        showError('Could not load room list.');
+        return;
+      }
+      renderRooms(body.data);
+    })
+    .catch(function(){ showError('Network error.'); });
+}
+function showError(msg) {
+  var st = document.getElementById('status');
+  st.textContent = msg;
+  st.className = 'status err';
+}
+
+function renderRooms(data) {
+  var rooms = data.rooms || [];
+  var st = document.getElementById('status');
+  var listEl = document.getElementById('rooms-list');
+  if (!rooms.length) {
+    st.textContent = '';
+    listEl.innerHTML = '<div class="state-msg">No roommate pairings yet. Check back closer to the event.</div>';
+    return;
+  }
+  var pairs = rooms.filter(function(r){ return r.occupants && r.occupants.length >= 2; });
+  st.textContent = rooms.length + ' rooms · ' + pairs.length + ' pairings';
+
+  var html = '';
+  rooms.forEach(function(rm){
+    var genderClass = rm.gender === 'Female' ? 'room-female' :
+                      rm.gender === 'Male'   ? 'room-male'   : '';
+    var occHtml = '';
+    (rm.occupants || []).forEach(function(o){
+      var stateAbbr = o.state ? (STATE_ABBR[o.state] || o.state) : '';
+      var href = phoneHref(o.phone);
+      var disp = phoneDisplay(o.phone);
+      var phoneEl = href
+        ? '<a class="occupant-phone" href="' + href + '"><span>📞</span><span>' + escHtml(disp) + '</span></a>'
+        : '<span class="occupant-phone no-phone"><span>📞</span><span>No number</span></span>';
+      occHtml += '<div class="occupant">' +
+                   '<div class="occupant-info">' +
+                     '<div class="occupant-top">' +
+                       (stateAbbr ? '<span class="state-pill">' + escHtml(stateAbbr) + '</span>' : '') +
+                     '</div>' +
+                     '<div class="occupant-name">' + escHtml(o.name) + '</div>' +
+                   '</div>' +
+                   phoneEl +
+                 '</div>';
+    });
+
+    html += '<div class="room ' + genderClass + '">' +
+              '<div class="room-hdr">' +
+                '<span>Room <span class="room-num">' + escHtml(rm.room) + '</span></span>' +
+                (rm.gender ? '<span class="room-gender">' + escHtml(rm.gender) + '</span>' : '') +
+              '</div>' +
+              '<div class="occupants">' + occHtml + '</div>' +
+            '</div>';
+  });
+  listEl.innerHTML = html;
+}
+
+loadRoommates();
+</script>
+
+</body>
+</html>
