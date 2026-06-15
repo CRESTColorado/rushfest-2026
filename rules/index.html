@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Rules of Competition with interactive learning. 2026 USYS Presidents Cup NW Regional Qualifier.">
+<meta name="theme-color" content="#a5b8d4">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Rules of Competition. USYS Presidents Cup NW 2026.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:          #a5b8d4;
+  --surface:     #243859;
+  --card:        #243859;
+  --card-hover:  #2d4470;
+  --navy:        #0F2A56;
+  --navy-mid:    #1c3d70;
+  --red:         #D52B3B;
+  --red-bri:     #e63946;
+  --red-soft:    #f8dcd9;
+  --blue:        #4d7ad9;
+  --blue-bri:    #6b95e6;
+  --blue-soft:   #dbe3f3;
+  --green:       #16a34a;
+  --green-bri:   #22c55e;
+  --green-soft:  #d4ebd7;
+  --gold:        #d4a017;
+  --gold-bri:    #ecbf3e;
+  --gold-soft:   #f7ecc6;
+  --text:        #0F2A56;
+  --text-soft:   #1c2a47;
+  --text-dim:    #3a4b6b;
+  --text-light:       #ffffff;
+  --text-light-soft:  rgba(255,255,255,.82);
+  --bebas:       'Barlow Condensed', sans-serif;
+  --font:        'Barlow', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font); font-weight: 500;
+  background: var(--bg); color: var(--text);
+  min-height: 100vh; -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed;
+  top: 50%; left: 50%; transform: translate(-50%, -45%);
+  width: min(85vw, 760px); height: min(85vw, 760px);
+  background: url('../assets/prescup-white.webp') center/contain no-repeat;
+  opacity: 0.18; pointer-events: none; z-index: 0;
+}
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+/* ── DARK MODE OVERRIDES ── */
+body.dark {
+  --bg:        #0F2A56;
+  --navy:      #ffffff;
+  --text:      #ffffff;
+  --text-soft: rgba(255,255,255,.85);
+  --text-dim:  rgba(255,255,255,.6);
+}
+body.dark::before { opacity: 0.10; }
+
+/* ── DARK MODE CONTENT BLOCK OVERRIDES ──
+   Form input has hardcoded `background: #fff` + `color: var(--navy)`.
+   In dark mode --navy flips to white → invisible white-on-white. Force
+   a real navy text color and a placeholder color that reads against
+   the white field. */
+body.dark .name-input {
+  color: #0F2A56;
+}
+body.dark .name-input::placeholder { color: #6b7d97; }
+
+body { transition: background-color .25s, color .25s; }
+
+/* ── THEME TOGGLE ── */
+.theme-toggle-wrap {
+  position: relative; z-index: 5;
+  text-align: center;
+  padding: 10px 16px 4px;
+}
+.theme-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  cursor: pointer;
+  background: rgba(15,42,86,.18);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(15,42,86,.15);
+  border-radius: 22px;
+  padding: 5px 10px;
+  transition: background .2s, border-color .2s;
+}
+body.dark .theme-toggle {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.15);
+}
+.theme-toggle-icon { font-size: 13px; line-height: 1; }
+.toggle-track {
+  width: 28px; height: 16px;
+  background: rgba(15,42,86,.45);
+  border-radius: 9px;
+  position: relative;
+  transition: background .25s;
+}
+body.dark .toggle-track { background: var(--gold); }
+.toggle-thumb {
+  position: absolute; top: 2px; left: 2px;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.3);
+  transition: transform .25s;
+}
+body.dark .toggle-thumb { transform: translateX(12px); }
+
+/* ── JAREFEREE SPONSOR BLOCK ── */
+.sponsor-block {
+  text-align: center;
+  padding: 20px 16px 10px;
+  position: relative; z-index: 1;
+}
+.sponsor-eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800; letter-spacing: .26em;
+  color: #d4a017;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  opacity: 0.85;
+}
+body.dark .sponsor-eyebrow { color: #ecbf3e; opacity: 0.8; }
+.jareferee-mark {
+  display: inline-block;
+  background: #243859;
+  border-radius: 6px;
+  padding: 7px 16px;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(15,42,86,.18);
+  transition: transform .15s, box-shadow .2s;
+}
+.jareferee-mark:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(15,42,86,.25); }
+.jareferee-mark img { height: 18px; width: auto; display: block; }
+
+/* TOP STRIP */
+.top-strip {
+  position: relative; z-index: 3;
+  padding: 12px 20px 10px;
+  padding-top: calc(12px + env(safe-area-inset-top));
+  border-bottom: 2px solid var(--red);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; background: var(--bg);
+}
+.top-strip-left {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .14em; color: var(--navy); text-transform: uppercase;
+}
+.top-strip-back {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .14em; color: var(--navy); text-transform: uppercase;
+  padding: 5px 11px; border: 2px solid var(--navy); border-radius: 6px;
+  background: transparent; transition: all .15s;
+}
+.top-strip-back:hover { background: var(--navy); color: #fff; }
+
+/* PROGRESS BAR */
+.progress-wrap {
+  position: sticky; top: 0; z-index: 4;
+  background: var(--bg);
+  padding: 12px 20px 8px;
+  border-bottom: 1px solid rgba(15,42,86,.15);
+}
+.progress-wrap.hidden { display: none; }
+.progress-info {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 6px;
+}
+.progress-info-left {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .18em; color: var(--red); text-transform: uppercase;
+}
+.progress-info-right {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .14em; color: var(--text-dim); text-transform: uppercase;
+}
+.progress-bar {
+  width: 100%; height: 5px; background: rgba(15,42,86,.18);
+  border-radius: 3px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%; background: var(--gold);
+  transition: width .35s; width: 0;
+}
+
+/* HERO (intro screen only) */
+.hero {
+  position: relative; z-index: 1;
+  padding: 28px 20px 14px; text-align: center;
+}
+.hero-eyebrow {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .24em; color: var(--red); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.hero-title {
+  font-family: var(--bebas);
+  font-size: clamp(34px, 7vw, 48px); font-weight: 900;
+  line-height: .95; letter-spacing: .04em; color: var(--navy);
+  margin-bottom: 8px; text-transform: uppercase;
+}
+.hero-flourish {
+  display: flex; align-items: center; justify-content: center;
+  gap: 10px; margin: 4px auto 12px; max-width: 200px;
+}
+.hero-flourish .line { flex: 1; height: 2px; background: var(--gold); opacity: .85; }
+.hero-flourish .star { color: var(--gold); font-size: 14px; }
+.hero-sub {
+  font-size: 14px; color: var(--text-soft); line-height: 1.55;
+  max-width: 520px; margin: 0 auto; font-weight: 600;
+}
+
+/* MAIN */
+.main {
+  position: relative; z-index: 1;
+  max-width: 760px; margin: 0 auto;
+  padding: 18px 14px 30px;
+}
+
+/* INTRO SCREEN */
+.intro-card {
+  background: var(--card);
+  border-radius: 14px;
+  padding: 28px 24px;
+  margin: 20px 0 14px;
+  text-align: center;
+  position: relative; overflow: hidden;
+  box-shadow: 0 8px 24px rgba(15,42,86,.25);
+}
+.intro-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--red);
+}
+.intro-card-eyebrow {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .24em; color: var(--gold-bri); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.intro-card-title {
+  font-family: var(--bebas); font-size: 26px; font-weight: 900;
+  letter-spacing: .04em; color: #fff; text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.intro-card-sub {
+  font-size: 13.5px; color: var(--text-light-soft);
+  margin-bottom: 18px; line-height: 1.55;
+}
+.intro-list {
+  text-align: left; max-width: 380px; margin: 0 auto 18px;
+  background: rgba(255,255,255,.05);
+  border-radius: 10px;
+  padding: 12px 16px;
+}
+.intro-list li {
+  list-style: none; padding: 4px 0;
+  font-size: 13px; color: var(--text-light-soft); font-weight: 500;
+  display: flex; gap: 10px;
+}
+.intro-list li::before {
+  content: '★'; color: var(--gold); flex-shrink: 0;
+}
+.name-input {
+  display: block; width: 100%; max-width: 320px; margin: 0 auto 12px;
+  padding: 12px 16px; font-size: 16px; font-family: inherit; font-weight: 600;
+  background: #fff; color: var(--navy);
+  border: 2px solid transparent; border-radius: 8px;
+  text-align: center; outline: none;
+}
+.name-input:focus { border-color: var(--gold-bri); }
+.name-input::placeholder { color: #8094b5; font-weight: 500; }
+.cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--bebas); font-size: 16px; font-weight: 900;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 14px 32px; background: var(--red); color: #fff;
+  border-radius: 8px; transition: all .15s;
+}
+.cta-btn:hover { background: var(--red-bri); transform: translateY(-1px); }
+.cta-btn:disabled { opacity: .4; cursor: not-allowed; transform: none; }
+.cta-btn.full { display: block; width: 100%; margin-top: 14px; }
+
+/* SECTION CARD */
+.section {
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(15,42,86,.18);
+  border-radius: 14px;
+  padding: 22px 22px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.section::before {
+  content: ''; position: absolute; left: 0; top: 18px; bottom: 18px;
+  width: 4px; border-radius: 0 4px 4px 0; background: var(--red);
+}
+.section-ref {
+  display: inline-block;
+  font-family: var(--bebas); font-size: 14px; font-weight: 900;
+  letter-spacing: .14em; color: var(--red); text-transform: uppercase;
+  margin-bottom: 8px;
+  padding: 2px 0;
+  border-bottom: 2px solid var(--red);
+  text-shadow: 0 1px 0 rgba(213,43,59,.15);
+}
+.section-title {
+  font-family: var(--bebas); font-size: 22px; font-weight: 900;
+  letter-spacing: .04em; color: var(--navy); text-transform: uppercase;
+  line-height: 1.1; margin-bottom: 14px;
+}
+.rule-text { font-size: 14px; color: var(--text-soft); line-height: 1.6; font-weight: 500; margin-bottom: 10px; }
+.rule-text strong { color: var(--navy); font-weight: 800; }
+.rule-text em { color: var(--red); font-style: normal; font-weight: 700; }
+.rule-list { list-style: none; padding: 0; margin: 6px 0 10px; }
+.rule-list li {
+  font-size: 13.5px; color: var(--text-soft); line-height: 1.55;
+  padding: 4px 0 4px 18px; position: relative; font-weight: 500;
+}
+.rule-list li::before {
+  content: '●'; color: var(--gold); font-size: 10px;
+  position: absolute; left: 0; top: 7px;
+}
+.rule-list li strong { color: var(--navy); font-weight: 800; }
+.age-grid {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 6px 16px; margin: 8px 0; padding: 12px 16px;
+  background: rgba(15,42,86,.06); border-radius: 8px;
+}
+.age-grid .ag-l { font-weight: 800; color: var(--navy); font-size: 14px; }
+.age-grid .ag-r { font-family: var(--bebas); font-size: 15px; color: var(--red); font-weight: 800; }
+
+/* CHALLENGE WRAPPER */
+.challenge {
+  margin-top: 18px; padding-top: 18px;
+  border-top: 2px dashed rgba(15,42,86,.25);
+}
+.challenge-label {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .24em; color: var(--gold); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.challenge-prompt {
+  font-size: 15px; font-weight: 700; color: var(--navy);
+  margin-bottom: 14px; line-height: 1.4;
+}
+.challenge-body { margin-bottom: 12px; }
+.challenge-feedback { display: none; }
+.challenge-feedback.show { display: block; animation: fadeIn .25s ease; }
+.challenge-feedback.correct {
+  background: var(--green-soft);
+  border: 1px solid rgba(22,163,74,.45);
+  border-radius: 10px;
+  padding: 14px 16px; margin-top: 10px;
+}
+.challenge-feedback.wrong {
+  background: var(--red-soft);
+  border: 1px solid rgba(213,43,59,.45);
+  border-radius: 10px;
+  padding: 14px 16px; margin-top: 10px;
+}
+.feedback-title {
+  font-family: var(--bebas); font-size: 15px; font-weight: 900;
+  letter-spacing: .08em; color: var(--navy); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.feedback-text { font-size: 13px; color: var(--text-soft); line-height: 1.55; font-weight: 500; }
+.feedback-text strong { color: var(--navy); font-weight: 800; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.shake { animation: shake .35s ease; }
+
+/* CHALLENGE TYPE: TAP-TO-PAIR */
+.pair-board {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 70px 1fr; gap: 12px;
+  align-items: center;
+}
+.pair-col { display: flex; flex-direction: column; gap: 10px; }
+.pair-pill {
+  padding: 14px 14px;
+  background: var(--card); color: #fff;
+  border-radius: 10px; font-size: 13px; font-weight: 700;
+  text-align: center; min-height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid transparent;
+  transition: all .15s;
+}
+.pair-pill:not(.locked):not(.matched):hover { background: var(--card-hover); }
+.pair-pill.selected { border-color: var(--gold-bri); background: var(--navy-mid); }
+.pair-pill.matched {
+  background: var(--green-soft); color: var(--navy);
+  border-color: var(--green); cursor: default;
+}
+.pair-pill.wrong {
+  background: var(--red-soft); color: var(--navy);
+  border-color: var(--red); cursor: default;
+  animation: shake .35s ease;
+}
+.pair-mid {
+  display: flex; flex-direction: column; align-items: center;
+  font-family: var(--bebas); font-size: 18px; color: var(--gold);
+  gap: 12px;
+}
+.pair-mid-line {
+  flex: 1; width: 2px; background: rgba(15,42,86,.18);
+}
+
+/* CHALLENGE TYPE: TAP IN ORDER */
+.order-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.order-pill {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--card); color: #fff;
+  border-radius: 10px; font-size: 13.5px; font-weight: 600;
+  border: 2px solid transparent;
+  transition: all .15s; text-align: left;
+  line-height: 1.4;
+}
+.order-pill:not(.locked):hover { background: var(--card-hover); }
+.order-pill.tapped {
+  background: var(--gold-soft); color: var(--navy);
+  border-color: var(--gold);
+}
+.order-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 28px; flex-shrink: 0;
+  background: rgba(255,255,255,.15);
+  border-radius: 50%;
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  color: #fff;
+}
+.order-pill.tapped .order-num {
+  background: var(--gold); color: var(--navy);
+}
+.order-text { flex: 1; }
+.order-actions { display: flex; gap: 8px; }
+.order-btn {
+  font-family: var(--bebas); font-size: 12px; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 10px 16px; border-radius: 8px; flex: 1;
+  transition: all .15s;
+}
+.order-btn-submit { background: var(--gold); color: var(--navy); }
+.order-btn-submit:hover { background: var(--gold-bri); }
+.order-btn-reset { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+.order-btn-reset:hover { background: var(--navy); color: #fff; }
+.order-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* CHALLENGE TYPE: SLIDER */
+.slider-display {
+  text-align: center;
+  font-family: var(--bebas); font-size: 56px; font-weight: 900;
+  color: var(--red); line-height: 1; margin-bottom: 6px;
+}
+.slider-label {
+  text-align: center;
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .18em; color: var(--text-dim); text-transform: uppercase;
+  margin-bottom: 18px;
+}
+.slider-range { display: flex; justify-content: space-between; margin-bottom: 4px; font-size: 11px; color: var(--text-dim); font-weight: 700; }
+.slider-input {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 8px;
+  background: rgba(15,42,86,.18);
+  border-radius: 4px; outline: none;
+  margin-bottom: 16px;
+}
+.slider-input::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 26px; height: 26px;
+  background: var(--red); border-radius: 50%;
+  cursor: pointer; box-shadow: 0 2px 6px rgba(15,42,86,.3);
+}
+.slider-input::-moz-range-thumb {
+  width: 26px; height: 26px;
+  background: var(--red); border-radius: 50%; border: none;
+  cursor: pointer; box-shadow: 0 2px 6px rgba(15,42,86,.3);
+}
+
+/* CHALLENGE TYPE: MULTI-SELECT */
+.multi-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+.multi-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: rgba(15,42,86,.06);
+  border: 2px solid rgba(15,42,86,.18);
+  border-radius: 10px;
+  text-align: left; line-height: 1.4;
+  font-size: 13.5px; color: var(--text-soft); font-weight: 600;
+  transition: all .15s;
+}
+.multi-option:hover:not(.locked) {
+  background: rgba(15,42,86,.1);
+  border-color: var(--navy);
+}
+.multi-option.selected {
+  background: var(--gold-soft);
+  border-color: var(--gold);
+  color: var(--navy);
+}
+.multi-option.correct-pick {
+  background: var(--green-soft);
+  border-color: var(--green);
+  color: var(--navy);
+}
+.multi-option.wrong-pick {
+  background: var(--red-soft);
+  border-color: var(--red);
+  color: var(--navy);
+}
+.multi-option.should-pick {
+  background: rgba(22,163,74,.15);
+  border-color: var(--green);
+  border-style: dashed;
+  color: var(--navy);
+}
+.multi-check {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border: 2px solid currentColor;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 900;
+}
+.multi-option.selected .multi-check::after { content: '✓'; color: var(--navy); }
+.multi-option.correct-pick .multi-check::after { content: '✓'; color: var(--green); }
+.multi-option.wrong-pick .multi-check::after { content: '✗'; color: var(--red); }
+.multi-option.should-pick .multi-check::after { content: '✓'; color: var(--green); }
+
+/* CHALLENGE TYPE: SCENARIO */
+.scenario {
+  background: var(--card); color: #fff;
+  border-radius: 12px;
+  padding: 18px 18px;
+}
+.scenario-step {
+  font-family: var(--bebas); font-size: 11px; font-weight: 800;
+  letter-spacing: .2em; color: var(--gold-bri); text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.scenario-text {
+  font-size: 15px; font-weight: 700; line-height: 1.45;
+  margin-bottom: 16px;
+}
+.scenario-options { display: flex; flex-direction: column; gap: 8px; }
+.scenario-option {
+  text-align: left; padding: 13px 16px;
+  background: rgba(255,255,255,.08);
+  border: 2px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  font-size: 14px; color: #fff; font-weight: 600;
+  line-height: 1.4; transition: all .15s;
+}
+.scenario-option:hover:not(:disabled) {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.35);
+}
+.scenario-option.correct {
+  background: rgba(34,197,94,.25);
+  border-color: var(--green-bri);
+}
+.scenario-option.wrong {
+  background: rgba(213,43,59,.22);
+  border-color: var(--red-bri);
+}
+
+/* CHALLENGE TYPE: TRUE/FALSE */
+.tf-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; }
+.tf-row {
+  background: rgba(15,42,86,.06);
+  border: 2px solid rgba(15,42,86,.18);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+.tf-row.answered.correct { background: var(--green-soft); border-color: var(--green); }
+.tf-row.answered.wrong { background: var(--red-soft); border-color: var(--red); }
+.tf-statement {
+  font-size: 13.5px; color: var(--text-soft); font-weight: 600;
+  line-height: 1.45; margin-bottom: 10px;
+}
+.tf-buttons { display: flex; gap: 8px; }
+.tf-btn {
+  flex: 1; padding: 10px;
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .12em; text-transform: uppercase;
+  border-radius: 8px;
+  background: var(--card); color: #fff;
+  border: 2px solid transparent;
+  transition: all .15s;
+}
+.tf-btn:hover:not(:disabled) { background: var(--card-hover); }
+.tf-btn.picked-correct {
+  background: var(--green); color: #fff;
+}
+.tf-btn.picked-wrong {
+  background: var(--red); color: #fff;
+}
+.tf-btn.right-answer {
+  background: transparent; color: var(--green);
+  border-color: var(--green);
+}
+.tf-explain {
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px solid rgba(15,42,86,.18);
+  font-size: 12.5px; color: var(--text-soft); font-weight: 500; line-height: 1.5;
+  display: none;
+}
+.tf-explain.show { display: block; }
+.tf-explain strong { color: var(--navy); font-weight: 800; }
+
+/* SHARED ACTION BUTTONS */
+.action-row { display: flex; gap: 10px; margin-top: 12px; }
+.action-btn {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 12px 18px; border-radius: 8px;
+  transition: all .15s; flex: 1;
+}
+.action-btn.primary { background: var(--red); color: #fff; }
+.action-btn.primary:hover { background: var(--red-bri); }
+.action-btn.secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+.action-btn.secondary:hover { background: var(--navy); color: #fff; }
+.action-btn.gold { background: var(--gold); color: var(--navy); }
+.action-btn.gold:hover { background: var(--gold-bri); }
+.action-btn:disabled { opacity: .35; cursor: not-allowed; }
+
+/* CERTIFICATE */
+.cert {
+  background: rgba(255,255,255,.85);
+  border: 3px double var(--navy);
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(15,42,86,.25);
+}
+.cert-seal { font-size: 48px; color: var(--gold); margin-bottom: 6px; line-height: 1; }
+.cert-eyebrow {
+  display: inline-block;
+  font-family: var(--bebas); font-size: 15px; font-weight: 900;
+  letter-spacing: .22em; color: var(--red); text-transform: uppercase;
+  margin-bottom: 10px;
+  padding: 2px 0;
+  border-bottom: 2px solid var(--red);
+  text-shadow: 0 1px 0 rgba(213,43,59,.15);
+}
+.cert-name {
+  font-family: var(--bebas); font-size: 32px; font-weight: 900;
+  letter-spacing: .04em; color: var(--navy); text-transform: uppercase;
+  margin-bottom: 4px; padding: 0 8px;
+  border-bottom: 2px solid var(--gold); display: inline-block;
+}
+.cert-body {
+  font-size: 14px; color: var(--text-soft); line-height: 1.65;
+  margin: 14px auto 0; max-width: 460px; font-weight: 500;
+}
+.cert-body strong { color: var(--navy); font-weight: 800; }
+.cert-stats {
+  display: flex; justify-content: center; gap: 28px;
+  margin: 18px 0 8px;
+}
+.cert-stat-num {
+  font-family: var(--bebas); font-size: 28px; font-weight: 900;
+  color: var(--red); line-height: 1;
+}
+.cert-stat-lbl {
+  font-family: var(--bebas); font-size: 10px; font-weight: 800;
+  letter-spacing: .14em; color: var(--text-dim); text-transform: uppercase;
+  margin-top: 4px;
+}
+.cert-ts { font-size: 12px; color: var(--text-dim); margin-top: 8px; }
+.cert-validation {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 14px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  font-size: 13px; font-weight: 600;
+  line-height: 1.35;
+  max-width: 400px;
+  text-align: left;
+}
+.cert-validation.pending { background: var(--gold-soft); color: var(--navy); }
+.cert-validation.success { background: var(--green-soft); color: var(--navy); }
+.cert-validation.error   { background: var(--red-soft);   color: var(--navy); }
+.cert-validation-icon { font-size: 18px; flex-shrink: 0; }
+.cert-actions { display: flex; gap: 10px; justify-content: center; margin-top: 18px; flex-wrap: wrap; }
+.cert-action {
+  font-family: var(--bebas); font-size: 13px; font-weight: 800;
+  letter-spacing: .14em; text-transform: uppercase;
+  padding: 10px 20px; border-radius: 8px;
+  transition: all .15s;
+}
+.cert-action.primary { background: var(--red); color: #fff; }
+.cert-action.primary:hover { background: var(--red-bri); }
+.cert-action.secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+.cert-action.secondary:hover { background: var(--navy); color: #fff; }
+
+/* Confetti */
+.confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; overflow: hidden; }
+.confetti-piece { position: absolute; width: 8px; height: 14px; animation: fall 1.6s ease-out forwards; }
+@keyframes fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Footer */
+.footer {
+  position: relative; z-index: 1;
+  background: var(--surface);
+  border-top: 2px solid var(--red);
+  padding: 20px;
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  text-align: center; margin-top: 30px;
+}
+.footer p { font-size: 12px; color: var(--text-light-soft); max-width: 480px; margin: 0 auto; line-height: 1.8; }
+.footer strong { color: #fff; font-weight: 700; }
+
+/* View visibility */
+.view { display: none; }
+.view.active { display: block; }
+
+@media (max-width: 480px) {
+  .main { padding: 16px 12px 24px; }
+  .section { padding: 18px 18px 20px; }
+  .section-title { font-size: 19px; }
+  .pair-board { grid-template-columns: 1fr 40px 1fr; gap: 8px; }
+  .scenario { padding: 16px; }
+  .scenario-text { font-size: 14.5px; }
+  .cert-name { font-size: 26px; }
+  .cert-stats { gap: 18px; }
+  .slider-display { font-size: 48px; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-strip">
+  <div class="top-strip-left">2026 USYS Presidents Cup. Northwest.</div>
+  <a class="top-strip-back" href="../index.html">← Hub</a>
+</div>
+
+<div class="theme-toggle-wrap">
+  <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle light or dark mode">
+    <span class="theme-toggle-icon" id="theme-icon">☀️</span>
+    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+  </button>
+</div>
+
+<div class="progress-wrap hidden" id="progress-wrap">
+  <div class="progress-info">
+    <div class="progress-info-left" id="progress-label">Section 1 of 18</div>
+    <div class="progress-info-right" id="progress-name"></div>
+  </div>
+  <div class="progress-bar"><div class="progress-bar-fill" id="progress-fill"></div></div>
+</div>
+
+<main class="main" id="main">
+
+  <!-- INTRO VIEW -->
+  <div class="view active" id="view-intro">
+    <div class="hero">
+      <div class="hero-eyebrow">Must Read</div>
+      <h1 class="hero-title">Rules of<br>Competition</h1>
+      <div class="hero-flourish"><div class="line"></div><div class="star">★</div><div class="line"></div></div>
+      <p class="hero-sub">The actual 2025 to 2026 USYS National Championships and Presidents Cup rulebook, with a quick interactive challenge after each ref-critical section to confirm you've got it.</p>
+    </div>
+
+    <div class="intro-card">
+      <div class="intro-card-eyebrow">How it works</div>
+      <div class="intro-card-title">Walk through. Tap through.</div>
+      <ul class="intro-list">
+        <li>Read each section from the actual rulebook.</li>
+        <li>Knock out a quick interactive challenge for the ref-critical ones.</li>
+        <li>Wrong? See the answer, try again before advancing.</li>
+        <li>Finish all sections to receive a personalized completion certificate.</li>
+      </ul>
+      <input class="name-input" id="ref-name" type="text" placeholder="Your full name" maxlength="60">
+      <button class="cta-btn" id="start-btn" onclick="startWalkthrough()">Begin →</button>
+    </div>
+  </div>
+
+  <!-- WALKTHROUGH VIEW -->
+  <div class="view" id="view-walkthrough">
+    <div id="section-container"></div>
+  </div>
+
+  <!-- COMPLETE VIEW -->
+  <div class="view" id="view-complete">
+    <div class="cert">
+      <div class="cert-seal">🏆</div>
+      <div class="cert-eyebrow">Certificate of Completion</div>
+      <div class="cert-name" id="cert-name">Name</div>
+      <div class="cert-body">
+        has reviewed the <strong>2025 to 2026 USYS National Championships and National Presidents Cup Competition Rules</strong> and completed every interactive challenge for the 2026 Northwest Regional Qualifier.
+      </div>
+      <div class="cert-ts" id="cert-ts">Completed.</div>
+      <div class="cert-validation pending" id="cert-validation">
+        <span class="cert-validation-icon">⏳</span>
+        <span class="cert-validation-text">Sending validation to admin team...</span>
+      </div>
+      <div class="cert-actions">
+        <a class="cert-action secondary" href="../index.html">Back to Hub</a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div class="sponsor-block">
+  <div class="sponsor-eyebrow">Powered By</div>
+  <a class="jareferee-mark" href="https://jareferee.com" target="_blank" rel="noopener">
+    <img src="../assets/jareferee-wordmark.png" alt="JAReferee">
+  </a>
+</div>
+
+<div class="footer">
+  <p>
+    <strong>Source:</strong> 2025 to 2026 USYS National Championships &amp; National Presidents Cup Competition Rules (5/25/26 FINAL)<br>
+    Questions about a rule? Ask Karen, Jeff, or your Ref Coach.
+  </p>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// SECTION DATA
+// ════════════════════════════════════════════════════════════════
+const SECTIONS = [
+
+  {
+    ref: '§6', title: 'Team Eligibility', displayOnly: true,
+    rule: '<p class="rule-text">Teams eligible to compete in the National Competitions are registered with US Youth Soccer and approved by their State Association. They must demonstrate roster continuity, with at least <strong>50% of the players matching those on the roster used to qualify at the State level</strong>.</p>' +
+          '<p class="rule-text"><strong>A valid Team Roster must:</strong></p>' +
+          '<ul class="rule-list">' +
+          '<li>Be approved by the relevant State Association.</li>' +
+          '<li>Include between <strong>9 and 22 USYS-registered players</strong>.</li>' +
+          '<li>Consist of a combination of primary, club pass, and guest players.</li>' +
+          '<li>Only include players who will compete for that team in the National Competition.</li>' +
+          '<li>Not feature players participating on more than one team in the same National Competition.</li>' +
+          '</ul>'
+  },
+
+  {
+    ref: '§8.1', title: 'Ineligible Player Use', displayOnly: true,
+    rule: '<p class="rule-text">Any team found using an ineligible player will be <strong>disqualified from further participation</strong> during the current seasonal year. Coaches or officials knowingly involved are prohibited from participating in subsequent seasons. Match results from any game the disqualified team participated in will result in a <strong>5 to 0 scoreline in favor of the disqualified team\'s opponent</strong>.</p>'
+  },
+
+  {
+    ref: '§8.2', title: 'Red Card and Send-Off',
+    rule: '<p class="rule-text">Players receiving a red card or sent off during a match are prohibited from participating in <strong>at least the next match</strong> for their Primary rostered team and may not play any other matches until the ban is served, <strong>across both State and National levels</strong>. They may face additional suspension based upon severity.</p>' +
+          '<p class="rule-text">The <strong>Competition Management Group shall determine any length of suspension beyond one match. This decision cannot be appealed.</strong></p>' +
+          '<p class="rule-text">Any player sent off must leave the field of play but may remain in the <strong>Team Bench Area under the supervision of a Team Official</strong>. If the sent off player cannot be controlled by a Team Official, the Referee may require the removal of the player from the entire field area.</p>',
+    challenge: {
+      type: 'scenario',
+      steps: [
+        {
+          text: 'A U16 player gets a red card in their Friday morning pool play match. What is the minimum suspension?',
+          options: [
+            { text: 'Just the remaining minutes of that same match', correct: false },
+            { text: 'At least the next match. Cannot play other matches until the ban is served. Applies across State and National levels.', correct: true },
+            { text: 'No suspension if their coach files an appeal' }
+          ],
+          explain: 'Per §8.2, the minimum is one match suspension. The player cannot play any other matches (State or National) until that ban is served. Severity can extend it.'
+        },
+        {
+          text: 'After being sent off, the player wants to stay on the bench. Is that allowed?',
+          options: [
+            { text: 'No. They must leave the entire field area immediately.', correct: false },
+            { text: 'Yes, in the Team Bench Area under team official supervision, unless they can\'t be controlled. Then the referee can require removal from the field area entirely.', correct: true },
+            { text: 'Yes, anywhere as long as they\'re not in uniform' }
+          ],
+          explain: 'Per §8.2, the sent-off player may remain in the Team Bench Area supervised by a Team Official. If supervision fails, the referee can require complete removal.'
+        }
+      ]
+    }
+  },
+
+  {
+    ref: '§8.3', title: 'Misconduct and Referee Abuse', displayOnly: true,
+    rule: '<p class="rule-text">Coaches, officials, and individuals associated with the team, <strong>including spectators</strong>, are subject to misconduct rules. Any misconduct, abusive behavior, or violent conduct reported by referees must be addressed in writing, with disciplinary action taken per <strong>US Youth Soccer policies and US Soccer Referee Abuse Prevention Policy (531-9)</strong>.</p>'
+  },
+
+  {
+    ref: '§8.4', title: 'Dismissed Team Official',
+    rule: '<p class="rule-text">Any Team Official dismissed from a match must <strong>leave the field area and retreat to the parking area of the complex</strong> or an area designated by the Competition Management team.</p>' +
+          '<p class="rule-text">Any team official who is dismissed is <strong>prohibited from communicating with their team during a match</strong>, including but not limited to cell phone use, texting, or other means of communication.</p>',
+    challenge: {
+      type: 'multi',
+      prompt: 'A coach gets dismissed in the 60th minute. Which of these actions are PROHIBITED during the rest of the match? Select all that apply.',
+      options: [
+        { text: 'Texting the assistant coach about substitution decisions', correct: true },
+        { text: 'Calling a player\'s parent to relay a message', correct: true },
+        { text: 'Standing in the technical area but staying quiet', correct: true },
+        { text: 'Sitting in the stands and yelling instructions', correct: true },
+        { text: 'Walking to their car in the parking lot', correct: false },
+        { text: 'Going to a designated area chosen by Competition Management', correct: false },
+        { text: 'Using a walkie-talkie or earpiece to communicate', correct: true }
+      ],
+      explain: 'Per §8.4, the dismissed official must <strong>leave the field area</strong> (parking lot or designated area) AND is prohibited from <strong>any form of communication</strong> with the team during the match. Going to the parking lot is required, not prohibited.'
+    }
+  },
+
+  {
+    ref: '§10', title: 'Lodging a Protest',
+    rule: '<p class="rule-text">A <strong>Protest</strong> is a written objection to a match result filed by a Team Official. <em>Referee decisions on matters of fact and judgment are final and cannot be protested.</em></p>' +
+          '<p class="rule-text">Per §10.4, a protest <strong>must be orally lodged with you and the opposing coach BEFORE the team leaves the field</strong>. If a coach catches you in the parking lot an hour later, the timing window has closed (though you can still note it).</p>' +
+          '<p class="rule-text"><strong>Your job as the referee is simple.</strong> If a coach tells you verbally they are protesting the game, <strong>note that on the game card</strong> and forward to admin. The Competition Management Group handles everything else (deadlines, filing fees, written follow-ups). That is not your responsibility.</p>',
+    challenge: {
+      type: 'scenario',
+      steps: [
+        {
+          text: 'A coach walks up to you after the final whistle and says, "I am protesting this game." What do you do?',
+          options: [
+            { text: 'Tell them they have 2 hours to file with $500 cash and explain the process', correct: false },
+            { text: 'Note on the game card that the coach verbally lodged a protest, and continue with normal post-match duties.', correct: true },
+            { text: 'Refuse to acknowledge it. Protests are not your problem.', correct: false },
+            { text: 'Argue the call with them until they back down', correct: false }
+          ],
+          explain: 'Note the verbal protest on the game card. That is all the referee owes. The Competition Management Group takes it from there.'
+        },
+        {
+          text: 'After noting it on the game card, what is your next step?',
+          options: [
+            { text: 'File the protest with USYS yourself', correct: false },
+            { text: 'Track down the opposing coach to get their side', correct: false },
+            { text: 'Forward the game card to admin. Your role on the protest is done.', correct: true },
+            { text: 'Wait at the field until Competition Management arrives', correct: false }
+          ],
+          explain: 'Game card goes to admin. Competition Management handles all follow-up. You are done.'
+        }
+      ]
+    }
+  },
+
+  {
+    ref: '§11.1', title: 'Passes and Match Day Roster',
+    rule: '<p class="rule-text">Each player and team official must carry a <strong>current US Youth Soccer member pass with a recent photograph</strong>. Passes can be electronic or laminated cards issued by the State Association.</p>' +
+          '<p class="rule-text">Match day rosters must include between <strong>9 and 22 players</strong>, with <strong>22 players being the maximum number of players allowed to participate</strong>.</p>',
+    challenge: {
+      type: 'slider',
+      prompt: 'What is the MAXIMUM number of players allowed on the match day roster?',
+      min: 9, max: 30, start: 18, correct: 22, unit: 'players',
+      explain: 'Per §11.1, match day rosters must include between 9 and 22 players, with <strong>22 being the absolute maximum</strong>.'
+    }
+  },
+
+  {
+    ref: '§11.2', title: 'Jersey Numbers and Goalkeeper Colors',
+    rule: '<p class="rule-text">Rosters must list jersey numbers, which must be <strong>visible and unique within the team</strong>. Goalkeepers may wear optional numbered jerseys but must wear <strong>colors that distinguish them from other players and officials</strong>.</p>',
+    challenge: {
+      type: 'multi',
+      prompt: 'Per §11.2, which of these are CORRECT? Select all that apply.',
+      options: [
+        { text: 'Jersey numbers must be visible and unique within the team', correct: true },
+        { text: 'Goalkeeper jersey colors must distinguish them from other players AND from officials', correct: true },
+        { text: 'Goalkeeper numbered jerseys are optional', correct: true },
+        { text: 'Two players on the same team can share a number if they are not on the field at the same time', correct: false },
+        { text: 'Goalkeepers only need to look different from the other players, not the officials', correct: false }
+      ],
+      explain: 'Per §11.2: numbers visible and unique within the team. GK color must distinguish from players AND officials. GK numbers are optional. No two players share a number on the same team.'
+    }
+  },
+
+  {
+    ref: '§11.5 NEW', title: 'Light vs Dark Kits',
+    rule: '<p class="rule-text">Each team is required to attend each match with <strong>two sets of jerseys and socks</strong>: a light-colored kit and a dark-colored kit. The <strong>home team wears their light kit</strong>; the visiting team wears their dark kit.</p>' +
+          '<p class="rule-text"><em>The Referee shall define what constitutes light vs dark color.</em> If, in the opinion of the referee, there is a conflict in uniform color, the <strong>offending team causing the conflict should change into their other kit</strong>.</p>',
+    challenge: {
+      type: 'multi',
+      prompt: 'Per §11.5, which of these are CORRECT? Select all that apply.',
+      options: [
+        { text: 'Home team wears their light-colored kit', correct: true },
+        { text: 'Visiting team wears their dark-colored kit', correct: true },
+        { text: 'The referee decides what counts as light vs dark', correct: true },
+        { text: 'When there is a color conflict, the offending team must change', correct: true },
+        { text: 'Each team must bring both a light kit and a dark kit to every match', correct: true },
+        { text: 'The visiting team\'s coach gets to decide if there is a color conflict', correct: false },
+        { text: 'Teams only need to bring one set of jerseys to each match', correct: false }
+      ],
+      explain: 'Per §11.5: home light, visitor dark. The referee defines light vs dark and decides on conflicts. Offending team changes. Teams must arrive with both kits.'
+    }
+  },
+
+  {
+    ref: '§12.1 + §12.3', title: 'IFAB Laws and Match Ball', displayOnly: true,
+    rule: '<p class="rule-text"><strong>Match rules follow the IFAB Laws of the Game</strong> unless specifically modified by US Youth Soccer policies.</p>' +
+          '<p class="rule-text"><strong>Size 5 match balls</strong> meeting IFAB standards will be used.</p>'
+  },
+
+  {
+    ref: '§12.2', title: 'Match Duration by Age',
+    rule: '<p class="rule-text">Match durations are as follows:</p>' +
+          '<div class="age-grid">' +
+          '<div class="ag-l">U13 and U14</div><div class="ag-r">Two 35-minute halves</div>' +
+          '<div class="ag-l">U15 and U16</div><div class="ag-r">Two 40-minute halves</div>' +
+          '<div class="ag-l">U17, U18, U19</div><div class="ag-r">Two 45-minute halves</div>' +
+          '</div>',
+    challenge: {
+      type: 'pair',
+      prompt: 'Match each age group to its match length. Tap one on the left, then tap its match on the right.',
+      pairs: [
+        { left: 'U13 / U14', right: 'Two 35-min halves' },
+        { left: 'U15 / U16', right: 'Two 40-min halves' },
+        { left: 'U17 / U18 / U19', right: 'Two 45-min halves' }
+      ],
+      explain: 'Per §12.2: younger groups get shorter halves. 35 min for U13/14, 40 min for U15/16, 45 min for U17 and up.'
+    }
+  },
+
+  {
+    ref: '§12.4', title: 'Tied Matches: Pool Play vs Final',
+    rule: '<p class="rule-text">At the NW Regional Qualifier, the format is <strong>three days of pool play followed by a single Final</strong> on Day 4 between the top two teams in each age group. No quarterfinals or semifinals.</p>' +
+          '<p class="rule-text"><strong>Pool play matches that end tied stay tied.</strong> No PKs, no extra time. The tie counts toward standings (1 point each), and tiebreaker math handles advancement.</p>' +
+          '<p class="rule-text"><strong>The Final proceeds directly to Penalty Kicks if tied at full time, with no Extra Time played.</strong></p>',
+    challenge: {
+      type: 'scenario',
+      steps: [
+        {
+          text: 'A U17 pool play match on Friday ends 1 to 1 at the final whistle. What happens next?',
+          options: [
+            { text: 'Direct to penalty kicks to determine a winner', correct: false },
+            { text: 'Two short extra time periods, then PKs if still tied', correct: false },
+            { text: 'Match stays tied. Each team earns 1 point. Tiebreakers sort advancement later.', correct: true }
+          ],
+          explain: 'Pool play ties stay ties. No PKs, no extra time. Each team takes 1 point.'
+        },
+        {
+          text: 'A U16 Final on Monday ends 2 to 2 at the final whistle. What happens next?',
+          options: [
+            { text: 'Match stays tied and both teams share the title' },
+            { text: 'Direct to penalty kicks. No extra time.', correct: true },
+            { text: 'Two 15-minute extra time periods, then PKs if still tied' }
+          ],
+          explain: 'The Final goes directly to PKs if tied. No extra time at the NW Regional Qualifier.'
+        }
+      ]
+    }
+  },
+
+  {
+    ref: '§12.5', title: 'Points and Goal Difference Cap',
+    rule: '<p class="rule-text">Points are awarded as follows: <strong>3 for a win, 1 for a tie, 0 for a loss</strong>. When goal difference is used as a tie-breaker, <strong>a maximum of +5 goals will be counted per match</strong> (e.g., a 7 to 0 win counts as +5 goal difference).</p>',
+    challenge: {
+      type: 'slider',
+      prompt: 'A team wins a pool play match 8 to 0. What goal difference does this match contribute to their total?',
+      min: 0, max: 10, start: 4, correct: 5, unit: '+goal difference',
+      explain: 'Per §12.5, goal difference is <strong>capped at +5 per match</strong>. An 8 to 0 win counts as +5, not +8. This rule prevents teams from running up the score in mismatched pool games.'
+    }
+  },
+
+  {
+    ref: '§12.6 NEW', title: 'Advancement from Group Play', displayOnly: true,
+    rule: '<p class="rule-text">At Presidents Cup, advancement is determined as follows:</p>' +
+          '<ul class="rule-list">' +
+          '<li>For age groups with <strong>eight teams</strong>: the <strong>two group winners</strong> shall advance to the next round.</li>' +
+          '<li>For age groups with <strong>four, five, six, or seven teams</strong>: the <strong>two teams with the highest point totals</strong> shall advance.</li>' +
+          '</ul>' +
+          '<p class="rule-text">At National Championships, each group winner advances to the knockout rounds.</p>'
+  },
+
+  {
+    ref: '§13.3', title: 'Match Reports and Supplemental Reports',
+    rule: '<p class="rule-text">Match officials must complete and submit an <strong>official match report</strong> at the conclusion of each contest.</p>' +
+          '<p class="rule-text"><strong>Additional written reporting</strong> of any misconduct or mistreatment is required. This includes <em>abuse, assault, threatening language, discriminatory acts, inappropriate or unacceptable behavior</em>. <strong>This requirement includes incidents where a red card wasn\'t or couldn\'t be issued.</strong></p>',
+    challenge: {
+      type: 'multi',
+      prompt: 'Which of these REQUIRE a written supplemental report from the referee? Select all that apply.',
+      options: [
+        { text: 'A red card was issued for violent conduct', correct: true },
+        { text: 'A spectator shouted slurs at the referee, but no card was issued', correct: true },
+        { text: 'A team won 5 to 0 with no incidents', correct: false },
+        { text: 'A coach was abusive toward officials but was never dismissed', correct: true },
+        { text: 'A player threatened another player after the final whistle', correct: true },
+        { text: 'A team substituted aggressively but legally throughout the match', correct: false },
+        { text: 'A parent in the stands made threatening gestures toward an AR', correct: true }
+      ],
+      explain: 'Per §13.3, supplemental reports are required for ANY misconduct, abuse, threats, discrimination, or unacceptable behavior. <strong>Critically, this applies even when no red card was issued or couldn\'t be issued.</strong> Normal play without incident does not require a supplemental.'
+    }
+  },
+
+  {
+    ref: '§14.1 + §14.3', title: 'Substitutions at the Presidents Cup', displayOnly: true,
+    rule: '<p class="rule-text">At Presidents Cup National Qualifiers and the National Presidents Cup, <strong>unlimited substitutions are permitted</strong>.</p>' +
+          '<p class="rule-text">Substitutions can occur at <strong>any stoppage with the referee\'s approval</strong>. <strong>Re-entry is permitted</strong> at designated substitution points or at any time during play if the referee permits.</p>'
+  },
+
+  {
+    ref: '§14.4', title: 'Concussion Substitution',
+    rule: '<p class="rule-text">If a player is suspected of having a concussion, they may be <strong>temporarily replaced</strong> so they can be evaluated by a qualified health professional. The temporary substitute <strong>does not count toward the team\'s normal substitution limits</strong>.</p>' +
+          '<p class="rule-text">If the player is <strong>cleared</strong>, they may return to the match, and the temporary substitute must come off. <strong>No substitution is charged</strong> to the team.</p>' +
+          '<p class="rule-text">If the player is <strong>not cleared and permanently removed</strong>, the change becomes a concussion substitution. <strong>Both teams receive one additional substitution</strong> and the opponent can make one additional substitution of one, singular player.</p>',
+    challenge: {
+      type: 'scenario',
+      steps: [
+        {
+          text: 'A U15 player takes a hard hit in the 30th minute. The coach suspects a concussion and wants the player evaluated. What is the correct procedure?',
+          options: [
+            { text: 'The player must be permanently substituted. They cannot return.' },
+            { text: 'Temporary substitution. Player goes off for evaluation. The temporary sub does NOT count against the team\'s limit.', correct: true },
+            { text: 'Stop the match for evaluation on the field' }
+          ],
+          explain: 'Per §14.4, suspected concussions allow a temporary substitution that doesn\'t count toward the team\'s normal limits.'
+        },
+        {
+          text: 'After evaluation, the HCP clears the player. Can the player return to the match?',
+          options: [
+            { text: 'Yes. The player returns, the temporary sub comes off, and no substitution is charged to the team.', correct: true },
+            { text: 'No. Once substituted, no return is allowed' },
+            { text: 'Only at the very next stoppage of play' }
+          ],
+          explain: 'Per §14.4, a cleared player returns and the team is not charged a substitution.'
+        },
+        {
+          text: 'Alternate scenario: the HCP does NOT clear the player. What happens to substitutions?',
+          options: [
+            { text: 'Just the one team uses a substitution' },
+            { text: 'Both teams receive one additional substitution. The opponent can use it on one, singular player.', correct: true },
+            { text: 'The team that lost the player is penalized one substitution' }
+          ],
+          explain: 'Per §14.4, when the change becomes a concussion substitution, BOTH teams receive one additional sub. This keeps things fair across both sides.'
+        }
+      ]
+    }
+  },
+
+  {
+    ref: '§15.1', title: 'Tiebreakers and Fair Play',
+    rule: '<p class="rule-text">When two teams finish a group tied on points, placement is determined by this sequence. The <strong>first criterion that separates them ends the sequence</strong>.</p>' +
+          '<ol class="rule-list">' +
+          '<li>Winner of head-to-head</li>' +
+          '<li>Winner of most matches</li>' +
+          '<li>Goal difference (max <strong>+5 per match</strong>)</li>' +
+          '<li>Fewest goals allowed</li>' +
+          '<li><strong>Fair Play</strong> ─ fewest total <strong>player and coach dismissals</strong></li>' +
+          '<li>Penalty kicks (coin toss only if both teams are absent)</li>' +
+          '</ol>' +
+          '<p class="rule-text"><strong>Why this matters to referees:</strong> Criterion 5 (Fair Play) counts every dismissal you issue across the group stage. How you manage cards has a direct effect on which team advances when everything else is even. Card consistently and accurately ─ but be aware that a soft red can decide who goes home.</p>',
+    challenge: {
+      type: 'multi',
+      prompt: 'Per §15.1, which of these contribute to a team\'s Fair Play tiebreaker count? Select all that apply.',
+      options: [
+        { text: 'A red card to a player for serious foul play', correct: true },
+        { text: 'A second yellow card that results in a send-off', correct: true },
+        { text: 'A coach dismissal during the match', correct: true },
+        { text: 'A single yellow card to a player', correct: false },
+        { text: 'A spectator being removed from the field area', correct: false },
+        { text: 'A normal substitution during stoppage', correct: false },
+        { text: 'A coach being verbally warned but not dismissed', correct: false }
+      ],
+      explain: 'Per §15.1, Fair Play counts <strong>player and coach dismissals</strong>. That is every send-off ─ direct red, second yellow leading to red, or coach dismissal. <strong>A single yellow card alone does not count</strong>. Spectators are not on the team roster. Substitutions and verbal warnings are not dismissals.'
+    }
+  }
+];
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+let state = {
+  refName: '',
+  startTime: null,
+  currentIdx: 0,
+  totalAttempts: 0,
+  mistakes: 0
+};
+
+// ════════════════════════════════════════════════════════════════
+// FLOW CONTROL
+// ════════════════════════════════════════════════════════════════
+function showView(id) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById('view-' + id).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Client-side sanitizer that mirrors server-side rules. Defense in depth:
+// the server still re-sanitizes; this just gives the ref a friendly error
+// before they click START instead of after submission.
+function sanitizeNameClient(raw) {
+  var s = String(raw == null ? '' : raw);
+  s = s.replace(/[\x00-\x1F\x7F]/g, '');                 // control chars
+  s = s.replace(/<[^>]*>/g, '');                          // html tags
+  s = s.replace(/https?:\/\/\S+/gi, '');                  // urls
+  s = s.replace(/www\.\S+/gi, '');                        // www urls
+  try {
+    s = s.replace(/[\p{Emoji_Presentation}\p{Extended_Pictographic}]/gu, '');
+    s = s.replace(/[^\p{L}\p{M}\s\-'.,]/gu, '');
+  } catch (e) {
+    s = s.replace(/[\u{1F000}-\u{1FFFF}]/gu, '');
+    s = s.replace(/[\u{2600}-\u{27BF}]/gu, '');
+    s = s.replace(/[^A-Za-z\u00C0-\u024F\u1E00-\u1EFF\s\-'.,]/g, '');
+  }
+  s = s.replace(/\s+/g, ' ').trim();
+  if (s.length > 60) s = s.substring(0, 60).trim();
+  return s;
+}
+function containsProfanityClient(s) {
+  if (!s) return false;
+  var PROFANITY_RE = /\b(f+u+c+k+\w*|motherf+u+c+k+\w*|sh+i+t+\w*|bullsh+i+t+|batsh+i+t+|b+i+t+c+h+\w*|a+s+h+o+l+e+\w*|asshat|dumbass|jackass|smartass|dips?h+i+t+|d+i+c+k+head|prick|cunts?|c+o+c+k+s+u+c+k+er|p+u+s+s+y+|twats?|whores?|sluts?|bastards?|niggers?|nigga\w*|faggots?|retards?|spics?|kikes?|chinks?|gooks?|wetbacks?)\b/i;
+  return PROFANITY_RE.test(s);
+}
+
+function showNameError(msg) {
+  var f = document.getElementById('ref-name');
+  f.focus();
+  f.style.borderColor = 'var(--red)';
+  var existing = document.getElementById('ref-name-error');
+  if (existing) { existing.textContent = msg; return; }
+  var div = document.createElement('div');
+  div.id = 'ref-name-error';
+  div.style.cssText = 'color: var(--red); font-size: 13px; font-weight: 600; margin-top: 8px; text-align: center;';
+  div.textContent = msg;
+  f.parentNode.insertBefore(div, f.nextSibling);
+}
+
+function clearNameError() {
+  var f = document.getElementById('ref-name');
+  f.style.borderColor = '';
+  var existing = document.getElementById('ref-name-error');
+  if (existing) existing.parentNode.removeChild(existing);
+}
+
+function startWalkthrough() {
+  var raw = document.getElementById('ref-name').value;
+  var cleaned = sanitizeNameClient(raw);
+  if (!cleaned || cleaned.length < 2) {
+    showNameError('Please enter your real name (letters, spaces, hyphens, apostrophes).');
+    return;
+  }
+  if (containsProfanityClient(cleaned)) {
+    showNameError('Please enter your real name.');
+    return;
+  }
+  if (cleaned !== raw.trim()) {
+    // Soft-correct: let the user see the cleaned version before proceeding
+    document.getElementById('ref-name').value = cleaned;
+    showNameError('Some characters were removed. If this looks right, tap START again.');
+    return;
+  }
+  clearNameError();
+  state.refName = cleaned;
+  state.startTime = new Date();
+  state.currentIdx = 0;
+  state.totalAttempts = 0;
+  state.mistakes = 0;
+  document.getElementById('progress-name').textContent = cleaned;
+  document.getElementById('progress-wrap').classList.remove('hidden');
+  showView('walkthrough');
+  renderSection();
+}
+
+function renderSection() {
+  const idx = state.currentIdx;
+  const s = SECTIONS[idx];
+  const total = SECTIONS.length;
+  document.getElementById('progress-label').textContent = 'Section ' + (idx + 1) + ' of ' + total;
+  document.getElementById('progress-fill').style.width = ((idx) / total * 100) + '%';
+
+  const container = document.getElementById('section-container');
+  let html = '<div class="section">';
+  html += '<div class="section-ref">' + s.ref + '</div>';
+  html += '<div class="section-title">' + s.title + '</div>';
+  html += s.rule;
+
+  if (s.displayOnly) {
+    html += '<div class="action-row" style="margin-top:18px;"><button class="action-btn primary" onclick="advance()">Continue →</button></div>';
+  } else {
+    html += '<div class="challenge" id="challenge-host">';
+    html += '<div class="challenge-label">Show what you know</div>';
+    html += '<div class="challenge-prompt" id="challenge-prompt">' + (s.challenge.prompt || '') + '</div>';
+    html += '<div class="challenge-body" id="challenge-body"></div>';
+    html += '<div class="challenge-feedback" id="challenge-feedback"></div>';
+    html += '</div>';
+  }
+
+  html += '</div>';
+  container.innerHTML = html;
+
+  if (!s.displayOnly) {
+    initChallenge(s.challenge);
+  }
+}
+
+function advance() {
+  state.currentIdx++;
+  if (state.currentIdx >= SECTIONS.length) {
+    finishWalkthrough();
+  } else {
+    document.getElementById('progress-fill').style.width = (state.currentIdx / SECTIONS.length * 100) + '%';
+    renderSection();
+  }
+}
+
+function finishWalkthrough() {
+  document.getElementById('progress-wrap').classList.add('hidden');
+  document.getElementById('cert-name').textContent = state.refName;
+  const ts = new Date();
+  const tsStr = ts.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) +
+                ' at ' +
+                ts.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  document.getElementById('cert-ts').textContent = 'Completed ' + tsStr;
+  showView('complete');
+  fireConfetti(true);
+  sendValidation();
+}
+
+// ════════════════════════════════════════════════════════════════
+// VALIDATION. POSTs to BCC Apps Script web app on completion.
+// Paste the deployed Apps Script /exec URL into VALIDATION_URL below.
+// ════════════════════════════════════════════════════════════════
+const VALIDATION_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+
+function sendValidation() {
+  const el = document.getElementById('cert-validation');
+  if (!el) { return; }
+
+  if (!VALIDATION_URL) {
+    el.className = 'cert-validation pending';
+    el.innerHTML = '<span class="cert-validation-icon">📋</span>' +
+      '<span class="cert-validation-text">Reply to Karen or Jeff with your name to confirm completion.</span>';
+    return;
+  }
+
+  const payload = {
+    name: state.refName,
+    timestamp: new Date().toISOString(),
+    sections: SECTIONS.length
+  };
+
+  fetch(VALIDATION_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    el.className = 'cert-validation success';
+    el.innerHTML = '<span class="cert-validation-icon">✓</span>' +
+      '<span class="cert-validation-text">Validation sent to Karen and Jeff. No further action needed.</span>';
+  }).catch(() => {
+    el.className = 'cert-validation error';
+    el.innerHTML = '<span class="cert-validation-icon">⚠️</span>' +
+      '<span class="cert-validation-text">Could not send automatically. Reply to Karen or Jeff with your name.</span>';
+  });
+}
+
+document.getElementById('ref-name').addEventListener('input', function(e) {
+  e.target.style.borderColor = '';
+  clearNameError();
+});
+
+// ════════════════════════════════════════════════════════════════
+// CHALLENGE INITIALIZERS
+// ════════════════════════════════════════════════════════════════
+function initChallenge(c) {
+  if (c.type === 'pair')     return initPair(c);
+  if (c.type === 'order')    return initOrder(c);
+  if (c.type === 'slider')   return initSlider(c);
+  if (c.type === 'multi')    return initMulti(c);
+  if (c.type === 'scenario') return initScenario(c);
+  if (c.type === 'tf')       return initTF(c);
+}
+
+function showFeedback(ok, text) {
+  const fb = document.getElementById('challenge-feedback');
+  fb.className = 'challenge-feedback show ' + (ok ? 'correct' : 'wrong');
+  fb.innerHTML =
+    '<div class="feedback-title">' + (ok ? '✓ Correct!' : '✗ Not quite.') + '</div>' +
+    '<div class="feedback-text">' + text + '</div>' +
+    (ok
+      ? '<div class="action-row"><button class="action-btn primary" onclick="advance()">Next Section →</button></div>'
+      : '<div class="action-row"><button class="action-btn secondary" onclick="retryChallenge()">Try Again</button></div>');
+}
+
+function retryChallenge() {
+  const s = SECTIONS[state.currentIdx];
+  document.getElementById('challenge-feedback').className = 'challenge-feedback';
+  document.getElementById('challenge-feedback').innerHTML = '';
+  document.getElementById('challenge-body').innerHTML = '';
+  initChallenge(s.challenge);
+}
+
+// ─── PAIR ────────────────────────────────────────────────────
+function initPair(c) {
+  const body = document.getElementById('challenge-body');
+  const shuffled = c.pairs.map(p => p.right).sort(() => Math.random() - 0.5);
+  let leftHtml = '<div class="pair-col">';
+  c.pairs.forEach((p, i) => {
+    leftHtml += '<button class="pair-pill" data-side="L" data-key="' + i + '" onclick="pairTap(this)">' + p.left + '</button>';
+  });
+  leftHtml += '</div>';
+  let midHtml = '<div class="pair-mid"><div class="pair-mid-line"></div><div>↔</div><div class="pair-mid-line"></div></div>';
+  let rightHtml = '<div class="pair-col">';
+  shuffled.forEach(r => {
+    const idx = c.pairs.findIndex(p => p.right === r);
+    rightHtml += '<button class="pair-pill" data-side="R" data-key="' + idx + '" onclick="pairTap(this)">' + r + '</button>';
+  });
+  rightHtml += '</div>';
+  body.innerHTML = '<div class="pair-board">' + leftHtml + midHtml + rightHtml + '</div>';
+  pairState = { selected: null, matchedCount: 0, total: c.pairs.length, explain: c.explain };
+}
+
+let pairState = null;
+function pairTap(el) {
+  if (el.classList.contains('matched')) return;
+  if (!pairState.selected) {
+    pairState.selected = el;
+    el.classList.add('selected');
+    return;
+  }
+  if (pairState.selected === el) {
+    el.classList.remove('selected');
+    pairState.selected = null;
+    return;
+  }
+  if (pairState.selected.dataset.side === el.dataset.side) {
+    pairState.selected.classList.remove('selected');
+    pairState.selected = el;
+    el.classList.add('selected');
+    return;
+  }
+  state.totalAttempts++;
+  if (pairState.selected.dataset.key === el.dataset.key) {
+    pairState.selected.classList.remove('selected');
+    pairState.selected.classList.add('matched');
+    el.classList.add('matched');
+    pairState.matchedCount++;
+    pairState.selected = null;
+    if (pairState.matchedCount === pairState.total) {
+      setTimeout(() => showFeedback(true, pairState.explain), 350);
+    }
+  } else {
+    state.mistakes++;
+    const prev = pairState.selected;
+    pairState.selected.classList.remove('selected');
+    pairState.selected.classList.add('wrong');
+    el.classList.add('wrong');
+    pairState.selected = null;
+    setTimeout(() => {
+      prev.classList.remove('wrong');
+      el.classList.remove('wrong');
+    }, 600);
+  }
+}
+
+// ─── ORDER ────────────────────────────────────────────────────
+let orderState = null;
+function initOrder(c) {
+  const body = document.getElementById('challenge-body');
+  const shuffled = c.items.map((item, i) => ({ item, idx: i })).sort(() => Math.random() - 0.5);
+  let html = '<div class="order-list">';
+  shuffled.forEach(o => {
+    html += '<button class="order-pill" data-key="' + o.idx + '" onclick="orderTap(this)">' +
+            '<span class="order-num">·</span>' +
+            '<span class="order-text">' + o.item + '</span>' +
+            '</button>';
+  });
+  html += '</div>';
+  html += '<div class="order-actions">' +
+          '<button class="order-btn order-btn-reset" onclick="orderReset()">Reset</button>' +
+          '<button class="order-btn order-btn-submit" id="order-submit" onclick="orderSubmit()" disabled>Check</button>' +
+          '</div>';
+  body.innerHTML = html;
+  orderState = { sequence: [], total: c.items.length, explain: c.explain };
+}
+function orderTap(el) {
+  if (el.classList.contains('tapped')) return;
+  orderState.sequence.push(parseInt(el.dataset.key, 10));
+  el.classList.add('tapped');
+  el.querySelector('.order-num').textContent = orderState.sequence.length;
+  if (orderState.sequence.length === orderState.total) {
+    document.getElementById('order-submit').disabled = false;
+  }
+}
+function orderReset() {
+  orderState.sequence = [];
+  document.querySelectorAll('#challenge-body .order-pill').forEach(p => {
+    p.classList.remove('tapped');
+    p.querySelector('.order-num').textContent = '·';
+  });
+  document.getElementById('order-submit').disabled = true;
+}
+function orderSubmit() {
+  state.totalAttempts++;
+  let correct = true;
+  for (let i = 0; i < orderState.sequence.length; i++) {
+    if (orderState.sequence[i] !== i) { correct = false; break; }
+  }
+  if (correct) {
+    showFeedback(true, orderState.explain);
+  } else {
+    state.mistakes++;
+    showFeedback(false, 'The order isn\'t right. ' + orderState.explain);
+  }
+}
+
+// ─── SLIDER ────────────────────────────────────────────────────
+function initSlider(c) {
+  const body = document.getElementById('challenge-body');
+  body.innerHTML =
+    '<div class="slider-display" id="slider-val">' + c.start + '</div>' +
+    '<div class="slider-label">' + c.unit + '</div>' +
+    '<div class="slider-range"><span>' + c.min + '</span><span>' + c.max + '</span></div>' +
+    '<input type="range" class="slider-input" id="slider-input" min="' + c.min + '" max="' + c.max + '" value="' + c.start + '">' +
+    '<button class="action-btn gold" style="width:100%;" onclick="sliderSubmit(' + c.correct + ',\'' + c.explain.replace(/'/g, "\\'") + '\')">Lock In</button>';
+  document.getElementById('slider-input').addEventListener('input', function(e) {
+    document.getElementById('slider-val').textContent = e.target.value;
+  });
+}
+function sliderSubmit(correct, explain) {
+  state.totalAttempts++;
+  const val = parseInt(document.getElementById('slider-input').value, 10);
+  if (val === correct) {
+    showFeedback(true, explain);
+  } else {
+    state.mistakes++;
+    showFeedback(false, 'You picked <strong>' + val + '</strong>. The correct answer is <strong>' + correct + '</strong>.<br><br>' + explain);
+  }
+}
+
+// ─── MULTI-SELECT ────────────────────────────────────────────────
+let multiState = null;
+function initMulti(c) {
+  const body = document.getElementById('challenge-body');
+  let html = '<div class="multi-grid">';
+  c.options.forEach((o, i) => {
+    html += '<button class="multi-option" data-key="' + i + '" onclick="multiToggle(this)">' +
+            '<span class="multi-check"></span>' +
+            '<span>' + o.text + '</span>' +
+            '</button>';
+  });
+  html += '</div>';
+  html += '<button class="action-btn gold" style="width:100%;" onclick="multiSubmit()">Submit</button>';
+  body.innerHTML = html;
+  multiState = { options: c.options, explain: c.explain, selected: new Set() };
+}
+function multiToggle(el) {
+  const key = parseInt(el.dataset.key, 10);
+  if (multiState.selected.has(key)) {
+    multiState.selected.delete(key);
+    el.classList.remove('selected');
+  } else {
+    multiState.selected.add(key);
+    el.classList.add('selected');
+  }
+}
+function multiSubmit() {
+  state.totalAttempts++;
+  const buttons = document.querySelectorAll('#challenge-body .multi-option');
+  let allCorrect = true;
+  multiState.options.forEach((o, i) => {
+    const isPicked = multiState.selected.has(i);
+    if (o.correct !== isPicked) allCorrect = false;
+    const btn = buttons[i];
+    btn.classList.remove('selected');
+    btn.disabled = true;
+    if (o.correct && isPicked) btn.classList.add('correct-pick');
+    else if (!o.correct && isPicked) btn.classList.add('wrong-pick');
+    else if (o.correct && !isPicked) btn.classList.add('should-pick');
+  });
+  if (allCorrect) {
+    showFeedback(true, multiState.explain);
+  } else {
+    state.mistakes++;
+    showFeedback(false, 'Some picks weren\'t right. Green = correct picks. Red = wrong picks. Dashed green = you should have picked these.<br><br>' + multiState.explain);
+  }
+}
+
+// ─── SCENARIO ────────────────────────────────────────────────────
+let scenarioState = null;
+function initScenario(c) {
+  scenarioState = { steps: c.steps, idx: 0 };
+  renderScenarioStep();
+}
+function renderScenarioStep() {
+  const body = document.getElementById('challenge-body');
+  const step = scenarioState.steps[scenarioState.idx];
+  const total = scenarioState.steps.length;
+  let html = '<div class="scenario">';
+  html += '<div class="scenario-step">Step ' + (scenarioState.idx + 1) + ' of ' + total + '</div>';
+  html += '<div class="scenario-text">' + step.text + '</div>';
+  html += '<div class="scenario-options">';
+  step.options.forEach((o, i) => {
+    html += '<button class="scenario-option" data-idx="' + i + '" onclick="scenarioPick(this,' + (o.correct ? 'true' : 'false') + ')">' + o.text + '</button>';
+  });
+  html += '</div></div>';
+  body.innerHTML = html;
+}
+function scenarioPick(el, correct) {
+  state.totalAttempts++;
+  document.querySelectorAll('#challenge-body .scenario-option').forEach(b => b.disabled = true);
+  if (correct) {
+    el.classList.add('correct');
+    const step = scenarioState.steps[scenarioState.idx];
+    const fb = document.getElementById('challenge-feedback');
+    fb.className = 'challenge-feedback show correct';
+    const isLast = scenarioState.idx === scenarioState.steps.length - 1;
+    fb.innerHTML =
+      '<div class="feedback-title">✓ Correct!</div>' +
+      '<div class="feedback-text">' + step.explain + '</div>' +
+      '<div class="action-row">' +
+        (isLast
+          ? '<button class="action-btn primary" onclick="advance()">Next Section →</button>'
+          : '<button class="action-btn primary" onclick="scenarioNext()">Continue Scenario →</button>') +
+      '</div>';
+  } else {
+    state.mistakes++;
+    el.classList.add('wrong');
+    const step = scenarioState.steps[scenarioState.idx];
+    const fb = document.getElementById('challenge-feedback');
+    fb.className = 'challenge-feedback show wrong';
+    fb.innerHTML =
+      '<div class="feedback-title">✗ Not quite.</div>' +
+      '<div class="feedback-text">' + step.explain + '</div>' +
+      '<div class="action-row"><button class="action-btn secondary" onclick="scenarioRetryStep()">Try this step again</button></div>';
+  }
+}
+function scenarioNext() {
+  scenarioState.idx++;
+  document.getElementById('challenge-feedback').className = 'challenge-feedback';
+  document.getElementById('challenge-feedback').innerHTML = '';
+  renderScenarioStep();
+}
+function scenarioRetryStep() {
+  document.getElementById('challenge-feedback').className = 'challenge-feedback';
+  document.getElementById('challenge-feedback').innerHTML = '';
+  renderScenarioStep();
+}
+
+// ─── TRUE/FALSE ────────────────────────────────────────────────────
+let tfState = null;
+function initTF(c) {
+  const body = document.getElementById('challenge-body');
+  let html = '<div class="tf-list">';
+  c.statements.forEach((s, i) => {
+    html += '<div class="tf-row" data-idx="' + i + '">' +
+            '<div class="tf-statement">' + s.text + '</div>' +
+            '<div class="tf-buttons">' +
+              '<button class="tf-btn" onclick="tfPick(' + i + ',true)">True</button>' +
+              '<button class="tf-btn" onclick="tfPick(' + i + ',false)">False</button>' +
+            '</div>' +
+            '<div class="tf-explain"></div>' +
+            '</div>';
+  });
+  html += '</div>';
+  html += '<button class="action-btn gold" style="width:100%; display:none;" id="tf-submit" onclick="tfSubmit()">Check Answers</button>';
+  body.innerHTML = html;
+  tfState = { statements: c.statements, picks: new Array(c.statements.length).fill(null) };
+}
+function tfPick(i, val) {
+  tfState.picks[i] = val;
+  const row = document.querySelector('#challenge-body .tf-row[data-idx="' + i + '"]');
+  const buttons = row.querySelectorAll('.tf-btn');
+  buttons[0].style.opacity = val === true ? '1' : '.5';
+  buttons[1].style.opacity = val === false ? '1' : '.5';
+  buttons[0].style.background = val === true ? 'var(--gold)' : 'var(--card)';
+  buttons[0].style.color = val === true ? 'var(--navy)' : '#fff';
+  buttons[1].style.background = val === false ? 'var(--gold)' : 'var(--card)';
+  buttons[1].style.color = val === false ? 'var(--navy)' : '#fff';
+  if (tfState.picks.every(p => p !== null)) {
+    document.getElementById('tf-submit').style.display = 'block';
+  }
+}
+function tfSubmit() {
+  state.totalAttempts++;
+  let allRight = true;
+  tfState.statements.forEach((s, i) => {
+    const row = document.querySelector('#challenge-body .tf-row[data-idx="' + i + '"]');
+    const explain = row.querySelector('.tf-explain');
+    const buttons = row.querySelectorAll('.tf-btn');
+    buttons.forEach(b => b.disabled = true);
+    const correct = tfState.picks[i] === s.answer;
+    if (!correct) { allRight = false; }
+    row.classList.add('answered', correct ? 'correct' : 'wrong');
+    explain.innerHTML = s.explain;
+    explain.classList.add('show');
+  });
+  document.getElementById('tf-submit').style.display = 'none';
+  if (allRight) {
+    showFeedback(true, 'You got every statement right. Solid grasp of this rule.');
+  } else {
+    state.mistakes++;
+    showFeedback(false, 'Some answers weren\'t right. Read the explanations above each statement, then try again.');
+  }
+}
+
+// ════════════════════════════════════════════════════════════════
+// CONFETTI
+// ════════════════════════════════════════════════════════════════
+function fireConfetti(big) {
+  const container = document.createElement('div');
+  container.className = 'confetti';
+  document.body.appendChild(container);
+  const colors = ['#D52B3B', '#0F2A56', '#d4a017', '#4d7ad9', '#16a34a'];
+  const count = big ? 60 : 25;
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = (Math.random() * 0.3) + 's';
+    piece.style.animationDuration = (1.2 + Math.random() * 0.8) + 's';
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 2200);
+}
+
+// ════════════════════════════════════════════════════════════════
+// THEME TOGGLE
+// ════════════════════════════════════════════════════════════════
+(function initTheme() {
+  var stored = '';
+  try { stored = localStorage.getItem('pcup-theme') || ''; } catch (e) {}
+  if (stored === 'dark') { document.body.classList.add('dark'); }
+  updateThemeIcon();
+})();
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  try {
+    localStorage.setItem('pcup-theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+  } catch (e) {}
+  updateThemeIcon();
+}
+function updateThemeIcon() {
+  var el = document.getElementById('theme-icon');
+  if (el) { el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️'; }
+}
+</script>
+
+</body>
+</html>
