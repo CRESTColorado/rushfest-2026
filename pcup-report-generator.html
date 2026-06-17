@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PCup Report Generator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --steel:        #a5b8d4;
+    --steel-deep:   #8ba2c4;
+    --navy:         #243859;
+    --navy-soft:    #2e4570;
+    --navy-line:    #3a5380;
+    --paper:        #ffffff;
+    --paper-soft:   #f3f6fb;
+    --paper-line:   #c9d5e6;
+    --ink-on-steel: #0F2A56;
+    --ink-on-navy:  #f3f6fb;
+    --dim-on-navy:  #b8c5dd;
+    --dim-on-steel: #3a5070;
+    --gold-dark:    #ecbf3e;
+    --gold-light:   #8a6810;
+    --green:        #38a16a;
+    --green-bg:     rgba(56,161,106,.16);
+    --amber:        #d49a1d;
+    --amber-bg:     rgba(212,154,29,.18);
+    --red:          #c0392b;
+    --red-bg:       rgba(192,57,43,.16);
+    --blue:         #2c6db5;
+    --blue-bg:      rgba(44,109,181,.16);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    background: var(--steel);
+    color: var(--ink-on-steel);
+    font-family: "Barlow", -apple-system, sans-serif;
+    font-size: 15px; line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ────────────────────────────────────────────────── */
+  .topbar {
+    background: var(--navy); color: var(--ink-on-navy);
+    padding: 18px 22px 16px;
+    border-bottom: 4px solid var(--gold-dark);
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; }
+  .brand-mark {
+    width: 44px; height: 44px; border-radius: 10px;
+    background: var(--gold-dark); color: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-family: "Barlow Condensed", sans-serif;
+    font-weight: 900; font-size: 22px; letter-spacing: .02em;
+  }
+  .brand-text { line-height: 1.1; }
+  .brand-title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 26px; font-weight: 900;
+    color: var(--ink-on-navy);
+    letter-spacing: .03em; text-transform: uppercase;
+  }
+  .brand-sub {
+    font-size: 12px; font-weight: 600;
+    color: var(--gold-dark);
+    letter-spacing: .14em; text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .back-btn {
+    background: transparent; color: var(--gold-dark);
+    border: 1.5px solid var(--gold-dark);
+    border-radius: 8px; padding: 8px 14px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 13px; font-weight: 800;
+    letter-spacing: .08em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .back-btn:hover { background: var(--gold-dark); color: var(--navy); }
+
+  /* ── SETUP ─────────────────────────────────────────────────── */
+  .setup {
+    background: var(--paper); color: var(--ink-on-steel);
+    border-bottom: 1px solid var(--paper-line);
+    padding: 14px 22px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .setup-label {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 14px; font-weight: 800;
+    color: var(--gold-light);
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+  .setup input {
+    flex: 1; min-width: 280px;
+    background: var(--paper-soft);
+    color: var(--ink-on-steel);
+    border: 1.5px solid var(--paper-line);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: "Barlow", sans-serif;
+    font-size: 13px; font-weight: 600;
+  }
+  .setup input:focus { outline: none; border-color: var(--gold-light); }
+  .setup-hint { font-size: 12px; color: var(--dim-on-steel); }
+
+  /* ── CONTROLS ──────────────────────────────────────────────── */
+  .controls {
+    padding: 16px 22px;
+    display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-end;
+  }
+  .ctrl { display: flex; flex-direction: column; gap: 6px; }
+  .ctrl label {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 12px; font-weight: 800;
+    color: var(--ink-on-steel);
+    letter-spacing: .12em; text-transform: uppercase;
+  }
+  .ctrl input, .ctrl select {
+    background: var(--paper); color: var(--ink-on-steel);
+    border: 1.5px solid var(--paper-line);
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-family: "Barlow", sans-serif;
+    font-size: 14px; font-weight: 600;
+    min-width: 140px;
+  }
+  .ctrl input:focus, .ctrl select:focus { outline: none; border-color: var(--navy); }
+  .btn {
+    height: 40px; padding: 0 18px;
+    background: var(--navy); color: var(--ink-on-navy);
+    border: none; border-radius: 8px;
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 16px; font-weight: 900;
+    letter-spacing: .06em; text-transform: uppercase;
+    cursor: pointer; transition: background .15s, transform .1s;
+  }
+  .btn:hover { background: var(--navy-soft); }
+  .btn:active { transform: scale(.97); }
+  .btn-gold { background: var(--gold-dark); color: var(--navy); }
+  .btn-gold:hover { background: #d4a832; }
+  .btn-ghost {
+    background: transparent; color: var(--ink-on-steel);
+    border: 1.5px solid var(--navy);
+  }
+  .btn-ghost:hover { background: var(--paper); }
+
+  /* ── REF LIST ──────────────────────────────────────────────── */
+  .list-wrap { padding: 0 22px 40px; }
+  .list-meta {
+    padding: 10px 0;
+    color: var(--dim-on-steel); font-size: 13px;
+  }
+  .list-meta strong { color: var(--ink-on-steel); font-weight: 800; }
+  .refs {
+    display: grid; gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  }
+  .ref-row {
+    background: var(--navy); color: var(--ink-on-navy);
+    border: 1px solid var(--navy-line);
+    border-radius: 10px;
+    padding: 14px 16px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; cursor: pointer;
+    transition: transform .12s, border-color .12s, box-shadow .12s;
+  }
+  .ref-row:hover {
+    transform: translateY(-1px);
+    border-color: var(--gold-dark);
+    box-shadow: 0 4px 14px rgba(15, 42, 86, .25);
+  }
+  .ref-row-l { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+  .ref-row-name {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 20px; font-weight: 900;
+    color: var(--ink-on-navy);
+    letter-spacing: .02em; line-height: 1.05;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .ref-row-email {
+    font-size: 12px; color: var(--dim-on-navy);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .ref-row-no-email { color: var(--amber); font-style: italic; }
+  .ref-row-r { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+  .ref-counts { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+  .count-pill {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 11px; font-weight: 800;
+    letter-spacing: .06em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 6px;
+  }
+  .cp-total    { background: var(--navy-soft); color: var(--dim-on-navy); }
+  .cp-ready    { background: var(--green-bg);  color: #7fdba8; border: 1px solid rgba(56,161,106,.4); }
+  .cp-pending  { background: var(--amber-bg);  color: #f2c96b; }
+  .cp-finals   { background: var(--gold-dark); color: var(--navy); }
+  .ref-row-avg {
+    font-size: 11px; color: var(--dim-on-navy);
+    font-family: "Barlow Condensed", sans-serif;
+    letter-spacing: .04em;
+  }
+  .ref-row-avg strong { color: var(--gold-dark); font-weight: 800; }
+
+  /* ── DETAIL VIEW ───────────────────────────────────────────── */
+  .detail-wrap { padding: 0 22px 60px; }
+  .detail-hd {
+    background: var(--navy); color: var(--ink-on-navy);
+    padding: 22px 24px;
+    border-radius: 12px;
+    border: 1px solid var(--navy-line);
+    margin: 20px 0 18px;
+    border-left: 6px solid var(--gold-dark);
+  }
+  .detail-name {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 34px; font-weight: 900;
+    color: var(--ink-on-navy);
+    letter-spacing: .02em; line-height: 1.02;
+  }
+  .detail-email {
+    font-size: 14px; color: var(--dim-on-navy);
+    margin-top: 6px;
+  }
+  .detail-email-missing { color: var(--amber); }
+  .detail-summary {
+    display: grid; gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    margin-top: 16px;
+  }
+  .summary-tile {
+    background: var(--navy-soft);
+    border-radius: 8px;
+    padding: 10px 12px;
+    border: 1px solid var(--navy-line);
+  }
+  .summary-label {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 11px; font-weight: 800;
+    color: var(--gold-dark);
+    letter-spacing: .12em; text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .summary-val {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 22px; font-weight: 900;
+    color: var(--ink-on-navy);
+  }
+  .summary-sub {
+    font-size: 11px; color: var(--dim-on-navy);
+    margin-top: 2px;
+  }
+
+  .detail-actions {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    margin-bottom: 18px;
+  }
+
+  .report-text {
+    width: 100%;
+    background: var(--paper);
+    color: var(--ink-on-steel);
+    border: 2px solid var(--navy);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-family: "Barlow", -apple-system, "Menlo", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 480px;
+    resize: vertical;
+    white-space: pre;
+    overflow-wrap: normal;
+    overflow-x: auto;
+    tab-size: 2;
+  }
+  .report-text:focus { outline: none; border-color: var(--gold-light); }
+
+  .notes-section { margin-bottom: 22px; }
+  .notes-section-title {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 16px; font-weight: 900;
+    color: var(--ink-on-steel);
+    letter-spacing: .08em; text-transform: uppercase;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid var(--navy);
+  }
+
+  /* ── EMPTY / STATUS ────────────────────────────────────────── */
+  .empty {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--dim-on-steel);
+    font-size: 16px;
+  }
+  .empty-mark {
+    font-family: "Barlow Condensed", sans-serif;
+    font-size: 56px; font-weight: 900;
+    color: var(--steel-deep);
+    margin-bottom: 10px;
+  }
+
+  /* ── TOAST ─────────────────────────────────────────────────── */
+  .toast {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--navy); color: var(--ink-on-navy);
+    padding: 12px 18px; border-radius: 10px;
+    border-left: 4px solid var(--gold-dark);
+    font-size: 14px; font-weight: 600;
+    box-shadow: 0 6px 24px rgba(0,0,0,.2);
+    transform: translateY(100px); opacity: 0;
+    transition: transform .2s, opacity .2s;
+    z-index: 100;
+    max-width: 420px;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast.err  { border-left-color: var(--red); }
+  .toast.ok   { border-left-color: var(--green); }
+
+  .footer {
+    padding: 24px 22px 40px;
+    text-align: center;
+    color: var(--dim-on-steel);
+    font-size: 12px;
+  }
+
+  @media (max-width: 640px) {
+    .topbar { padding: 14px 16px; }
+    .brand-title { font-size: 22px; }
+    .controls, .list-wrap, .detail-wrap, .setup { padding-left: 14px; padding-right: 14px; }
+    .refs { grid-template-columns: 1fr; }
+    .detail-name { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">PC</div>
+    <div class="brand-text">
+      <div class="brand-title">Report Generator</div>
+      <div class="brand-sub">Presidents Cup 2026 . NW Qualifier</div>
+    </div>
+  </div>
+  <button class="back-btn" id="back-btn" style="display:none" onclick="goBack()">← All Referees</button>
+</header>
+
+<div class="setup">
+  <span class="setup-label">Apps Script URL</span>
+  <input id="api-url" placeholder="https://script.google.com/macros/s/AKfy.../exec" autocomplete="off">
+  <span class="setup-hint" id="setup-hint">Paste once, saved locally.</span>
+</div>
+
+<!-- LIST VIEW -->
+<div id="view-list">
+  <div class="controls">
+    <div class="ctrl">
+      <label for="filter-date-from">From</label>
+      <input type="date" id="filter-date-from">
+    </div>
+    <div class="ctrl">
+      <label for="filter-date-to">To</label>
+      <input type="date" id="filter-date-to">
+    </div>
+    <button class="btn btn-gold" onclick="loadRefs()">Load Referees</button>
+    <button class="btn btn-ghost" onclick="resetFilters()">Reset</button>
+  </div>
+  <div class="list-wrap">
+    <div class="list-meta" id="list-meta">Set your Apps Script URL above, then click Load Referees.</div>
+    <div class="refs" id="refs-grid"></div>
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="view-detail" style="display:none">
+  <div class="detail-wrap">
+    <div class="detail-hd" id="detail-hd"></div>
+    <div class="detail-actions">
+      <button class="btn btn-gold" onclick="copyReport()">Copy Report</button>
+      <button class="btn btn-ghost" onclick="downloadReport()">Download .txt</button>
+      <button class="btn btn-ghost" onclick="rebuildReport()">Rebuild from Latest</button>
+    </div>
+    <div class="notes-section">
+      <div class="notes-section-title">Compiled Report (ready for AI tone pass + email)</div>
+      <textarea class="report-text" id="report-text" spellcheck="false"></textarea>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Presidents Cup 2026 . Powered by JAReferee
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const LS_API = "pcup_apps_script_url";
+  let refsCache = [];
+  let detailCache = null;
+
+  document.addEventListener("DOMContentLoaded", function () {
+    const url = localStorage.getItem(LS_API) || "";
+    document.getElementById("api-url").value = url;
+    if (url) { document.getElementById("setup-hint").textContent = "Saved. Edit to change."; }
+    document.getElementById("api-url").addEventListener("change", function (e) {
+      localStorage.setItem(LS_API, e.target.value.trim());
+      document.getElementById("setup-hint").textContent = "Saved.";
+    });
+  });
+
+  function getApiUrl() { return (document.getElementById("api-url").value || "").trim(); }
+
+  function toast(msg, kind) {
+    const t = document.getElementById("toast");
+    t.textContent = msg;
+    t.className = "toast show " + (kind || "");
+    clearTimeout(t._timer);
+    t._timer = setTimeout(function () { t.className = "toast"; }, 3200);
+  }
+
+  function resetFilters() {
+    document.getElementById("filter-date-from").value = "";
+    document.getElementById("filter-date-to").value = "";
+    loadRefs();
+  }
+
+  async function loadRefs() {
+    const url = getApiUrl();
+    if (!url) { toast("Set the Apps Script URL first.", "err"); return; }
+    const params = new URLSearchParams({ action: "refsList" });
+    const df = document.getElementById("filter-date-from").value;
+    const dt = document.getElementById("filter-date-to").value;
+    if (df) params.set("dateFrom", df);
+    if (dt) params.set("dateTo",   dt);
+    document.getElementById("list-meta").textContent = "Loading…";
+    document.getElementById("refs-grid").innerHTML = "";
+    try {
+      const r = await fetch(url + "?" + params.toString());
+      const j = await r.json();
+      if (j.status !== "ok") { throw new Error(j.message || "Server error"); }
+      refsCache = j.data.rows || [];
+      renderRefs();
+    } catch (e) {
+      toast("Load failed: " + e.message, "err");
+      document.getElementById("list-meta").innerHTML =
+        '<span style="color:var(--red); font-weight:700;">' + escapeHtml(e.message) + '</span>';
+    }
+  }
+
+  function renderRefs() {
+    const meta = document.getElementById("list-meta");
+    const grid = document.getElementById("refs-grid");
+    if (!refsCache.length) {
+      meta.textContent = "No referees with feedback in this window.";
+      grid.innerHTML = '<div class="empty"><div class="empty-mark">~</div>Try widening the date range.</div>';
+      return;
+    }
+    const totalNotes = refsCache.reduce(function (s, r) { return s + r.total; }, 0);
+    const totalReady = refsCache.reduce(function (s, r) { return s + r.readyCount; }, 0);
+    const totalMissingEmail = refsCache.filter(function (r) { return !r.refEmail; }).length;
+    meta.innerHTML =
+      "<strong>" + refsCache.length + "</strong> referees . " +
+      "<strong>" + totalNotes + "</strong> notes . " +
+      "<strong>" + totalReady + "</strong> ready (approved + edited)" +
+      (totalMissingEmail ? ' . <span style="color:var(--amber); font-weight:700;">' + totalMissingEmail + " missing email</span>" : "");
+    grid.innerHTML = "";
+    refsCache.forEach(function (r) {
+      const row = document.createElement("div");
+      row.className = "ref-row";
+      row.onclick = function () { openDetail(r.refName); };
+      const emailHtml = r.refEmail
+        ? '<div class="ref-row-email">' + escapeHtml(r.refEmail) + "</div>"
+        : '<div class="ref-row-email ref-row-no-email">no email in Roster col M</div>';
+      const avg = (r.avgWeighted != null) ? r.avgWeighted : (r.avgMatchControl != null ? r.avgMatchControl : null);
+      row.innerHTML =
+        '<div class="ref-row-l">' +
+          '<div class="ref-row-name">' + escapeHtml(r.refName) + "</div>" +
+          emailHtml +
+        "</div>" +
+        '<div class="ref-row-r">' +
+          '<div class="ref-counts">' +
+            '<span class="count-pill cp-total">' + r.total + " total</span>" +
+            (r.readyCount   ? '<span class="count-pill cp-ready">'   + r.readyCount   + " ready</span>" : "") +
+            (r.pending      ? '<span class="count-pill cp-pending">' + r.pending      + " pending</span>" : "") +
+            (r.recFinalsCount ? '<span class="count-pill cp-finals">★ ' + r.recFinalsCount + "</span>" : "") +
+          "</div>" +
+          (avg != null
+             ? '<div class="ref-row-avg">avg <strong>' + avg + "</strong></div>"
+             : "") +
+        "</div>";
+      grid.appendChild(row);
+    });
+  }
+
+  async function openDetail(refName) {
+    const url = getApiUrl();
+    if (!url) { toast("Set the Apps Script URL first.", "err"); return; }
+    const params = new URLSearchParams({ action: "feedbackForRef", name: refName });
+    const df = document.getElementById("filter-date-from").value;
+    const dt = document.getElementById("filter-date-to").value;
+    if (df) params.set("dateFrom", df);
+    if (dt) params.set("dateTo",   dt);
+    document.getElementById("view-list").style.display   = "none";
+    document.getElementById("view-detail").style.display = "block";
+    document.getElementById("back-btn").style.display    = "inline-block";
+    document.getElementById("detail-hd").innerHTML =
+      '<div class="detail-name">' + escapeHtml(refName) + "</div>" +
+      '<div class="detail-email">Loading.</div>';
+    document.getElementById("report-text").value = "Loading.";
+    try {
+      const r = await fetch(url + "?" + params.toString());
+      const j = await r.json();
+      if (j.status !== "ok") { throw new Error(j.message || "Server error"); }
+      detailCache = j.data;
+      renderDetail();
+    } catch (e) {
+      toast("Load failed: " + e.message, "err");
+      document.getElementById("detail-hd").innerHTML =
+        '<div class="detail-name">' + escapeHtml(refName) + "</div>" +
+        '<div class="detail-email detail-email-missing">' + escapeHtml(e.message) + "</div>";
+    }
+  }
+
+  function rebuildReport() {
+    if (!detailCache) return;
+    renderDetail();
+    toast("Rebuilt from latest data.", "ok");
+  }
+
+  function renderDetail() {
+    const d = detailCache;
+    if (!d) return;
+    const allRows = d.rows || [];
+    const readyRows = allRows.filter(function (n) {
+      const s = (n.cleanupStatus || "").toLowerCase();
+      return s === "approved" || s === "edited";
+    });
+    const fullRows = allRows.filter(function (n) { return n.type === "Full Feedback"; });
+    const finalsRecs = fullRows.filter(function (n) {
+      return String(n.recFinals || "").toLowerCase() === "yes";
+    }).length;
+    const avgs = computeAverages(fullRows);
+    const emailHtml = d.refEmail
+      ? escapeHtml(d.refEmail)
+      : '<span class="detail-email-missing">no email in Roster col M</span>';
+    document.getElementById("detail-hd").innerHTML =
+      '<div class="detail-name">' + escapeHtml(d.refName) + "</div>" +
+      '<div class="detail-email">' + emailHtml + "</div>" +
+      '<div class="detail-summary">' +
+        '<div class="summary-tile"><div class="summary-label">Total</div><div class="summary-val">' + allRows.length + '</div><div class="summary-sub">all notes</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Ready</div><div class="summary-val">' + readyRows.length + '</div><div class="summary-sub">approved + edited</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Finals Recs</div><div class="summary-val">' + finalsRecs + '</div><div class="summary-sub">★ from coaches</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Match Ctl</div><div class="summary-val">' + (avgs.mc != null ? avgs.mc : "-") + '</div><div class="summary-sub">avg 1-4</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Interaction</div><div class="summary-val">' + (avgs.it != null ? avgs.it : "-") + '</div><div class="summary-sub">avg 1-4</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Teamwork</div><div class="summary-val">' + (avgs.tw != null ? avgs.tw : "-") + '</div><div class="summary-sub">avg 1-4</div></div>' +
+        '<div class="summary-tile"><div class="summary-label">Positioning</div><div class="summary-val">' + (avgs.ps != null ? avgs.ps : "-") + '</div><div class="summary-sub">avg 1-4</div></div>' +
+      '</div>';
+    document.getElementById("report-text").value = buildReport(d, readyRows, fullRows, avgs, finalsRecs);
+  }
+
+  function computeAverages(fullRows) {
+    function avg(arr) {
+      const nums = arr.map(function (x) { return parseFloat(x); }).filter(function (n) { return !isNaN(n); });
+      if (!nums.length) return null;
+      return +(nums.reduce(function (s, n) { return s + n; }, 0) / nums.length).toFixed(2);
+    }
+    return {
+      mc: avg(fullRows.map(function (n) { return n.matchControl; })),
+      it: avg(fullRows.map(function (n) { return n.interaction; })),
+      tw: avg(fullRows.map(function (n) { return n.teamwork; })),
+      ps: avg(fullRows.map(function (n) { return n.positioning; }))
+    };
+  }
+
+  function buildReport(d, readyRows, fullRows, avgs, finalsRecs) {
+    const lines = [];
+    lines.push("=".repeat(64));
+    lines.push("REFEREE COACHING REPORT");
+    lines.push("Presidents Cup 2026 . NW Qualifier . Boise");
+    lines.push("=".repeat(64));
+    lines.push("");
+    lines.push("REFEREE: " + d.refName);
+    if (d.refEmail) { lines.push("EMAIL:    " + d.refEmail); }
+    else            { lines.push("EMAIL:    (not in Roster col M)"); }
+    lines.push("REPORT GENERATED: " + new Date().toLocaleString());
+    lines.push("");
+    lines.push("-".repeat(64));
+    lines.push("AT A GLANCE");
+    lines.push("-".repeat(64));
+    lines.push("Total notes captured:  " + d.rows.length);
+    lines.push("Ready for ref (appr+edited): " + readyRows.length);
+    lines.push("Full feedback rows:    " + fullRows.length);
+    lines.push("Quick notes:           " + (d.rows.length - fullRows.length));
+    lines.push("Recommended for finals (count of coach ★): " + finalsRecs);
+    lines.push("");
+    lines.push("Coach ratings (avg, 1-4 scale):");
+    lines.push("  Match Control / Game Management:   " + (avgs.mc != null ? avgs.mc : "n/a"));
+    lines.push("  Interaction with Participants:     " + (avgs.it != null ? avgs.it : "n/a"));
+    lines.push("  Teamwork:                          " + (avgs.tw != null ? avgs.tw : "n/a"));
+    lines.push("  Positioning / Movement:            " + (avgs.ps != null ? avgs.ps : "n/a"));
+    lines.push("");
+    lines.push("-".repeat(64));
+    lines.push("COACH FEEDBACK (approved + edited only, newest first)");
+    lines.push("-".repeat(64));
+    if (!readyRows.length) {
+      lines.push("(No reviewed feedback yet. Approve/edit notes in the Notes Review tool.)");
+    } else {
+      readyRows.forEach(function (n, idx) {
+        lines.push("");
+        lines.push("[" + (idx + 1) + "] " + n.date + " . F" + n.field + " . " + n.kickoffTime +
+                   " . " + (n.ageGroup || "") +
+                   (n.officialRole ? " . " + n.officialRole : ""));
+        lines.push("    Coach: " + (n.coachName || "?") +
+                   (n.coachRole ? " (" + n.coachRole + ")" : ""));
+        if (n.type === "Full Feedback") {
+          const r = [];
+          if (n.matchControl) r.push("MC:" + n.matchControl);
+          if (n.interaction)  r.push("Int:" + n.interaction);
+          if (n.teamwork)     r.push("Tm:" + n.teamwork);
+          if (n.positioning)  r.push("Pos:" + n.positioning);
+          if (n.difficulty)   r.push("Diff:" + n.difficulty);
+          if (String(n.recFinals || "").toLowerCase() === "yes") r.push("★ FINALS");
+          if (r.length) { lines.push("    Ratings: " + r.join("  ")); }
+        } else {
+          lines.push("    (Quick Note)");
+        }
+        const text = (n.cleanupStatus === "edited" || n.cleanupStatus === "approved") && n.finalNote
+          ? n.finalNote : n.pubNotes;
+        if (text) {
+          const wrapped = wrapText(text, 60).split("\n");
+          wrapped.forEach(function (w) { lines.push("    " + w); });
+        }
+        if (n.cleanupStatus === "edited") {
+          lines.push("    [Reviewer edited. Original below for reference.]");
+          if (n.pubNotes) {
+            const orig = wrapText(n.pubNotes, 60).split("\n");
+            orig.forEach(function (w) { lines.push("    > " + w); });
+          }
+        }
+        if (n.reviewedBy) {
+          lines.push("    Reviewed by: " + n.reviewedBy);
+        }
+      });
+    }
+    // Pending appendix (not in main report, but useful for Jeff)
+    const pendingRows = d.rows.filter(function (n) {
+      return (n.cleanupStatus || "pending").toLowerCase() === "pending";
+    });
+    if (pendingRows.length) {
+      lines.push("");
+      lines.push("-".repeat(64));
+      lines.push("PENDING (not yet reviewed, " + pendingRows.length + " notes)");
+      lines.push("-".repeat(64));
+      pendingRows.forEach(function (n, idx) {
+        lines.push("");
+        lines.push("[P" + (idx + 1) + "] " + n.date + " . F" + n.field + " . " + (n.coachName || "?"));
+        if (n.pubNotes) {
+          const wrapped = wrapText(n.pubNotes, 60).split("\n");
+          wrapped.forEach(function (w) { lines.push("    " + w); });
+        }
+      });
+    }
+    lines.push("");
+    lines.push("=".repeat(64));
+    lines.push("END OF REPORT");
+    lines.push("=".repeat(64));
+    return lines.join("\n");
+  }
+
+  function wrapText(s, width) {
+    s = String(s == null ? "" : s).replace(/\r\n/g, "\n");
+    const paragraphs = s.split("\n");
+    const out = [];
+    paragraphs.forEach(function (p) {
+      if (!p) { out.push(""); return; }
+      const words = p.split(/\s+/);
+      let line = "";
+      words.forEach(function (w) {
+        if ((line + " " + w).trim().length > width) {
+          if (line) out.push(line);
+          line = w;
+        } else {
+          line = line ? (line + " " + w) : w;
+        }
+      });
+      if (line) out.push(line);
+    });
+    return out.join("\n");
+  }
+
+  function copyReport() {
+    const txt = document.getElementById("report-text").value;
+    if (!txt) { toast("Nothing to copy yet.", "err"); return; }
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(txt).then(
+        function () { toast("Report copied to clipboard.", "ok"); },
+        function () { fallbackCopy(txt); }
+      );
+    } else {
+      fallbackCopy(txt);
+    }
+  }
+  function fallbackCopy(txt) {
+    const ta = document.getElementById("report-text");
+    ta.focus(); ta.select();
+    try { document.execCommand("copy"); toast("Report copied.", "ok"); }
+    catch (e) { toast("Copy failed. Select all + Cmd/Ctrl-C.", "err"); }
+  }
+
+  function downloadReport() {
+    if (!detailCache) return;
+    const txt = document.getElementById("report-text").value;
+    const safeName = String(detailCache.refName || "ref").replace(/[^A-Za-z0-9]+/g, "_");
+    const blob = new Blob([txt], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "pcup_report_" + safeName + ".txt";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function () {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 0);
+  }
+
+  function goBack() {
+    document.getElementById("view-detail").style.display = "none";
+    document.getElementById("view-list").style.display   = "block";
+    document.getElementById("back-btn").style.display    = "none";
+    detailCache = null;
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+</script>
+</body>
+</html>
