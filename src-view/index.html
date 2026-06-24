@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SRC State View · USYS Presidents Cup 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap">
+<style>
+:root {
+  --navy: #243859;
+  --navy-dark: #1a2c47;
+  --navy-panel: #f1f4f9;
+  --steel: #a5b8d4;
+  --gold: #d4a017;
+  --gold-bri: #ecbf3e;
+  --red: #d52b3b;
+  --red-bri: #f87171;
+  --green: #16a34a;
+  --green-bri: #4ade80;
+  --gray-text: #4b5563;
+  --card-bg: #fff;
+  --shadow: 0 4px 14px rgba(0,0,0,.08);
+  --bebas: 'Barlow Condensed', sans-serif;
+}
+body.dark {
+  background: #0a1628;
+  color: #fff;
+  --navy: #fff;
+  --navy-panel: #182842;
+  --card-bg: #182842;
+  --gray-text: rgba(255,255,255,.65);
+}
+body.dark .login-card { background: #182842; }
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Barlow', system-ui, sans-serif;
+  background: var(--steel);
+  color: var(--navy);
+  min-height: 100vh;
+}
+body.dark { background: #0a1628; }
+.header {
+  background: #243859;
+  padding: 16px 20px;
+  display: flex; align-items: center;
+  border-bottom: 3px solid var(--red);
+  color: #fff;
+  position: sticky; top: 0; z-index: 10;
+}
+.header-eyebrow {
+  font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-bri);
+  font-weight: 800;
+}
+.header-title {
+  font-family: var(--bebas);
+  font-size: 22px; font-weight: 800; letter-spacing: .03em;
+  text-transform: uppercase;
+  flex: 1;
+}
+.theme-toggle {
+  background: transparent; border: none;
+  color: var(--gold-bri); cursor: pointer;
+  font-size: 22px; padding: 4px 10px;
+}
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 18px 16px 48px;
+}
+
+/* Login card */
+.login-card {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 26px 24px;
+  margin-top: 16px;
+  box-shadow: var(--shadow);
+  border-top: 3px solid var(--gold-bri);
+}
+.login-eyebrow {
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 800;
+}
+.login-title {
+  font-family: var(--bebas);
+  font-size: 24px; font-weight: 800;
+  letter-spacing: .02em;
+  margin: 4px 0 12px;
+  color: var(--navy);
+}
+.login-sub {
+  font-size: 13px; line-height: 1.5;
+  color: var(--gray-text);
+  margin-bottom: 18px;
+}
+.login-field { margin-bottom: 14px; }
+.login-label {
+  display: block;
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .12em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--gray-text);
+  margin-bottom: 6px;
+}
+.login-input, .login-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #c9d5e6;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: inherit;
+  box-sizing: border-box;
+  background: #fff; color: var(--navy);
+}
+body.dark .login-input, body.dark .login-select {
+  background: rgba(0,0,0,.22);
+  color: #fff;
+  border-color: rgba(255,255,255,.18);
+}
+.login-input:focus, .login-select:focus {
+  outline: none;
+  border-color: var(--gold-bri);
+  box-shadow: 0 0 0 3px rgba(236,191,62,.2);
+}
+.login-error {
+  background: rgba(213,43,59,.1);
+  border: 1px solid rgba(213,43,59,.4);
+  color: #b91c1c;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-top: 10px;
+  font-size: 13px;
+  display: none;
+}
+.login-error.show { display: block; }
+.login-btn {
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px;
+  background: var(--gold);
+  color: #fff;
+  border: none; border-radius: 10px;
+  font-family: var(--bebas);
+  font-size: 15px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform .08s, background .12s;
+}
+.login-btn:hover { background: #c89412; }
+.login-btn:active { transform: scale(.98); }
+.login-btn:disabled { opacity: .6; cursor: wait; }
+
+/* Logged-in view */
+.welcome {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #243859 0%, #1a2c47 100%);
+  color: #fff;
+  padding: 14px 18px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  border-top: 3px solid var(--gold-bri);
+}
+.welcome-name {
+  font-family: var(--bebas);
+  font-size: 20px; font-weight: 800; letter-spacing: .02em;
+}
+.welcome-sub {
+  font-size: 12px; color: rgba(255,255,255,.65);
+  margin-top: 2px;
+}
+.welcome-states {
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .14em;
+  color: var(--gold-bri);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 4px;
+}
+.signout {
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.2);
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .1em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.summary-bar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.summary-stat {
+  background: var(--card-bg);
+  padding: 14px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+.summary-stat .num {
+  font-family: var(--bebas);
+  font-size: 30px; font-weight: 800;
+  color: var(--gold);
+}
+.summary-stat .lbl {
+  font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gray-text);
+  font-weight: 700;
+  margin-top: 2px;
+}
+
+/* Ref cards */
+.ref-list { display: flex; flex-direction: column; gap: 10px; }
+.ref-card {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  border-left: 4px solid transparent;
+  transition: transform .08s, box-shadow .12s;
+}
+.ref-card:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.12); }
+.ref-card.has-notes { border-left-color: var(--gold-bri); }
+.ref-card.no-notes { border-left-color: #e5e7eb; opacity: .65; }
+.ref-card-top {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 10px;
+}
+.ref-card-name {
+  font-family: var(--bebas);
+  font-size: 17px; font-weight: 800; letter-spacing: .02em;
+  color: var(--navy);
+}
+.ref-card-state {
+  font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gray-text);
+  font-weight: 700;
+}
+.ref-card-pills { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.note-pill {
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-family: var(--bebas);
+  font-size: 10px; font-weight: 800; letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.note-pill.total { background: rgba(36,56,89,.08); color: var(--navy); }
+.note-pill.pending  { background: rgba(107,114,128,.18); color: #6b7280; }
+.note-pill.cleaned  { background: rgba(236,191,62,.18); color: var(--gold); }
+.note-pill.approved { background: rgba(22,163,74,.18);  color: var(--green); }
+.note-pill.edited   { background: rgba(59,130,246,.18); color: #2563eb; }
+body.dark .note-pill.total { background: rgba(255,255,255,.08); color: #fff; }
+body.dark .note-pill.pending  { background: rgba(255,255,255,.08); color: rgba(255,255,255,.65); }
+body.dark .ref-card-name { color: #fff; }
+body.dark .ref-card-state { color: rgba(255,255,255,.6); }
+
+/* Detail view */
+.detail-modal {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.6);
+  display: none;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 100;
+}
+.detail-modal.open { display: flex; }
+.detail-card {
+  background: var(--card-bg);
+  border-radius: 16px 16px 0 0;
+  width: 100%;
+  max-width: 720px;
+  max-height: 92vh;
+  overflow-y: auto;
+  padding: 22px 20px 28px;
+  box-shadow: 0 -8px 24px rgba(0,0,0,.3);
+  border-top: 3px solid var(--gold-bri);
+}
+.detail-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 14px;
+}
+.detail-name {
+  font-family: var(--bebas);
+  font-size: 22px; font-weight: 800; letter-spacing: .02em;
+  color: var(--navy);
+}
+.detail-close {
+  background: transparent; border: none;
+  font-size: 26px; cursor: pointer;
+  color: var(--gray-text);
+  padding: 0 6px;
+}
+.note-block {
+  background: var(--navy-panel);
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.note-block-head {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--gray-text);
+  margin-bottom: 8px;
+  flex-wrap: wrap; gap: 6px;
+}
+.note-block-status {
+  font-family: var(--bebas);
+  font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.note-block-game {
+  font-family: var(--bebas);
+  font-size: 12px; letter-spacing: .04em;
+  color: var(--navy); font-weight: 700;
+  margin-bottom: 4px;
+}
+body.dark .note-block-game { color: #fff; }
+.note-block-coach { font-size: 11px; color: var(--gray-text); margin-bottom: 8px; }
+.note-pub {
+  background: rgba(255,255,255,.6);
+  border-left: 3px solid var(--gold-bri);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 6px;
+  font-size: 13px; line-height: 1.5;
+  color: var(--navy);
+}
+body.dark .note-pub {
+  background: rgba(0,0,0,.18); color: #fff;
+}
+.note-priv {
+  background: rgba(213,43,59,.08);
+  border-left: 3px solid var(--red);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 6px;
+  font-size: 12px; line-height: 1.5;
+  color: #991b1b;
+  font-style: italic;
+}
+.note-priv strong {
+  display: block; font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase; font-style: normal;
+  margin-bottom: 4px; color: var(--red);
+}
+.note-final {
+  background: rgba(22,163,74,.08);
+  border-left: 3px solid var(--green);
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 8px;
+  font-size: 13px; line-height: 1.5;
+  color: #14532d;
+}
+.note-final strong {
+  display: block; font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 4px; color: var(--green);
+}
+
+/* SRC view: final-only content styling */
+.note-final-clean {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--navy);
+  margin-top: 10px;
+  padding: 4px 0;
+}
+body.dark .note-final-clean { color: #fff; }
+.note-ratings {
+  display: flex; flex-wrap: wrap; gap: 6px;
+  margin-top: 8px;
+}
+.rating-chip {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px;
+  background: rgba(36,56,89,.06);
+  border-radius: 999px;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  color: var(--navy);
+}
+body.dark .rating-chip { background: rgba(255,255,255,.08); color: #fff; }
+.rec-finals-badge {
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 800; letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  background: rgba(236,191,62,.18);
+  border: 1px solid rgba(236,191,62,.55);
+  color: var(--gold);
+  border-radius: 999px;
+}
+.detail-actions { display: flex; gap: 8px; align-items: center; }
+.detail-print {
+  background: var(--gold);
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-family: var(--bebas);
+  font-size: 12px; font-weight: 800; letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.detail-print:hover { background: #c89412; }
+
+/* Print intro card — only visible when printing */
+.print-intro {
+  display: none;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid #243859;
+}
+.print-event {
+  font-family: var(--bebas);
+  font-size: 14px; font-weight: 800; letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 4px;
+}
+.print-meta {
+  font-size: 12px;
+  color: var(--gray-text);
+  margin-top: 2px;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PRINT STYLES
+   Browser print → "Save as PDF" gives a clean, readable handout
+   for the SRC to file or share. Hides UI chrome and uses the
+   detail card as the full page.
+   ══════════════════════════════════════════════════════════════ */
+@media print {
+  /* Reset background colors for ink-friendly output */
+  body, body.dark {
+    background: #fff !important;
+    color: #243859 !important;
+  }
+  /* Hide everything except the open detail modal */
+  .header, .wrap, .toast,
+  .filter-row, .summary-bar, .welcome,
+  .search-row, .ref-list, .login-card { display: none !important; }
+  .detail-modal {
+    position: static !important;
+    background: transparent !important;
+    inset: auto !important;
+    display: block !important;
+  }
+  .detail-card {
+    position: static;
+    max-height: none !important;
+    box-shadow: none !important;
+    border-top: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    background: #fff !important;
+    color: #243859 !important;
+  }
+  .detail-actions, .detail-close { display: none !important; }
+  .detail-head {
+    border-bottom: 1px solid #c9d5e6;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+  }
+  .detail-name {
+    color: #243859 !important;
+    font-size: 26px !important;
+  }
+  /* Show the print intro card */
+  .print-intro { display: block !important; }
+  /* Note blocks: no shadow, no background, clean borders */
+  .note-block {
+    background: transparent !important;
+    border: 1px solid #c9d5e6 !important;
+    border-left: 4px solid #ecbf3e !important;
+    margin-bottom: 14px !important;
+    padding: 12px 14px !important;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .note-block-game { color: #243859 !important; }
+  .note-block-coach { color: #4b5563 !important; }
+  .rating-chip {
+    background: transparent !important;
+    border: 1px solid #c9d5e6;
+    color: #243859 !important;
+  }
+  .rec-finals-badge {
+    background: transparent !important;
+    color: #b8860b !important;
+    border-color: #b8860b !important;
+  }
+  .note-final-clean {
+    color: #243859 !important;
+    background: transparent !important;
+    padding: 4px 0 !important;
+  }
+  /* Compact layout for print */
+  @page {
+    margin: 0.5in;
+    size: letter;
+  }
+}
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--gray-text);
+}
+.empty-state .icon { font-size: 36px; display: block; margin-bottom: 8px; }
+.search-row {
+  display: flex; gap: 8px;
+  margin-bottom: 12px;
+}
+.search-input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #c9d5e6;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: inherit;
+  background: var(--card-bg);
+  color: var(--navy);
+}
+body.dark .search-input { color: #fff; border-color: rgba(255,255,255,.18); }
+.filter-tab {
+  background: transparent;
+  border: 1px solid rgba(36,56,89,.2);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-family: var(--bebas);
+  font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  color: var(--navy);
+}
+body.dark .filter-tab { color: #fff; border-color: rgba(255,255,255,.18); }
+.filter-tab.active {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+}
+.filter-row { display: flex; gap: 6px; margin-bottom: 10px; flex-wrap: wrap; }
+
+/* Toast */
+.toast {
+  position: fixed; left: 50%; bottom: 24px;
+  transform: translateX(-50%) translateY(20px);
+  background: #243859; color: #fff;
+  padding: 10px 20px; border-radius: 999px;
+  font-size: 13px; font-weight: 600;
+  opacity: 0; pointer-events: none;
+  transition: opacity .25s, transform .25s;
+  z-index: 9999;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.toast.success { background: var(--green); }
+.toast.error { background: var(--red); }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div>
+    <div class="header-eyebrow">USYS Presidents Cup 2026</div>
+    <div class="header-title">SRC State View</div>
+  </div>
+  <div style="flex:1"></div>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">☀️</span>
+  </button>
+</header>
+
+<div class="wrap">
+
+  <!-- Login -->
+  <div class="login-card" id="login-card">
+    <div class="login-eyebrow">SRC Access</div>
+    <div class="login-title">Sign in to view your state's feedback</div>
+    <div class="login-sub">
+      Read-only view of the final coaching notes for refs from your state.
+      Only approved and edited notes appear here, the same content that will
+      be emailed to your refs. Click any ref to see their notes, then use
+      Print / PDF to save a copy.
+    </div>
+    <div class="login-field">
+      <label class="login-label">Your name</label>
+      <select id="login-name" class="login-select">
+        <option value="">— Select —</option>
+        <option value="Kevin Autio">Kevin Autio (Oregon)</option>
+        <option value="Liam Hayes">Liam Hayes (Oregon)</option>
+        <option value="Kyle Greenwood">Kyle Greenwood (Washington)</option>
+        <option value="Wain Jackson">Wain Jackson (Washington)</option>
+        <option value="Jim Kritzberg">Jim Kritzberg (Washington)</option>
+        <option value="Riley Jones">Riley Jones (Idaho)</option>
+        <option value="Matthew Gamette">Matthew Gamette (Idaho)</option>
+        <option value="Moctar Diof">Moctar Diof (Alaska)</option>
+        <option value="Mark Fisk">Mark Fisk (Alaska)</option>
+        <option value="Justin Harcrow">Justin Harcrow (Montana)</option>
+      </select>
+    </div>
+    <div class="login-field">
+      <label class="login-label">PIN</label>
+      <input type="text" id="login-pin" class="login-input"
+             inputmode="numeric" maxlength="6" autocomplete="off"
+             placeholder="4-digit PIN">
+    </div>
+    <div class="login-error" id="login-error"></div>
+    <button class="login-btn" id="login-btn" onclick="doLogin()">View My State's Feedback</button>
+  </div>
+
+  <!-- Logged-in view -->
+  <div id="content" style="display:none;">
+    <div class="welcome">
+      <div>
+        <div class="welcome-name" id="welcome-name"></div>
+        <div class="welcome-sub" id="welcome-sub"></div>
+        <div class="welcome-states" id="welcome-states"></div>
+      </div>
+      <button class="signout" onclick="signOut()">Sign out</button>
+    </div>
+
+    <div class="summary-bar">
+      <div class="summary-stat">
+        <div class="num" id="stat-refs">0</div>
+        <div class="lbl">Refs in State</div>
+      </div>
+      <div class="summary-stat">
+        <div class="num" id="stat-notes">0</div>
+        <div class="lbl">Total Notes</div>
+      </div>
+    </div>
+
+    <div class="search-row">
+      <input type="text" class="search-input" id="search-input"
+             placeholder="🔎 Search ref name..." oninput="renderRefs()">
+    </div>
+    <div class="filter-row">
+      <button class="filter-tab active" data-filter="all" onclick="setFilter('all')">All Refs</button>
+      <button class="filter-tab" data-filter="with-notes" onclick="setFilter('with-notes')">Has Notes</button>
+      <button class="filter-tab" data-filter="no-notes" onclick="setFilter('no-notes')">No Notes Yet</button>
+    </div>
+
+    <div class="ref-list" id="ref-list"></div>
+  </div>
+
+</div>
+
+<!-- Detail modal -->
+<div class="detail-modal" id="detail-modal" onclick="closeDetail(event)">
+  <div class="detail-card" onclick="event.stopPropagation()" id="detail-card"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+const NAME_KEY = 'pcup-src-name';
+const PIN_KEY  = 'pcup-src-pin';
+
+// ── Theme ──
+(function(){
+  let pref = '';
+  try { pref = localStorage.getItem('pcup-theme') || ''; } catch(e){}
+  if (pref === 'dark') document.body.classList.add('dark');
+  updateThemeIcon();
+})();
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  const dark = document.body.classList.contains('dark');
+  try { localStorage.setItem('pcup-theme', dark ? 'dark' : 'light'); } catch(e){}
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  const el = document.getElementById('theme-icon');
+  if (el) el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+}
+
+// ── Toast ──
+let _toastTimer = null;
+function showToast(msg, kind, duration){
+  const el = document.getElementById('toast');
+  el.className = 'toast show ' + (kind || '');
+  el.textContent = msg;
+  if (_toastTimer) clearTimeout(_toastTimer);
+  if (duration !== 0) {
+    _toastTimer = setTimeout(function(){ el.classList.remove('show'); }, duration || 2400);
+  }
+}
+
+// ── State ──
+const S = { data: null, filter: 'all', search: '' };
+
+function escHtml(s){
+  return String(s == null ? '' : s)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── Login ──
+function doLogin(){
+  const name = document.getElementById('login-name').value.trim();
+  const pin = document.getElementById('login-pin').value.trim();
+  const err = document.getElementById('login-error');
+  err.classList.remove('show');
+  if (!name) { err.textContent = 'Pick your name from the list.'; err.classList.add('show'); return; }
+  if (!pin)  { err.textContent = 'Enter your PIN.'; err.classList.add('show'); return; }
+
+  const btn = document.getElementById('login-btn');
+  btn.disabled = true; btn.textContent = 'Signing in...';
+
+  fetchFeedback(name, pin, function(data, errMsg){
+    btn.disabled = false; btn.textContent = 'View My State\'s Feedback';
+    if (errMsg) {
+      err.textContent = errMsg;
+      err.classList.add('show');
+      return;
+    }
+    if (!data.authorized) {
+      err.textContent = data.reason || 'Sign-in failed.';
+      err.classList.add('show');
+      return;
+    }
+    try { localStorage.setItem(NAME_KEY, name); } catch(e){}
+    try { localStorage.setItem(PIN_KEY, pin); } catch(e){}
+    S.data = data;
+    renderLoggedIn();
+  });
+}
+function fetchFeedback(name, pin, cb){
+  const url = SCRIPT_URL + '?action=srcFeedback'
+            + '&name=' + encodeURIComponent(name)
+            + '&pin=' + encodeURIComponent(pin);
+  fetch(url)
+    .then(function(r){ return r.json(); })
+    .then(function(body){
+      if (!body || body.status !== 'ok' || !body.data) {
+        cb(null, 'Network error or invalid response. Try again.');
+        return;
+      }
+      cb(body.data, null);
+    })
+    .catch(function(){ cb(null, 'Network error. Check your connection.'); });
+}
+function signOut(){
+  try { localStorage.removeItem(NAME_KEY); } catch(e){}
+  try { localStorage.removeItem(PIN_KEY); } catch(e){}
+  S.data = null;
+  document.getElementById('content').style.display = 'none';
+  document.getElementById('login-card').style.display = '';
+  document.getElementById('login-pin').value = '';
+  document.getElementById('login-name').value = '';
+  document.getElementById('login-error').classList.remove('show');
+  showToast('Signed out', 'success');
+}
+
+// ── Logged-in render ──
+function renderLoggedIn(){
+  document.getElementById('login-card').style.display = 'none';
+  document.getElementById('content').style.display = '';
+  const d = S.data;
+  document.getElementById('welcome-name').textContent = d.srcName;
+  document.getElementById('welcome-sub').textContent  = d.srcRole + (d.note ? ' · ' + d.note : '');
+  document.getElementById('welcome-states').textContent = '📍 ' + (d.states || []).join(' · ').toUpperCase();
+  document.getElementById('stat-refs').textContent = d.refCount;
+  document.getElementById('stat-notes').textContent = d.totalNotes;
+  renderRefs();
+}
+function setFilter(f){
+  S.filter = f;
+  document.querySelectorAll('.filter-tab').forEach(function(b){
+    b.classList.toggle('active', b.getAttribute('data-filter') === f);
+  });
+  renderRefs();
+}
+function renderRefs(){
+  if (!S.data) return;
+  const q = (document.getElementById('search-input').value || '').toLowerCase().trim();
+  S.search = q;
+  let refs = S.data.refs || [];
+  if (q) refs = refs.filter(function(r){ return r.refName.toLowerCase().indexOf(q) !== -1; });
+  if (S.filter === 'with-notes') refs = refs.filter(function(r){ return r.counts.total > 0; });
+  if (S.filter === 'no-notes')   refs = refs.filter(function(r){ return r.counts.total === 0; });
+
+  const list = document.getElementById('ref-list');
+  if (!refs.length) {
+    list.innerHTML = '<div class="empty-state"><span class="icon">📭</span>No refs match.</div>';
+    return;
+  }
+  list.innerHTML = refs.map(function(r){
+    const c = r.counts;
+    const hasNotes = c.total > 0;
+    const pills = hasNotes
+      ? '<span class="note-pill total">' + c.total + ' note' + (c.total === 1 ? '' : 's') + ' ready</span>'
+      : '<span class="note-pill pending">No notes yet</span>';
+    return '<div class="ref-card ' + (hasNotes ? 'has-notes' : 'no-notes') + '" onclick="openDetail(\'' + escHtml(r.refName).replace(/'/g, "\\'") + '\')">' +
+             '<div class="ref-card-top">' +
+               '<div class="ref-card-name">' + escHtml(r.refName) + '</div>' +
+               '<div class="ref-card-state">' + escHtml(r.state) + '</div>' +
+             '</div>' +
+             '<div class="ref-card-pills">' + pills + '</div>' +
+           '</div>';
+  }).join('');
+}
+
+// ── Detail modal ──
+function openDetail(refName){
+  const ref = (S.data.refs || []).filter(function(r){ return r.refName === refName; })[0];
+  if (!ref) return;
+  const card = document.getElementById('detail-card');
+  let html =
+    '<div class="detail-head">' +
+      '<div>' +
+        '<div class="detail-name">' + escHtml(ref.refName) + '</div>' +
+        '<div style="font-size:12px;color:var(--gray-text);margin-top:2px;">' +
+          escHtml(ref.state.toUpperCase()) + ' · ' + ref.counts.total + ' note' + (ref.counts.total === 1 ? '' : 's') +
+        '</div>' +
+      '</div>' +
+      '<div class="detail-actions">' +
+        '<button class="detail-print" onclick="printRefReport()" title="Print or save as PDF">🖨️ Print / PDF</button>' +
+        '<button class="detail-close" onclick="closeDetail()">×</button>' +
+      '</div>' +
+    '</div>';
+  if (!ref.notes.length) {
+    html += '<div class="empty-state"><span class="icon">📭</span>No final notes yet for this ref. Notes still in draft or under review are not shown here.</div>';
+  } else {
+    // Print-friendly intro (only visible when printing)
+    html +=
+      '<div class="print-intro">' +
+        '<div class="print-event">USYS Presidents Cup 2026 · NW Regional Qualifier</div>' +
+        '<div class="print-meta">Referee: <strong>' + escHtml(ref.refName) + '</strong> · ' +
+        escHtml(ref.state.toUpperCase()) + ' · ' + ref.counts.total +
+        ' final note' + (ref.counts.total === 1 ? '' : 's') +
+        '</div>' +
+        '<div class="print-meta">Reviewed by ' + escHtml(S.data.srcName) + ' (' + escHtml(S.data.srcRole) + ')</div>' +
+        '<div class="print-meta">Generated ' + new Date().toLocaleString() + '</div>' +
+      '</div>';
+
+    ref.notes.forEach(function(n){
+      const ratings = [];
+      if (n.matchControl) ratings.push('Match Control: ' + n.matchControl);
+      if (n.interaction)  ratings.push('Interaction: ' + n.interaction);
+      if (n.teamwork)     ratings.push('Teamwork: ' + n.teamwork);
+      if (n.positioning)  ratings.push('Positioning: ' + n.positioning);
+      const ratingsHtml = ratings.length
+        ? '<div class="note-ratings">' + ratings.map(function(r){ return '<span class="rating-chip">' + escHtml(r) + '</span>'; }).join('') + '</div>'
+        : '';
+      const finalsBadge = (n.recFinals && n.recFinals.toLowerCase() === 'yes')
+        ? '<span class="rec-finals-badge">⭐ Recommended for Finals</span>'
+        : '';
+      html +=
+        '<div class="note-block">' +
+          '<div class="note-block-head">' +
+            '<div class="note-block-game">' +
+              'Game #' + escHtml(n.gameNum) + ' · F' + escHtml(String(n.field)) + ' · ' +
+              escHtml(n.ageGroup) + ' · ' + escHtml(n.officialRole) +
+            '</div>' +
+            finalsBadge +
+          '</div>' +
+          '<div class="note-block-coach">' +
+            'Coach: ' + escHtml(n.coachName) + (n.coachRole ? ' · ' + escHtml(n.coachRole) : '') +
+          '</div>' +
+          ratingsHtml +
+          (n.finalNote
+            ? '<div class="note-final-clean">' + escHtml(n.finalNote) + '</div>'
+            : '<div class="note-final-clean" style="font-style:italic;opacity:.6;">(No written note attached to this submission.)</div>') +
+        '</div>';
+    });
+  }
+  card.innerHTML = html;
+  document.getElementById('detail-modal').classList.add('open');
+}
+function closeDetail(evt){
+  if (evt && evt.target && evt.target.id !== 'detail-modal') return;
+  document.getElementById('detail-modal').classList.remove('open');
+}
+function printRefReport(){
+  // Trigger the browser print dialog. The @media print CSS rewrites the
+  // page to a clean printable view. User picks "Save as PDF" from the
+  // destination dropdown to get a PDF file.
+  window.print();
+}
+
+// ── Boot: auto sign-in if cached ──
+(function(){
+  let name = '', pin = '';
+  try { name = localStorage.getItem(NAME_KEY) || ''; } catch(e){}
+  try { pin  = localStorage.getItem(PIN_KEY)  || ''; } catch(e){}
+  if (name && pin) {
+    document.getElementById('login-name').value = name;
+    document.getElementById('login-pin').value = pin;
+    doLogin();
+  }
+})();
+</script>
+
+</body>
+</html>
