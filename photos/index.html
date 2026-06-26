@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tournament Photos · USYS Presidents Cup 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600;700;800&family=Barlow+Condensed:wght@500;600;700;800&display=swap">
+<style>
+:root {
+  --navy: #243859;
+  --navy-dark: #1a2c47;
+  --steel: #a5b8d4;
+  --gold: #d4a017;
+  --gold-bri: #ecbf3e;
+  --red: #d52b3b;
+  --green: #16a34a;
+  --gray-text: #4b5563;
+  --card-bg: #fff;
+  --shadow: 0 6px 18px rgba(0,0,0,.1);
+  --bebas: 'Barlow Condensed', sans-serif;
+}
+body.dark {
+  background: #0a1628;
+  color: #fff;
+  --card-bg: #182842;
+  --gray-text: rgba(255,255,255,.65);
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Barlow', system-ui, sans-serif;
+  background: var(--steel);
+  color: var(--navy);
+  min-height: 100vh;
+}
+body.dark { background: #0a1628; }
+
+/* Header */
+.header {
+  background: var(--navy);
+  padding: 14px 20px;
+  display: flex; align-items: center; gap: 12px;
+  border-bottom: 3px solid var(--red);
+  color: #fff;
+}
+.back-btn {
+  background: transparent; border: none;
+  color: #fff;
+  font-size: 22px; padding: 4px 8px;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: var(--bebas);
+}
+.header-info { flex: 1; }
+.header-eyebrow {
+  font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--gold-bri);
+  font-weight: 800;
+}
+.header-title {
+  font-family: var(--bebas);
+  font-size: 22px; font-weight: 800; letter-spacing: .03em;
+  text-transform: uppercase;
+}
+.theme-toggle {
+  background: transparent; border: none;
+  color: var(--gold-bri); cursor: pointer;
+  font-size: 22px; padding: 4px 10px;
+}
+
+/* Container */
+.wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 20px 16px 64px;
+}
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #243859 0%, #1a2c47 100%);
+  color: #fff;
+  border-radius: 14px;
+  padding: 24px 22px;
+  margin-bottom: 20px;
+  text-align: center;
+  border-top: 3px solid var(--gold-bri);
+  box-shadow: var(--shadow);
+}
+.hero-icon { font-size: 44px; margin-bottom: 6px; }
+.hero-eyebrow {
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--gold-bri);
+  font-weight: 800;
+}
+.hero-title {
+  font-family: var(--bebas);
+  font-size: 30px; font-weight: 800;
+  letter-spacing: .02em;
+  margin: 4px 0 10px;
+}
+.hero-sub {
+  font-size: 14px; line-height: 1.55;
+  color: rgba(255,255,255,.78);
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* Action cards */
+.action-stack {
+  display: flex; flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.action-card {
+  background: var(--card-bg);
+  color: var(--navy);
+  border-radius: 14px;
+  padding: 22px;
+  text-decoration: none;
+  display: flex; align-items: center; gap: 18px;
+  box-shadow: var(--shadow);
+  border-left: 5px solid var(--gold-bri);
+  transition: transform .12s, box-shadow .14s;
+}
+.action-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.14);
+}
+.action-card.upload { border-left-color: var(--green); }
+.action-icon {
+  font-size: 38px;
+  flex-shrink: 0;
+  width: 60px; height: 60px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(236,191,62,.12);
+  border-radius: 14px;
+}
+.action-card.upload .action-icon {
+  background: rgba(22,163,74,.12);
+}
+.action-text { flex: 1; }
+.action-eyebrow {
+  font-family: var(--bebas);
+  font-size: 10px; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 800;
+}
+.action-card.upload .action-eyebrow { color: var(--green); }
+.action-title {
+  font-family: var(--bebas);
+  font-size: 20px; font-weight: 800;
+  color: var(--navy);
+  letter-spacing: .02em;
+  margin: 2px 0 4px;
+}
+body.dark .action-title { color: #fff; }
+.action-desc {
+  font-size: 13px;
+  color: var(--gray-text);
+  line-height: 1.45;
+}
+.action-arrow {
+  font-family: var(--bebas);
+  font-size: 14px; font-weight: 800; letter-spacing: .08em;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.action-card.upload .action-arrow { color: var(--green); }
+
+/* Instructions */
+.instructions {
+  background: var(--card-bg);
+  border-radius: 14px;
+  padding: 22px;
+  box-shadow: var(--shadow);
+  margin-bottom: 18px;
+}
+.instructions-title {
+  font-family: var(--bebas);
+  font-size: 14px; font-weight: 800; letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.instruction-list {
+  margin: 0; padding-left: 22px;
+  font-size: 14px; line-height: 1.7;
+  color: var(--navy);
+}
+body.dark .instruction-list { color: rgba(255,255,255,.85); }
+.instruction-list li { margin-bottom: 6px; }
+.instruction-list strong { color: var(--gold); font-weight: 700; }
+
+/* Footer */
+.foot {
+  text-align: center;
+  font-family: var(--bebas);
+  font-size: 11px; letter-spacing: .14em;
+  text-transform: uppercase;
+  color: rgba(36,56,89,.55);
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(36,56,89,.15);
+}
+body.dark .foot { color: rgba(255,255,255,.45); border-color: rgba(255,255,255,.1); }
+.foot .sub {
+  font-size: 10px; color: rgba(36,56,89,.4);
+  margin-top: 4px; letter-spacing: .04em;
+  font-family: 'Barlow', sans-serif;
+  text-transform: none; font-weight: 500;
+}
+body.dark .foot .sub { color: rgba(255,255,255,.35); }
+
+@media (max-width: 480px) {
+  .hero-title { font-size: 26px; }
+  .action-card { padding: 18px; gap: 14px; }
+  .action-icon { width: 50px; height: 50px; font-size: 32px; }
+  .action-title { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <a class="back-btn" href="../index.html" title="Back to Referee Portal">‹</a>
+  <div class="header-info">
+    <div class="header-eyebrow">USYS Presidents Cup 2026</div>
+    <div class="header-title">📸 Tournament Photos</div>
+  </div>
+  <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">
+    <span id="theme-icon">☀️</span>
+  </button>
+</header>
+
+<div class="wrap">
+
+  <div class="hero">
+    <div class="hero-icon">📸</div>
+    <div class="hero-eyebrow">Boise 2026 Memories</div>
+    <div class="hero-title">View, Download &amp; Share</div>
+    <div class="hero-sub">
+      A shared photo album for the weekend. Browse the official tournament shots,
+      download your favorites, and add your own photos so the rest of the crew
+      can have them too.
+    </div>
+  </div>
+
+  <div class="action-stack">
+
+    <a class="action-card" href="https://drive.google.com/drive/folders/1y30c1tbaVbyoCNg37z_RE6JC0rr5WkZo?usp=drive_link" target="_blank" rel="noopener">
+      <div class="action-icon">📥</div>
+      <div class="action-text">
+        <div class="action-eyebrow">Step 1</div>
+        <div class="action-title">View &amp; Download Photos</div>
+        <div class="action-desc">Opens the shared Google Drive album. Tap any photo to view full size, then use the download icon to save it to your device.</div>
+      </div>
+      <div class="action-arrow">OPEN →</div>
+    </a>
+
+    <a class="action-card upload" href="https://drive.google.com/drive/folders/1y30c1tbaVbyoCNg37z_RE6JC0rr5WkZo?usp=drive_link" target="_blank" rel="noopener">
+      <div class="action-icon">📤</div>
+      <div class="action-text">
+        <div class="action-eyebrow">Step 2</div>
+        <div class="action-title">Share Your Photos</div>
+        <div class="action-desc">Same album. Tap the + button (or drag and drop on desktop) to add your tournament photos for everyone else to enjoy.</div>
+      </div>
+      <div class="action-arrow">UPLOAD →</div>
+    </a>
+
+  </div>
+
+  <div class="instructions">
+    <div class="instructions-title">📥 How to Download</div>
+    <ol class="instruction-list">
+      <li>Tap <strong>View &amp; Download Photos</strong> above to open the album</li>
+      <li>Tap any photo to open it full size</li>
+      <li>Tap the <strong>three-dot menu</strong> (or the download icon on desktop) and choose <strong>Download</strong></li>
+      <li>Photos save to your phone's photo library or your computer's Downloads folder</li>
+    </ol>
+  </div>
+
+  <div class="instructions">
+    <div class="instructions-title">📤 How to Share Yours</div>
+    <ol class="instruction-list">
+      <li>Tap <strong>Share Your Photos</strong> above to open the album</li>
+      <li>On mobile, tap the <strong>+ (New)</strong> button → <strong>Upload</strong></li>
+      <li>On desktop, just <strong>drag and drop</strong> your photos anywhere on the album page</li>
+      <li>Pick photos from your phone library or computer, confirm, and they upload automatically</li>
+      <li>Everyone with the album link can see and download them. Be considerate of others when sharing photos with them in it.</li>
+    </ol>
+  </div>
+
+  <div class="foot">
+    2026 USYS Presidents Cup &middot; NW Regional Qualifier &middot; Boise, Idaho
+    <div class="sub">Powered by JAReferee</div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  let pref = '';
+  try { pref = localStorage.getItem('pcup-theme') || ''; } catch(e){}
+  if (pref === 'dark') document.body.classList.add('dark');
+  updateThemeIcon();
+})();
+function toggleTheme(){
+  document.body.classList.toggle('dark');
+  const dark = document.body.classList.contains('dark');
+  try { localStorage.setItem('pcup-theme', dark ? 'dark' : 'light'); } catch(e){}
+  updateThemeIcon();
+}
+function updateThemeIcon(){
+  const el = document.getElementById('theme-icon');
+  if (el) el.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+}
+</script>
+
+</body>
+</html>
