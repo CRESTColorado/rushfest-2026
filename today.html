@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>What's Happening Today · Command Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800;900&family=Barlow:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════════
+   PALETTE matches BCC + Coach App. Same brand system, dark theme.
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  --bg: #0f2a56;
+  --surface: #1a3568;
+  --card: #243859;
+  --card2: #2c4068;
+  --border: rgba(165, 184, 212, 0.14);
+  --text: #ffffff;
+  --dim: rgba(255,255,255,.72);
+  --mute: rgba(255,255,255,.45);
+  --gold: #ecbf3e;
+  --gold-d: rgba(236,191,62,.18);
+  --red: #D52B3B;
+  --red-d: rgba(213,43,59,.18);
+  --green: #16a34a;
+  --green-d: rgba(22,163,74,.18);
+  --steel: #a5b8d4;
+  --steel-d: rgba(165,184,212,.18);
+  --shadow: 0 4px 14px rgba(0,0,0,.25);
+  --shadow-lg: 0 8px 28px rgba(0,0,0,.4);
+  --bebas: 'Barlow Condensed', sans-serif;
+  --font: 'Barlow', sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; min-height: 100vh; background: var(--bg); color: var(--text); font-family: var(--font); }
+body { padding-top: env(safe-area-inset-top); padding-bottom: env(safe-area-inset-bottom); }
+
+/* ══════════════════════════════════════════════════════════════
+   TOURNAMENT_CONFIG mirrors BCC. Change this block per event.
+   ══════════════════════════════════════════════════════════════ */
+
+/* PIN screen */
+#screen-pin { position: fixed; inset: 0; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 24px; z-index: 100; }
+#screen-pin.hidden { display: none; }
+.pin-shield { width: 110px; height: 110px; margin-bottom: 18px; }
+.pin-shield img { width: 100%; height: auto; display: block; }
+.pin-title { font-family: var(--bebas); font-size: 36px; font-weight: 900; letter-spacing: .04em; color: #fff; text-align: center; margin-bottom: 4px; text-transform: uppercase; line-height: 1; }
+.pin-sub { font-size: 13px; color: var(--dim); margin-bottom: 28px; text-align: center; letter-spacing: .02em; }
+.pin-input { font-size: 24px; font-family: var(--bebas); font-weight: 800; letter-spacing: .4em; text-align: center; background: var(--card2); border: 2px solid var(--border); border-radius: 10px; color: #fff; padding: 14px 16px; width: 240px; outline: none; transition: border-color .15s; }
+.pin-input:focus { border-color: var(--gold); }
+.pin-input.error { border-color: var(--red); animation: shake .3s; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+.pin-status { font-size: 12px; color: var(--dim); margin-top: 10px; min-height: 16px; letter-spacing: .04em; }
+.pin-status.err { color: var(--red); }
+.pin-submit { margin-top: 18px; background: var(--gold); color: var(--bg); border: none; padding: 12px 28px; border-radius: 8px; font-family: var(--bebas); font-size: 14px; font-weight: 900; letter-spacing: .14em; cursor: pointer; text-transform: uppercase; transition: all .15s; }
+.pin-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(236,191,62,.4); }
+.pin-submit:disabled { opacity: .5; cursor: wait; }
+
+/* ══════════════════════════════════════════════════════════════
+   MAIN LAYOUT
+   ══════════════════════════════════════════════════════════════ */
+
+/* Header */
+#today-header { display: flex; align-items: center; padding: 14px 22px; background: var(--card); border-bottom: 2px solid var(--red); gap: 16px; flex-wrap: wrap; }
+#today-header-left { flex: 1; min-width: 0; }
+.today-title { font-family: var(--bebas); font-size: 22px; font-weight: 900; letter-spacing: .04em; color: #fff; text-transform: uppercase; line-height: 1.1; }
+.today-sub { font-size: 12px; color: var(--dim); font-weight: 600; letter-spacing: .04em; margin-top: 2px; }
+#today-header-right { display: flex; align-items: center; gap: 12px; }
+.live-pill { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; background: var(--red-d); border: 1px solid var(--red); border-radius: 999px; font-family: var(--bebas); font-size: 11px; font-weight: 900; letter-spacing: .12em; color: var(--red); text-transform: uppercase; }
+.live-dot { width: 7px; height: 7px; background: var(--red); border-radius: 50%; animation: pulse-dot 1.4s infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:.35} }
+.last-sync { font-size: 11px; color: var(--mute); letter-spacing: .04em; }
+.refresh-btn { background: var(--card2); border: 1px solid var(--border); color: var(--text); padding: 6px 12px; border-radius: 6px; font-family: var(--bebas); font-size: 11px; font-weight: 800; letter-spacing: .12em; cursor: pointer; text-transform: uppercase; }
+.refresh-btn:hover { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+.refresh-btn:disabled { opacity: .5; cursor: wait; }
+
+/* 2x2 grid on laptop, stacks below 1024px */
+.today-grid { display: grid; grid-template-columns: 1fr; gap: 14px; padding: 14px; max-width: 1480px; margin: 0 auto; }
+@media (min-width: 1024px) { .today-grid { grid-template-columns: 1fr 1fr; } }
+
+.panel { background: var(--card); border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px; min-height: 340px; display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--steel); }
+.panel.tone-red::before    { background: var(--red); }
+.panel.tone-gold::before   { background: var(--gold); }
+.panel.tone-green::before  { background: var(--green); }
+.panel-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); gap: 12px; flex-wrap: wrap; }
+.panel-ttl { font-family: var(--bebas); font-size: 16px; font-weight: 900; letter-spacing: .12em; color: #fff; text-transform: uppercase; }
+.panel-ttl .icon { margin-right: 6px; }
+.panel-meta { font-size: 11px; color: var(--mute); font-weight: 600; letter-spacing: .04em; }
+.panel-body { flex: 1; overflow-y: auto; min-height: 0; max-height: 580px; }
+.panel-body::-webkit-scrollbar { width: 6px; }
+.panel-body::-webkit-scrollbar-track { background: transparent; }
+.panel-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.empty { text-align: center; color: var(--mute); padding: 30px 16px; font-style: italic; font-size: 13px; }
+
+/* ══════════════════════════════════════════════════════════════
+   FIELD COVERAGE PANEL
+   ══════════════════════════════════════════════════════════════ */
+.field-row { display: grid; grid-template-columns: 60px 1fr 110px 1fr 90px; gap: 10px; align-items: center; padding: 9px 10px; border-bottom: 1px solid var(--border); }
+.field-row:last-child { border-bottom: none; }
+.field-row:hover { background: var(--card2); }
+.fr-num { font-family: var(--bebas); font-size: 22px; font-weight: 900; color: #fff; }
+.fr-games { font-size: 12px; color: var(--dim); }
+.fr-games .ct { font-family: var(--bebas); font-size: 18px; font-weight: 900; color: #fff; }
+.fr-crew { font-family: var(--bebas); font-size: 11px; font-weight: 800; letter-spacing: .1em; padding: 3px 8px; border-radius: 5px; text-transform: uppercase; text-align: center; }
+.fr-crew.full { background: var(--green-d); color: var(--green); border: 1px solid var(--green); }
+.fr-crew.gaps { background: var(--gold-d); color: var(--gold); border: 1px solid var(--gold); }
+.fr-coach { font-size: 12px; color: var(--text); font-weight: 600; }
+.fr-coach .lbl { font-size: 9px; color: var(--mute); font-family: var(--bebas); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; display: block; margin-bottom: 1px; }
+.fr-coach.unassigned { color: var(--red); font-style: italic; }
+.fr-assign-btn { background: var(--gold); color: var(--bg); border: none; padding: 6px 10px; border-radius: 5px; font-family: var(--bebas); font-size: 10px; font-weight: 900; letter-spacing: .1em; cursor: pointer; text-transform: uppercase; }
+.fr-assign-btn:hover { background: var(--gold); filter: brightness(1.1); }
+@media (max-width: 640px) {
+  .field-row { grid-template-columns: 50px 1fr 90px; }
+  .fr-coach, .fr-assign-btn { grid-column: 1 / -1; padding-top: 4px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   OBSERVATIONS TALLY PANEL
+   ══════════════════════════════════════════════════════════════ */
+.obs-bucket { margin-bottom: 14px; }
+.obs-bucket:last-child { margin-bottom: 0; }
+.obs-bucket-hd { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; padding: 6px 0; border-bottom: 1px dashed var(--border); }
+.obs-bucket-name { font-family: var(--bebas); font-size: 12px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.obs-bucket.full .obs-bucket-name { color: var(--green); }
+.obs-bucket.notes .obs-bucket-name { color: var(--gold); }
+.obs-bucket.unseen .obs-bucket-name { color: var(--red); }
+.obs-bucket-ct { font-family: var(--bebas); font-size: 18px; font-weight: 900; color: #fff; }
+.obs-row { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 7px 8px; border-bottom: 1px solid var(--border); font-size: 13px; }
+.obs-row:last-child { border-bottom: none; }
+.obs-row .name { font-weight: 700; color: #fff; }
+.obs-row .meta { font-size: 11px; color: var(--mute); font-weight: 500; margin-top: 1px; }
+.obs-row .meta .next { color: var(--gold); font-weight: 700; }
+.remind-btn { background: var(--card2); color: var(--gold); border: 1px solid var(--gold); padding: 4px 8px; border-radius: 4px; font-family: var(--bebas); font-size: 10px; font-weight: 900; letter-spacing: .1em; cursor: pointer; text-transform: uppercase; white-space: nowrap; }
+.remind-btn:hover { background: var(--gold); color: var(--bg); }
+
+/* ══════════════════════════════════════════════════════════════
+   ACTIVITY FEED PANEL
+   ══════════════════════════════════════════════════════════════ */
+.activity-item { display: grid; grid-template-columns: 30px 1fr auto; gap: 10px; align-items: start; padding: 9px 6px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.activity-item:last-child { border-bottom: none; }
+.activity-icon { width: 26px; height: 26px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 900; font-family: var(--bebas); }
+.activity-item.full   .activity-icon { background: var(--gold-d);  color: var(--gold);  border: 1px solid var(--gold); }
+.activity-item.quicknote .activity-icon { background: var(--steel-d); color: var(--steel); border: 1px solid var(--steel); }
+.activity-line { color: var(--text); line-height: 1.4; }
+.activity-line .coach { font-weight: 800; color: var(--gold); }
+.activity-line .ref { font-weight: 700; color: #fff; }
+.activity-line .what { color: var(--dim); }
+.activity-meta { font-size: 10px; color: var(--mute); margin-top: 2px; letter-spacing: .04em; }
+.activity-ts { font-size: 10px; color: var(--mute); font-family: var(--bebas); font-weight: 800; letter-spacing: .08em; text-align: right; white-space: nowrap; }
+
+/* ══════════════════════════════════════════════════════════════
+   TOTALS + COACH PULSE PANEL
+   ══════════════════════════════════════════════════════════════ */
+.totals-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+.total-cell { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 10px 8px; text-align: center; }
+.total-num { font-family: var(--bebas); font-size: 26px; font-weight: 900; color: #fff; line-height: 1; }
+.total-lbl { font-family: var(--bebas); font-size: 9px; font-weight: 800; letter-spacing: .12em; color: var(--mute); text-transform: uppercase; margin-top: 4px; line-height: 1.2; }
+.coach-pulse-hd { font-family: var(--bebas); font-size: 11px; font-weight: 900; letter-spacing: .14em; color: var(--steel); text-transform: uppercase; margin: 8px 0 6px; padding-bottom: 6px; border-bottom: 1px dashed var(--border); }
+.coach-pulse-row { display: grid; grid-template-columns: 1fr auto auto; gap: 10px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--border); font-size: 12px; }
+.coach-pulse-row:last-child { border-bottom: none; }
+.coach-pulse-row .name { font-weight: 700; color: #fff; }
+.coach-pulse-row .last { font-size: 10px; color: var(--mute); margin-top: 1px; letter-spacing: .04em; }
+.pulse-counts { display: flex; gap: 6px; }
+.pulse-count { font-family: var(--bebas); font-size: 11px; font-weight: 900; letter-spacing: .04em; padding: 3px 7px; border-radius: 4px; }
+.pulse-count.scored { background: var(--gold-d); color: var(--gold); border: 1px solid var(--gold); }
+.pulse-count.quick { background: var(--steel-d); color: var(--steel); border: 1px solid var(--steel); }
+.coach-pulse-row.idle { opacity: .55; }
+.idle-flag { font-family: var(--bebas); font-size: 9px; font-weight: 900; letter-spacing: .14em; color: var(--red); padding: 2px 6px; background: var(--red-d); border: 1px solid var(--red); border-radius: 4px; text-transform: uppercase; margin-left: 6px; }
+
+/* ══════════════════════════════════════════════════════════════
+   ASSIGN COACH + REMIND MODALS
+   ══════════════════════════════════════════════════════════════ */
+.modal-bg { position: fixed; inset: 0; background: rgba(0,0,0,.6); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+.modal-bg.open { display: flex; }
+.modal-sheet { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 22px 24px; max-width: 460px; width: 100%; box-shadow: var(--shadow-lg); max-height: 85vh; overflow-y: auto; }
+.modal-ttl { font-family: var(--bebas); font-size: 20px; font-weight: 900; letter-spacing: .04em; color: #fff; text-transform: uppercase; margin-bottom: 6px; }
+.modal-sub { font-size: 12px; color: var(--dim); margin-bottom: 16px; line-height: 1.4; }
+.modal-stub { background: var(--gold-d); border: 1px dashed var(--gold); padding: 14px; border-radius: 8px; color: var(--gold); font-size: 13px; line-height: 1.5; margin-bottom: 16px; }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-btn { padding: 9px 16px; border-radius: 6px; font-family: var(--bebas); font-size: 11px; font-weight: 900; letter-spacing: .14em; cursor: pointer; text-transform: uppercase; border: 1px solid var(--border); background: var(--card2); color: var(--text); }
+.modal-btn.primary { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+/* JAReferee mark */
+.ja-mark { text-align: center; padding: 18px 16px 24px; }
+.ja-eyebrow { font-family: var(--bebas); font-size: 10px; font-weight: 800; letter-spacing: .26em; color: var(--gold); text-transform: uppercase; opacity: .7; margin-bottom: 6px; }
+.ja-mark a { display: inline-block; background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1); border-radius: 6px; padding: 6px 14px; text-decoration: none; }
+.ja-mark img { height: 14px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     PIN SCREEN
+═══════════════════════════════════════════ -->
+<div id="screen-pin">
+  <div class="pin-shield">
+    <img src="../assets/prescup-navy.png" alt="USYS Presidents Cup" onerror="this.style.display='none'">
+  </div>
+  <div class="pin-title">What's Happening Today</div>
+  <div class="pin-sub" id="pin-sub">Loading...</div>
+  <input type="password" class="pin-input" id="pin-input" inputmode="numeric" pattern="[0-9]*" placeholder="• • • •" autocomplete="off" onkeydown="if(event.key==='Enter')submitPin()" oninput="document.getElementById('pin-input').classList.remove('error')">
+  <div class="pin-status" id="pin-status"></div>
+  <button class="pin-submit" id="pin-submit" onclick="submitPin()">Sign In &rarr;</button>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     MAIN DASHBOARD
+═══════════════════════════════════════════ -->
+<div id="screen-main" style="display:none">
+  <div id="today-header">
+    <div id="today-header-left">
+      <div class="today-title" id="today-title">Today &middot; <span id="today-event">Tournament</span></div>
+      <div class="today-sub" id="today-date">Loading...</div>
+    </div>
+    <div id="today-header-right">
+      <div class="live-pill"><span class="live-dot"></span> LIVE</div>
+      <div class="last-sync" id="last-sync">Loading...</div>
+      <button class="refresh-btn" id="refresh-btn" onclick="refreshSnapshot()">&#x21bb; Refresh</button>
+    </div>
+  </div>
+
+  <div class="today-grid">
+    <!-- TOP LEFT: Field Coverage -->
+    <div class="panel tone-gold" id="panel-fields">
+      <div class="panel-hd">
+        <div class="panel-ttl"><span class="icon">&#x1F3DF;&#xFE0F;</span>Field Coverage</div>
+        <div class="panel-meta" id="fields-meta">0 fields</div>
+      </div>
+      <div class="panel-body" id="fields-body">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+
+    <!-- TOP RIGHT: Observations Tally -->
+    <div class="panel tone-red" id="panel-observations">
+      <div class="panel-hd">
+        <div class="panel-ttl"><span class="icon">&#x1F441;&#xFE0F;</span>Observations</div>
+        <div class="panel-meta" id="obs-meta">0 of 0 refs observed</div>
+      </div>
+      <div class="panel-body" id="obs-body">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM LEFT: Activity Feed -->
+    <div class="panel tone-green" id="panel-activity">
+      <div class="panel-hd">
+        <div class="panel-ttl"><span class="icon">&#x26A1;</span>Live Activity</div>
+        <div class="panel-meta" id="activity-meta">last 50 events</div>
+      </div>
+      <div class="panel-body" id="activity-body">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+
+    <!-- BOTTOM RIGHT: Totals + Coach Pulse -->
+    <div class="panel" id="panel-totals">
+      <div class="panel-hd">
+        <div class="panel-ttl"><span class="icon">&#x1F4CA;</span>Today's Pulse</div>
+        <div class="panel-meta" id="totals-meta"></div>
+      </div>
+      <div class="panel-body" id="totals-body">
+        <div class="empty">Loading...</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ja-mark">
+    <div class="ja-eyebrow">Powered By</div>
+    <a href="https://jareferee.com" target="_blank" rel="noopener">
+      <img src="../assets/jareferee-wordmark.png" alt="JAReferee" onerror="this.parentElement.textContent='JAReferee'">
+    </a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     ASSIGN COACH MODAL (stub for v1)
+═══════════════════════════════════════════ -->
+<div class="modal-bg" id="assign-modal" onclick="if(event.target===this)closeAssign()">
+  <div class="modal-sheet">
+    <div class="modal-ttl">Assign Ref Coach</div>
+    <div class="modal-sub" id="assign-context">Field N</div>
+    <div class="modal-stub">
+      The assignment writer ships in the next update. For now, edit the <strong>Ref Coach Assigned</strong> column directly in the Game Assignments tab. The page will reflect changes on the next 30s poll.
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="closeAssign()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     REMIND COACH MODAL (stub for v1)
+═══════════════════════════════════════════ -->
+<div class="modal-bg" id="remind-modal" onclick="if(event.target===this)closeRemind()">
+  <div class="modal-sheet">
+    <div class="modal-ttl">Remind Coach</div>
+    <div class="modal-sub" id="remind-context">Coach owes a scored observation</div>
+    <div class="modal-stub">
+      Automated end-of-day nudges ship in the next update (SMS/email via the scheduled trigger). For now, ping the coach directly with the context shown.
+    </div>
+    <div class="modal-actions">
+      <button class="modal-btn primary" onclick="closeRemind()">Got it</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   CONFIG. Paste your deployed Apps Script /exec URL.
+   ══════════════════════════════════════════════════════════════ */
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
+
+/* ══════════════════════════════════════════════════════════════
+   TOURNAMENT_CONFIG mirrors BCC. Change per event when duplicating.
+   ══════════════════════════════════════════════════════════════ */
+var TOURNAMENT_CONFIG = {
+  eventTitle:    '2026 USYS Presidents Cup',
+  eventSubtitle: 'NW Regional Qualifier',
+  startDate:     '2026-06-19',
+  endDate:       '2026-06-22'
+};
+
+var POLL_INTERVAL_MS = 30 * 1000;
+var pollTimer = null;
+var inFlight = false;
+
+/* ══════════════════════════════════════════════════════════════
+   BOOT
+   ══════════════════════════════════════════════════════════════ */
+(function boot() {
+  document.getElementById('pin-sub').textContent = TOURNAMENT_CONFIG.eventTitle;
+  document.getElementById('today-event').textContent = TOURNAMENT_CONFIG.eventTitle;
+
+  // Auto-sign-in if we have a fresh session (matches BCC pattern)
+  var stash = null;
+  try { stash = JSON.parse(sessionStorage.getItem('today-auth') || 'null'); } catch (e) {}
+  if (stash && stash.ts && (Date.now() - stash.ts) < 8 * 60 * 60 * 1000) {
+    enterDashboard();
+    return;
+  }
+  setTimeout(function() {
+    var inp = document.getElementById('pin-input');
+    if (inp) inp.focus();
+  }, 200);
+})();
+
+function submitPin() {
+  var inp = document.getElementById('pin-input');
+  var pin = (inp.value || '').trim();
+  if (!pin) {
+    inp.classList.add('error');
+    document.getElementById('pin-status').textContent = 'Enter your PIN';
+    document.getElementById('pin-status').className = 'pin-status err';
+    return;
+  }
+  var btn = document.getElementById('pin-submit');
+  btn.disabled = true;
+  document.getElementById('pin-status').textContent = 'Checking...';
+  document.getElementById('pin-status').className = 'pin-status';
+
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: 'auth', pin: pin })
+  })
+    .then(function(r) { return r.json(); })
+    .then(function(body) {
+      btn.disabled = false;
+      if (body && body.status === 'ok' && body.data) {
+        // Only Karen, Jeff, Deanna land here (admin tier). Coaches get a
+        // friendlier message but stay on the PIN screen.
+        var tier = (body.data.tier || '').toLowerCase();
+        if (tier !== 'admin') {
+          inp.classList.add('error');
+          document.getElementById('pin-status').textContent = 'This page is for HQ admins. Use the Coach App for field work.';
+          document.getElementById('pin-status').className = 'pin-status err';
+          return;
+        }
+        try {
+          sessionStorage.setItem('today-auth', JSON.stringify({
+            name: body.data.name || '',
+            tier: tier,
+            ts: Date.now()
+          }));
+        } catch (e) {}
+        enterDashboard();
+      } else {
+        inp.classList.add('error');
+        document.getElementById('pin-status').textContent = (body && body.message) || 'Sign-in failed';
+        document.getElementById('pin-status').className = 'pin-status err';
+      }
+    })
+    .catch(function() {
+      btn.disabled = false;
+      inp.classList.add('error');
+      document.getElementById('pin-status').textContent = 'Network error';
+      document.getElementById('pin-status').className = 'pin-status err';
+    });
+}
+
+function enterDashboard() {
+  document.getElementById('screen-pin').classList.add('hidden');
+  document.getElementById('screen-main').style.display = 'block';
+  refreshSnapshot();
+  startPolling();
+}
+
+function startPolling() {
+  if (pollTimer) clearInterval(pollTimer);
+  pollTimer = setInterval(function() {
+    if (document.hidden) return;
+    refreshSnapshot();
+  }, POLL_INTERVAL_MS);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SNAPSHOT FETCH + RENDER
+   ══════════════════════════════════════════════════════════════ */
+function refreshSnapshot() {
+  if (inFlight) return;
+  inFlight = true;
+  var btn = document.getElementById('refresh-btn');
+  if (btn) btn.disabled = true;
+
+  fetch(SCRIPT_URL + '?action=getKarenSnapshot')
+    .then(function(r) { return r.json(); })
+    .then(function(body) {
+      inFlight = false;
+      if (btn) btn.disabled = false;
+      if (!body || body.status !== 'ok' || !body.data) {
+        document.getElementById('last-sync').textContent = 'Load failed';
+        return;
+      }
+      renderSnapshot(body.data);
+    })
+    .catch(function() {
+      inFlight = false;
+      if (btn) btn.disabled = false;
+      document.getElementById('last-sync').textContent = 'Network error';
+    });
+}
+
+function renderSnapshot(d) {
+  // Header
+  try {
+    var dateObj = new Date(d.date + 'T12:00:00');
+    var dateStr = dateObj.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' });
+    document.getElementById('today-date').textContent = dateStr;
+  } catch (e) {
+    document.getElementById('today-date').textContent = d.date;
+  }
+  document.getElementById('last-sync').textContent = 'Updated ' + formatTime(d.generatedAt);
+
+  renderFieldCoverage(d.fieldCoverage || []);
+  renderObservations(d.observations || {}, d.totals || {});
+  renderActivity(d.activity || []);
+  renderTotals(d.totals || {}, d.coachPulse || []);
+}
+
+function renderFieldCoverage(fields) {
+  var body = document.getElementById('fields-body');
+  var meta = document.getElementById('fields-meta');
+  meta.textContent = fields.length + (fields.length === 1 ? ' field' : ' fields');
+  if (!fields.length) {
+    body.innerHTML = '<div class="empty">No games scheduled today.</div>';
+    return;
+  }
+  body.innerHTML = fields.map(function(fc) {
+    var crewClass = fc.gamesWithGaps > 0 ? 'gaps' : 'full';
+    var crewLabel = fc.gamesWithGaps > 0
+      ? (fc.gamesWithGaps + ' gap' + (fc.gamesWithGaps === 1 ? '' : 's'))
+      : 'Full crew';
+    var coachHtml;
+    if (fc.refCoachStatus === 'assigned') {
+      coachHtml = '<div class="fr-coach">' +
+        '<span class="lbl">Coach</span>' + esc(fc.refCoach) + '</div>' +
+        '<div></div>';
+    } else {
+      coachHtml = '<div class="fr-coach unassigned">No coach assigned</div>' +
+        '<button class="fr-assign-btn" onclick="openAssign(' + fc.field + ')">Assign</button>';
+    }
+    return '<div class="field-row">' +
+      '<div class="fr-num">F' + fc.field + '</div>' +
+      '<div class="fr-games"><span class="ct">' + fc.gamesCount + '</span> game' + (fc.gamesCount === 1 ? '' : 's') + '</div>' +
+      '<div class="fr-crew ' + crewClass + '">' + crewLabel + '</div>' +
+      coachHtml +
+      '</div>';
+  }).join('');
+}
+
+function renderObservations(obs, totals) {
+  var body = document.getElementById('obs-body');
+  var meta = document.getElementById('obs-meta');
+  var observed = (obs.fullyObserved || []).length;
+  var working = totals.refsWorkingToday || 0;
+  meta.textContent = observed + ' of ' + working + ' refs observed';
+
+  if (!working) {
+    body.innerHTML = '<div class="empty">No refs scheduled today.</div>';
+    return;
+  }
+
+  function renderBucket(klass, name, count, rows, rowFn, emptyMsg) {
+    var rowsHtml = rows.length
+      ? rows.map(rowFn).join('')
+      : '<div class="empty" style="padding:14px 8px;font-size:11px">' + emptyMsg + '</div>';
+    return '<div class="obs-bucket ' + klass + '">' +
+      '<div class="obs-bucket-hd">' +
+        '<div class="obs-bucket-name">' + name + '</div>' +
+        '<div class="obs-bucket-ct">' + count + '</div>' +
+      '</div>' +
+      rowsHtml +
+      '</div>';
+  }
+
+  var unseenRows = (obs.notSeen || []).map(function(r) {
+    var nextStr = r.nextGameTime
+      ? '<span class="next">Next: ' + esc(r.nextGameTime) + ' &middot; F' + esc(String(r.nextGameField || '')) + ' &middot; ' + esc(r.nextGameRole || '') + '</span>'
+      : 'No more games today';
+    return '<div class="obs-row"><div><div class="name">' + esc(r.name) + '</div><div class="meta">' + nextStr + '</div></div></div>';
+  });
+  var notesRows = (obs.notesOnly || []).map(function(r) {
+    var nextStr = r.nextGameTime
+      ? '<span class="next">Next: ' + esc(r.nextGameTime) + ' &middot; F' + esc(String(r.nextGameField || '')) + '</span> &middot; '
+      : '';
+    return '<div class="obs-row">' +
+      '<div><div class="name">' + esc(r.name) + '</div>' +
+      '<div class="meta">' + nextStr + r.quickCount + ' note' + (r.quickCount === 1 ? '' : 's') +
+      (r.owingCoach ? ' from ' + esc(r.owingCoach.split(' ')[0]) : '') +
+      '</div></div>' +
+      '<button class="remind-btn" onclick="openRemind(\'' + esc(r.name).replace(/'/g, "\\'") + '\', \'' + esc(r.owingCoach || '').replace(/'/g, "\\'") + '\')">Remind</button>' +
+      '</div>';
+  });
+  var fullRows = (obs.fullyObserved || []).map(function(r) {
+    return '<div class="obs-row"><div><div class="name">' + esc(r.name) + '</div>' +
+      '<div class="meta">' + r.scoredCount + ' scored' +
+      (r.quickCount ? ' &middot; ' + r.quickCount + ' notes' : '') + '</div></div></div>';
+  });
+
+  body.innerHTML =
+    renderBucket('unseen', '\u26A0 Not yet seen', unseenRows.length, unseenRows,
+      function(s) { return s; },
+      'Every ref has at least a note. Great.') +
+    renderBucket('notes', '\u270F\uFE0F Notes only (no score yet)', notesRows.length, notesRows,
+      function(s) { return s; },
+      'No outstanding scores.') +
+    renderBucket('full', '\u2713 Fully observed', fullRows.length, fullRows,
+      function(s) { return s; },
+      'No completed scored observations yet today.');
+}
+
+function renderActivity(items) {
+  var body = document.getElementById('activity-body');
+  var meta = document.getElementById('activity-meta');
+  meta.textContent = items.length + ' events today';
+  if (!items.length) {
+    body.innerHTML = '<div class="empty">No activity yet today.</div>';
+    return;
+  }
+  body.innerHTML = items.map(function(it) {
+    var icon = it.type === 'full' ? '\u2605' : '\u270F\uFE0F';
+    var what = it.type === 'full' ? 'scored' : 'noted';
+    var meta = (it.field ? 'Field ' + esc(String(it.field)) + ' &middot; ' : '') +
+               (it.gameNum ? '#' + esc(String(it.gameNum)) + ' &middot; ' : '') +
+               (it.gameTime ? esc(it.gameTime) : '');
+    return '<div class="activity-item ' + esc(it.type) + '">' +
+      '<div class="activity-icon">' + icon + '</div>' +
+      '<div>' +
+        '<div class="activity-line">' +
+          '<span class="coach">' + esc(coachFirst(it.coach)) + '</span> ' +
+          '<span class="what">' + what + ' </span>' +
+          '<span class="ref">' + esc(it.ref || 'unknown') + '</span>' +
+          (it.role ? ' <span class="what">(' + esc(it.role) + ')</span>' : '') +
+        '</div>' +
+        '<div class="activity-meta">' + meta + '</div>' +
+      '</div>' +
+      '<div class="activity-ts">' + formatTime(it.ts) + '</div>' +
+      '</div>';
+  }).join('');
+}
+
+function renderTotals(totals, pulse) {
+  var body = document.getElementById('totals-body');
+  document.getElementById('totals-meta').textContent = (pulse.length || 0) + ' coaches active';
+
+  var totalsHtml = '<div class="totals-row">' +
+    '<div class="total-cell"><div class="total-num">' + (totals.scoredObservations || 0) + '</div><div class="total-lbl">Scored<br>Obs</div></div>' +
+    '<div class="total-cell"><div class="total-num">' + (totals.quickNotes || 0) + '</div><div class="total-lbl">Quick<br>Notes</div></div>' +
+    '<div class="total-cell"><div class="total-num">' + (totals.refsObserved || 0) + '</div><div class="total-lbl">Refs<br>Observed</div></div>' +
+    '<div class="total-cell"><div class="total-num">' + (totals.refsWorkingToday || 0) + '</div><div class="total-lbl">Refs<br>Working</div></div>' +
+    '</div>';
+
+  var pulseHtml = '<div class="coach-pulse-hd">Coach Pulse</div>';
+  if (!pulse.length) {
+    pulseHtml += '<div class="empty" style="padding:14px;font-size:12px">No coach activity yet today.</div>';
+  } else {
+    var now = Date.now();
+    pulseHtml += pulse.map(function(c) {
+      var lastMs = c.lastActivity ? new Date(c.lastActivity).getTime() : 0;
+      var idleMin = lastMs ? Math.round((now - lastMs) / 60000) : 9999;
+      var isIdle = idleMin > 90;
+      var lastStr = c.lastActivity ? formatTime(c.lastActivity) : 'never';
+      return '<div class="coach-pulse-row' + (isIdle ? ' idle' : '') + '">' +
+        '<div><div class="name">' + esc(c.name) + (isIdle ? '<span class="idle-flag">IDLE ' + idleMin + 'm</span>' : '') + '</div>' +
+        '<div class="last">Last: ' + lastStr + '</div></div>' +
+        '<div class="pulse-counts">' +
+          (c.scoredCount > 0 ? '<div class="pulse-count scored">' + c.scoredCount + ' SC</div>' : '') +
+          (c.quickCount > 0 ? '<div class="pulse-count quick">' + c.quickCount + ' QN</div>' : '') +
+        '</div>' +
+        '<div></div>' +
+        '</div>';
+    }).join('');
+  }
+  body.innerHTML = totalsHtml + pulseHtml;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MODALS (stubs for v1; real flows in next update)
+   ══════════════════════════════════════════════════════════════ */
+function openAssign(field) {
+  document.getElementById('assign-context').textContent = 'Field ' + field;
+  document.getElementById('assign-modal').classList.add('open');
+}
+function closeAssign() { document.getElementById('assign-modal').classList.remove('open'); }
+
+function openRemind(refName, owingCoach) {
+  var sub = refName + (owingCoach ? ' (notes from ' + coachFirst(owingCoach) + ')' : '');
+  document.getElementById('remind-context').textContent = sub;
+  document.getElementById('remind-modal').classList.add('open');
+}
+function closeRemind() { document.getElementById('remind-modal').classList.remove('open'); }
+
+/* ══════════════════════════════════════════════════════════════
+   HELPERS
+   ══════════════════════════════════════════════════════════════ */
+function esc(s) {
+  return String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+function coachFirst(name) {
+  return String(name || '').split(' ')[0] || name || 'Coach';
+}
+function formatTime(iso) {
+  if (!iso) return '--';
+  try {
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '--';
+    return d.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  } catch (e) { return '--'; }
+}
+</script>
+</body>
+</html>
