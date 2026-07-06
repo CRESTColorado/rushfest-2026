@@ -4981,77 +4981,87 @@ body.dark .cmsg-section-title { color: rgba(255,255,255,.55); }
    ══════════════════════════════════════════════════════════════ */
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
 
-/* ══════════════════════════════════════════════════════════════
-   TOURNAMENT_CONFIG. Single source of truth for event-specific values.
-   When cloning this repo for a new event, change ONLY this block.
-   Everything else (footers, dashboard headers, event pill, field
-   counts, brand assets, coaching visibility, post-event detection)
-   reads from here on boot.
-   ══════════════════════════════════════════════════════════════ */
 var TOURNAMENT_CONFIG = {
   // ── IDENTITY ─────────────────────────────────────────────────
-  eventTitle:    'RushFest 2026',              // TODO Jeff: confirm exact title
-  eventSubtitle: 'Summer Classic',             // TODO Jeff: confirm
-  dashSubtitle:  'RushFest · Aurora',          // TODO Jeff: venue city
-  eventDateRange: 'JULY 7 – 10, 2026',         // TODO Jeff: confirm dates
-  eventVenue:     'TBD · Aurora, Colorado',    // TODO Jeff: venue name
-  pinEyebrow:     'RushFest 2026',             // shown on PIN screen
-  pinSubtitle:    'Aurora · Staff Only',       // shown under PIN eyebrow
+  eventTitle:         'RushFest 2026',
+  eventSubtitle:      'Summer Classic',              // TODO Jeff: confirm subtitle
+  dashSubtitle:       'RushFest · Aurora Sports Park',
+  eventDateRange:     'JULY 7 – 10, 2026',           // TODO Jeff: confirm dates
+  eventVenue:         'Aurora Sports Park · Aurora, Colorado',
+  pinEyebrow:         'RushFest 2026',
+  pinSubtitle:        'Aurora · Staff Only',
+  commandCenterName:  'RushFest Command Center',
+  commandCenterAbbrev:'RCC',                          // replaces "BCC" in labels
+  adminSendFromLabel: 'RushFest Coaching',            // used in report generator
 
   // ── SCHEDULE ─────────────────────────────────────────────────
-  startDate: '2026-07-07',                     // TODO Jeff: confirm
-  endDate:   '2026-07-10',                     // TODO Jeff: confirm
+  startDate:         '2026-07-07',                    // TODO Jeff: confirm
+  endDate:           '2026-07-10',                    // TODO Jeff: confirm
   postEventSubtitle: 'Tournament close-out · ',
 
   // ── SCALE ────────────────────────────────────────────────────
-  fieldCount: 20,                              // TODO Jeff: confirm field count
-  crewSlots: 3,                                // 3-person crews for RushFest rec
-  rankingSystem: 'none',                       // 'src' | 'tier' | 'none'
-  releaseMode: 'per-day',                      // 'per-day' | 'all-at-once' | 'progressive'
-  coachRole: 'Coach',                          // label used in UI (NRC / Mentor / Coach)
+  fieldCount:     20,                                 // TODO Jeff: confirm
+  crewSlots:      3,
+  rankingSystem:  'none',                             // 'src' | 'tier' | 'none'
+  releaseMode:    'per-day',                          // 'per-day' | 'all-at-once' | 'progressive'
+  coachRole:      'Mentor',                           // display label for coach role
+  coachRoleTiers: ['Mentor', 'Mentor+'],              // shown in dropdowns
+
+  // ── COACHING MODE ────────────────────────────────────────────
+  // 'full-eval'    = ratings + scored obs + rank math (Boise PCup, NCS)
+  // 'feedback-only'= written feedback only, no ratings, no rank impact (RushFest)
+  coachingMode: 'feedback-only',
+
+  // ── ASSIGNMENT SOURCE ────────────────────────────────────────
+  // 'sheet'   = Boise-style, assigned inside the RCC sheet
+  // 'assignr' = external Assignr, imported into Game Assignments tab
+  assignmentSource: 'assignr',
 
   // ── BRAND ────────────────────────────────────────────────────
-  brandWatermark: '../assets/rushfest-white.webp',  // TODO Jeff: drop asset in repo
-  brandLogo:      '../assets/rushfest-logo.png',    // TODO Jeff: drop asset in repo
-  brandPrimary:   '#243859',                        // TODO Jeff: RushFest navy?
-  brandAccent:    '#ecbf3e',                        // TODO Jeff: RushFest gold?
+  brandWatermark: '../assets/rushfest-white.webp',   // TODO Jeff: drop in repo
+  brandLogo:      '../assets/rushfest-logo.png',     // TODO Jeff: drop in repo
+  brandPrimary:   '#243859',                          // TODO Jeff: confirm palette
+  brandAccent:    '#ecbf3e',
+  fieldMapSvg:    '../assets/aurora-sports-park.svg',// reuse from GCC
 
   // ── FEATURE FLAGS ────────────────────────────────────────────
-  // Set false to hide the dashboard card + block the underlying screen.
-  // RushFest = full ops MINUS coaching pipeline.
   features: {
-    checkIn:        false,   // Boise-style arrivals check-in. Off for RushFest (local rec).
-    rulesQuiz:      true,    // Rules completion tracking
-    gameCheckIn:    true,    // Pre-game check-in
-    switchLog:      true,    // Switch tracking
-    hqRoster:       true,    // Everything-view for admins
-    gameCounts:    true,    // Game counts per official
-    earningsVerify: true,    // Payment verification
-    bulletins:      true,    // Broadcast messages
-    assignmentsGlance: true, // Assignments dashboard
-    fieldUtilization:  true, // Field usage tracking
-    openings:       true,    // Formerly "Gaps"
-    closeout:       true,    // Budget close-out screen
+    checkIn:           false,   // local rec, no travel arrivals
+    rulesQuiz:         true,
+    gameCheckIn:       true,
+    switchLog:         true,
+    hqRoster:          true,
+    gameCounts:        true,
+    earningsVerify:    true,
+    bulletins:         true,
+    assignmentsGlance: true,
+    fieldUtilization:  true,
+    openings:          true,
+    closeout:          true,
 
-    // Coaching pipeline. ALL OFF for RushFest.
-    coachMessages:  false,   // Coach-to-ref inbox
-    feedbackGlance: false,   // Feedback dashboard
-    notesReview:    false,   // Quick-notes review screen
-    coachAssignment: false,  // Coach-to-game assignment column
+    // Coaching pipeline. ON for RushFest, feedback-only mode.
+    coachMessages:     true,
+    feedbackGlance:    true,
+    notesReview:       true,
+    coachAssignment:   true,
 
-    // Closeout sub-modules. RushFest has no travel/NRC, so these off.
-    closeoutNRC:      false,
-    closeoutPerDiem:  false,
-    closeoutTravel:   false,
-    closeoutGameFees: true,
-    closeoutAdmin:    true,
-    closeoutOther:    true
+    // Coaching sub-features. Drive the mode split.
+    coachRatings:      false,   // hide 1-4 rating block in app/
+    coachScoredObs:    false,   // no scored observation handoff
+    coachRankMath:     false,   // feedback does not affect ranks/tiers
+
+    // Closeout sub-modules
+    closeoutNRC:       false,   // no ref coach receipts
+    closeoutPerDiem:   false,
+    closeoutTravel:    false,
+    closeoutGameFees:  true,
+    closeoutAdmin:     true,
+    closeoutOther:     true
   },
 
   // ── PAYER DEFAULTS ───────────────────────────────────────────
-  // Section key : default payer for closeout dropdowns.
   payerDefaults: {
-    gameFees:  'Tournament',     // RushFest pays its own game fees
+    gameFees:  'Tournament',
     travel:    'Tournament',
     nrc:       'Tournament',
     admin:     'Tournament',
@@ -5060,8 +5070,7 @@ var TOURNAMENT_CONFIG = {
   },
   payerOptions: ['Tournament', 'Host Club', 'Sponsor', 'Other'],
 
-  // ── BUDGET ───────────────────────────────────────────────────
-  defaultBudget: 0             // TODO Jeff: RushFest budget target if known
+  defaultBudget: 0                                    // TODO Jeff: RushFest budget target
 };
 
 // Computed once on boot. true when today > TOURNAMENT_CONFIG.endDate.
