@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>RushFest Check-In</title>
+<style>
+  :root {
+    --bg: #0a0e1a;
+    --surface: #131927;
+    --card: #1a2236;
+    --card-h: #233149;
+    --text: #ffffff;
+    --text2: #94a3b8;
+    --border: #2a3447;
+    --green: #00ff88;
+    --green-d: #00d870;
+    --cyan: #00d4ff;
+    --red: #ff4757;
+    --gold: #C8921A;
+    --gold-light: #F5C842;
+    --shadow: 0 4px 20px rgba(0,0,0,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* ── HEADER ── */
+  .hdr {
+    background: linear-gradient(135deg, #1a2236 0%, #0f1420 100%);
+    padding: 20px 20px 18px;
+    border-bottom: 2px solid var(--border);
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .hdr-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--text2);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .hdr-title {
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--green) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hdr-venue {
+    font-size: 15px;
+    color: var(--text);
+    font-weight: 700;
+    margin-top: 4px;
+  }
+  .hdr-date {
+    font-size: 12px;
+    color: var(--text2);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* ── FINALS DAY BANNER ── */
+  .finals-banner {
+    background: linear-gradient(135deg, rgba(200,146,26,0.14) 0%, rgba(20,30,55,0.4) 100%);
+    border: 1px solid rgba(200,146,26,0.35);
+    border-radius: 14px;
+    padding: 20px 22px 22px;
+    margin: 16px 16px 0;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(200,146,26,0.08);
+  }
+  .finals-banner::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+  }
+  .finals-eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    color: var(--gold-light);
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .finals-title {
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .finals-body {
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.55;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  .finals-body + .finals-body {
+    margin-top: 14px;
+  }
+  .finals-body.memorial {
+    color: var(--text2);
+    font-style: italic;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .finals-signature {
+    font-size: 11px;
+    color: var(--text2);
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(200,146,26,0.2);
+  }
+
+  /* ── MAIN ── */
+  .main {
+    flex: 1;
+    padding: 18px 16px 100px;
+    max-width: 500px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .instruction {
+    text-align: center;
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 14px;
+    line-height: 1.4;
+  }
+  .instruction .cr-callout {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(255,170,0,0.12);
+    border: 1.5px solid #ffaa00;
+    border-radius: 9px;
+    color: #ffaa00;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    line-height: 1.4;
+  }
+  .instruction .cr-callout strong { color: #ffd166; font-weight: 900; }
+
+  /* ── SEARCH ── */
+  .search-wrap {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .search {
+    width: 100%;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 18px 18px 52px;
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 600;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .search:focus { border-color: var(--cyan); }
+  .search::placeholder { color: var(--text2); font-weight: 500; }
+  .search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    color: var(--text2);
+    pointer-events: none;
+  }
+  .clear-btn {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--border);
+    color: var(--text);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+  .clear-btn.show { display: flex; }
+
+  /* ── RESULTS ── */
+  .results {
+    display: none;
+  }
+  .results.show { display: block; }
+  .result-item {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.12s;
+    min-height: 60px;
+  }
+  .result-item:active { transform: scale(0.98); background: var(--card-h); }
+  .result-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .result-status {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-transform: uppercase;
+  }
+  .result-status.in {
+    background: rgba(0, 255, 136, 0.15);
+    color: var(--green);
+  }
+  .result-status.out {
+    background: rgba(148, 163, 184, 0.15);
+    color: var(--text2);
+  }
+
+  /* ── NO RESULTS ── */
+  .empty {
+    text-align: center;
+    padding: 36px 20px;
+    color: var(--text2);
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .empty-icon { font-size: 48px; margin-bottom: 8px; opacity: 0.4; }
+
+  /* ── CONFIRMATION SHEET ── */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 99;
+    display: none;
+  }
+  .overlay.show { display: block; }
+  .sheet {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--surface);
+    border-top: 2px solid var(--border);
+    border-radius: 24px 24px 0 0;
+    padding: 24px 20px 32px;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  .sheet.show { transform: translateY(0); }
+  .sheet-handle {
+    width: 40px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 0 auto 20px;
+  }
+  .sheet-title {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text2);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .sheet-name {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    margin-bottom: 18px;
+    word-wrap: break-word;
+  }
+  .sheet-games {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 18px;
+    max-height: 200px;
+    overflow-y: auto;
+  }
+  .sheet-game {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .sheet-game:last-child { border-bottom: none; }
+  .sheet-game-info { font-weight: 600; color: var(--text); }
+  .sheet-game-info .role {
+    display: inline-block;
+    background: var(--cyan);
+    color: #001a26;
+    font-size: 10px;
+    font-weight: 900;
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-right: 6px;
+    letter-spacing: 0.05em;
+  }
+  .sheet-game-time { color: var(--text2); font-size: 13px; font-weight: 600; }
+
+  /* ── ATTESTATION SCREEN ── */
+  .attest-warn {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%);
+    border: 2.5px solid #ef4444;
+    color: #fef2f2;
+    padding: 14px 16px;
+    border-radius: 11px;
+    margin-bottom: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.4;
+    animation: stopPulse 1.4s ease-in-out 0s 2;
+  }
+  .attest-warn .stop-l {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    color: #fff;
+  }
+  .attest-warn strong { color: #fef2f2; font-weight: 900; }
+  @keyframes stopPulse {
+    0%,100% { transform: scale(1); }
+    50%     { transform: scale(1.02); }
+  }
+  .attest-sub {
+    color: var(--text2);
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0 4px 12px;
+  }
+  .attest-game .role {
+    background: #ffaa00;
+    color: #000;
+  }
+  .attest-check-wrap {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px;
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 11px;
+    margin: 8px 0 6px;
+    cursor: pointer;
+    user-select: none;
+    transition: border-color .15s, background .15s;
+  }
+  .attest-check-wrap.checked {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.08);
+  }
+  .attest-check-wrap input[type="checkbox"] {
+    width: 24px; height: 24px;
+    margin-top: 1px;
+    accent-color: #ef4444;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .attest-check-wrap .attest-check-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+  }
+  .attest-hint {
+    text-align: center;
+    color: var(--text2);
+    font-size: 11px;
+    margin-top: -2px;
+    margin-bottom: 8px;
+    transition: opacity .2s;
+  }
+  .attest-hint.hidden { opacity: 0; }
+  .btn-finalize {
+    width: 100%;
+    background: var(--border);
+    color: var(--text2);
+    border: none;
+    border-radius: 14px;
+    padding: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: not-allowed;
+    transition: background .2s, color .2s, transform .15s;
+  }
+  .btn-finalize.unlocked {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(239, 68, 68, 0.35);
+  }
+  .btn-finalize.unlocked:active { transform: scale(0.98); }
+  .btn-finalize:disabled { cursor: not-allowed; }
+
+  .sheet-no-games {
+    text-align: center;
+    color: var(--text2);
+    font-size: 13px;
+    padding: 12px;
+    font-style: italic;
+  }
+  .btn-confirm {
+    width: 100%;
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-d) 100%);
+    color: #001a0d;
+    border: none;
+    border-radius: 14px;
+    padding: 20px;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 255, 136, 0.35);
+    margin-bottom: 10px;
+  }
+  .btn-confirm:active { transform: scale(0.98); }
+  .btn-confirm:disabled {
+    background: var(--border);
+    color: var(--text2);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .btn-cancel {
+    width: 100%;
+    background: transparent;
+    color: var(--text2);
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SUCCESS STATE ── */
+  .success {
+    text-align: center;
+    padding: 8px 0 12px;
+  }
+  .success-icon {
+    font-size: 64px;
+    margin-bottom: 12px;
+    animation: pop 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes pop {
+    0% { transform: scale(0); }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .success-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--green);
+    margin-bottom: 8px;
+  }
+  .success-sub {
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .success-pump {
+    font-family: 'Barlow Condensed', sans-serif;
+    color: var(--green);
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 10px 0 6px;
+    animation: pumpIn .5s ease-out;
+  }
+  @keyframes pumpIn {
+    0%   { opacity: 0; transform: translateY(8px) scale(.95); }
+    100% { opacity: 1; transform: translateY(0)   scale(1); }
+  }
+  .success-detail {
+    color: var(--text2);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .btn-done {
+    width: 100%;
+    background: var(--card);
+    color: var(--text);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    font-size: 15px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    margin-top: 16px;
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: var(--surface);
+    color: var(--text);
+    padding: 14px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    z-index: 200;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-width: 90vw;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast.error { border-color: var(--red); color: var(--red); }
+
+  /* ── LOADING ── */
+  .loading {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 14, 26, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+    z-index: 150;
+  }
+  .loading.show { display: flex; }
+  .spinner {
+    width: 44px;
+    height: 44px;
+    border: 4px solid var(--border);
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-text { color: var(--text2); font-size: 13px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* ── FOOTER ── */
+  .footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 10px;
+    font-size: 10px;
+    color: var(--text2);
+    background: var(--bg);
+    letter-spacing: 0.05em;
+    border-top: 1px solid var(--border);
+    z-index: 50;
+  }
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-eyebrow" data-cfg="hdrEyebrow">RushFest Referee Operations</div>
+  <div class="hdr-title">REFEREE CHECK-IN</div>
+  <div class="hdr-venue" id="venue-label">Loading venue...</div>
+  <div class="hdr-date" id="date-label"></div>
+</div>
+
+<!-- Event-day banner. Content + trigger date come from TOURNAMENT_CONFIG.eventBanner below. -->
+<div class="finals-banner" id="finals-banner" style="display:none;">
+  <div class="finals-eyebrow" id="fb-eyebrow">RushFest · Colorado Rush</div>
+  <div class="finals-title" id="fb-title">GO RUN GREAT GAMES</div>
+  <div class="finals-body" id="fb-body">
+    Welcome to Aurora Sports Park. 31 fields, four days, one great weekend of soccer. Thanks for showing up.
+  </div>
+  <div class="finals-signature" id="fb-signature">Jeff and the RushFest staff</div>
+</div>
+
+<div class="main">
+  <div class="instruction">
+    Type your name to find yourself in today's roster.
+    <span class="cr-callout">⚠ <strong>Center referees:</strong> collect your game card from the Site Coordinator <strong>before</strong> checking in.</span>
+  </div>
+
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+      <circle cx="11" cy="11" r="7"></circle>
+      <path d="M21 21l-4.3-4.3"></path>
+    </svg>
+    <input
+      type="text"
+      class="search"
+      id="search"
+      placeholder="Type your name..."
+      autocomplete="off"
+      autocapitalize="words"
+      spellcheck="false"
+      inputmode="text">
+    <button class="clear-btn" id="clear-btn" onclick="clearSearch()">×</button>
+  </div>
+
+  <div class="results" id="results"></div>
+</div>
+
+<div class="footer">© 2026 JAReferee / RushFest Referee Operations</div>
+
+<!-- Confirmation sheet -->
+<div class="overlay" id="overlay" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div id="sheet-content"></div>
+</div>
+
+<!-- Loading -->
+<div class="loading" id="loading">
+  <div class="spinner"></div>
+  <div class="loading-text" id="loading-text">Loading...</div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzjvvz1KSINuuzi4IEo_fXcz3MvIbA_gLxIKEUr-HorGQNpQhEag-X1LR8FmAUczrwh/exec';
+
+/* ══════════════════════════════════════════════════════════════
+   TOURNAMENT_CONFIG. Single source of truth for event-specific
+   values in the check-in page. Change ONLY this block per event.
+   ══════════════════════════════════════════════════════════════ */
+var TOURNAMENT_CONFIG = {
+  eventTitle:    'RushFest 2026',
+  eventShort:    'RushFest',
+  hdrEyebrow:    'RushFest Referee Operations',
+  footerLabel:   '© 2026 JAReferee / RushFest Referee Operations',
+
+  // Assignr site id (?site= URL param overrides this)
+  assignrSiteId: '20901',   // TODO Jeff: replace with RushFest Assignr site id
+
+  venue: {
+    name: 'Aurora Sports Park',
+    city: 'Aurora, Colorado'
+  },
+
+  // Colorado Rush brand
+  brand: {
+    primary:   '#0066CC',
+    primaryDk: '#004a99',
+    accent:    '#000000',
+    onPrimary: '#ffffff',
+    logoUrl:   '../assets/colorado-rush.webp'
+  },
+
+  // Event-day banner. Shown when today matches one of the trigger dates.
+  // Empty array = never show. Format: 'YYYY-MM-DD'.
+  eventBanner: {
+    triggerDates: ['2026-07-10'],  // final day of RushFest
+    eyebrow:      'RushFest · Colorado Rush · Final Day',
+    title:        'YOU BROUGHT IT ALL WEEKEND',
+    body:         'Four days, 31 fields, and the standard you set on every match. Thanks for showing up. Go run one more great game.',
+    signature:    'Jeff and the RushFest staff'
+  }
+};
+
+// Legacy alias so existing banner code below still triggers correctly.
+var FINALS_DAYS = TOURNAMENT_CONFIG.eventBanner.triggerDates;
+
+// Apply Rush brand palette to :root CSS vars, and swap banner content
+// from TOURNAMENT_CONFIG. Runs before init() so first paint is branded.
+(function applyRushFestConfig(){
+  try {
+    var b = TOURNAMENT_CONFIG.brand;
+    if (b) {
+      var r = document.documentElement.style;
+      if (b.primary)   { r.setProperty('--brand-primary', b.primary);
+                         r.setProperty('--accent',        b.primary);
+                         r.setProperty('--cyan',          b.primary); }
+      if (b.primaryDk) { r.setProperty('--brand-primary-dk', b.primaryDk); }
+      if (b.accent)    { r.setProperty('--brand-accent', b.accent); }
+      if (b.onPrimary) { r.setProperty('--brand-on',     b.onPrimary); }
+    }
+    document.title = TOURNAMENT_CONFIG.eventTitle + ' Check-In';
+    var eb = TOURNAMENT_CONFIG.eventBanner;
+    if (eb) {
+      var setText = function(id, val){ var el = document.getElementById(id); if (el && val) el.textContent = val; };
+      setText('fb-eyebrow',   eb.eyebrow);
+      setText('fb-title',     eb.title);
+      setText('fb-body',      eb.body);
+      setText('fb-signature', eb.signature);
+    }
+    document.querySelectorAll('[data-cfg]').forEach(function(el){
+      var key = el.getAttribute('data-cfg');
+      if (TOURNAMENT_CONFIG[key]) el.textContent = TOURNAMENT_CONFIG[key];
+    });
+  } catch(e) { /* fail-open, keep static markup */ }
+})();
+
+var S = {
+  siteId: TOURNAMENT_CONFIG.assignrSiteId,
+  venue: '',
+  date: '',
+  games: [],
+  checkins: [],
+  refIndex: {},        // name (lowercase) → { name, games:[], anyAtVenue:bool }
+  selectedRef: null,
+  searchTimer: null
+};
+
+// ── INIT ─────────────────────────────────────────────────────
+function init() {
+  var params = new URLSearchParams(window.location.search);
+  S.siteId = params.get('site') || TOURNAMENT_CONFIG.assignrSiteId;
+  S.venue  = decodeURIComponent(params.get('venue') || TOURNAMENT_CONFIG.venue.name || '');
+  S.date   = params.get('date') || todayStr();
+
+  // Header labels
+  document.getElementById('venue-label').textContent = S.venue || 'All venues';
+  document.getElementById('date-label').textContent  = formatDateForDisplay(S.date);
+
+  // Finals Day banner — only shows on dates in FINALS_DAYS
+  if (FINALS_DAYS.indexOf(S.date) >= 0) {
+    var banner = document.getElementById('finals-banner');
+    if (banner) banner.style.display = 'block';
+  }
+
+  // Live search
+  var input = document.getElementById('search');
+  input.addEventListener('input', function() {
+    document.getElementById('clear-btn').classList.toggle('show', input.value.length > 0);
+    if (S.searchTimer) clearTimeout(S.searchTimer);
+    S.searchTimer = setTimeout(function() { doSearch(input.value); }, 120);
+  });
+
+  loadData();
+}
+
+function todayStr() {
+  var d = new Date();
+  return d.getFullYear() + '-' + pad2(d.getMonth()+1) + '-' + pad2(d.getDate());
+}
+function pad2(n) { return n < 10 ? '0'+n : ''+n; }
+
+function formatDateForDisplay(s) {
+  // s = '2026-05-23'  →  'Saturday, May 23'
+  try {
+    var parts = s.split('-');
+    var d = new Date(parseInt(parts[0]), parseInt(parts[1])-1, parseInt(parts[2]));
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    return days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate();
+  } catch(e) { return s; }
+}
+
+// ── DATA LOAD ────────────────────────────────────────────────
+function loadData() {
+  showLoading('Loading roster...');
+  // Two parallel fetches
+  var got = { games:false, checkins:false };
+  function done(k) {
+    got[k] = true;
+    if (got.games && got.checkins) {
+      hideLoading();
+      buildRefIndex();
+      document.getElementById('search').focus();
+    }
+  }
+  apiGet('games', { siteId: S.siteId, date: S.date }, function(r) {
+    if (r && r.status === 'ok' && Array.isArray(r.data)) S.games = r.data;
+    done('games');
+  });
+  apiGet('checkins', { date: S.date }, function(r) {
+    if (r && r.status === 'ok' && Array.isArray(r.data)) S.checkins = r.data;
+    done('checkins');
+  });
+}
+
+function buildRefIndex() {
+  S.refIndex = {};
+  S.games.forEach(function(g) {
+    var atVenue = !S.venue || (g.venue || '').toLowerCase() === S.venue.toLowerCase();
+    var crew = g.crew || {};
+    addRef(crew.cr,     'CR',  g, atVenue);
+    addRef(crew.ar1,    'AR1', g, atVenue);
+    addRef(crew.ar2,    'AR2', g, atVenue);
+    addRef(crew.fourth, '4TH', g, atVenue);
+    // Also surface HQ staff (SC trios) so site coordinators can check themselves in
+    if (g.hqStaff && g.hqStaff.length) {
+      g.hqStaff.forEach(function(s) {
+        if (s && s.name) addRef(s.name, s.posAb || 'SC', g, atVenue);
+      });
+    }
+  });
+}
+
+function addRef(name, role, g, atVenue) {
+  if (!name) return;
+  var key = name.toLowerCase().trim();
+  if (!S.refIndex[key]) {
+    S.refIndex[key] = { name: name.trim(), games: [], anyAtVenue: false };
+  }
+  S.refIndex[key].games.push({
+    role: role,
+    field: g.field || '',
+    time: g.localizedTime || '',
+    gameId: g.id || '',
+    venue: g.venue || ''
+  });
+  if (atVenue) S.refIndex[key].anyAtVenue = true;
+}
+
+// ── SEARCH ───────────────────────────────────────────────────
+function doSearch(q) {
+  var resultsEl = document.getElementById('results');
+  q = (q || '').trim().toLowerCase();
+  if (q.length < 2) {
+    resultsEl.classList.remove('show');
+    resultsEl.innerHTML = '';
+    return;
+  }
+
+  // Find matches
+  var matches = [];
+  for (var key in S.refIndex) {
+    var entry = S.refIndex[key];
+    if (key.indexOf(q) !== -1) {
+      matches.push(entry);
+    }
+  }
+
+  // Sort: refs at THIS venue first, then alphabetical
+  matches.sort(function(a, b) {
+    if (a.anyAtVenue !== b.anyAtVenue) return a.anyAtVenue ? -1 : 1;
+    return a.name.localeCompare(b.name);
+  });
+
+  if (matches.length === 0) {
+    resultsEl.innerHTML = '<div class="empty"><div class="empty-icon">🔍</div>No referees found matching "' + escapeHtml(q) + '"<br><br><small>Check spelling, or ask your Site Coordinator.</small></div>';
+    resultsEl.classList.add('show');
+    return;
+  }
+
+  // Cap at 12 for performance + readability
+  var capped = matches.slice(0, 12);
+  resultsEl.innerHTML = capped.map(function(r) {
+    var checkedIn = isCheckedIn(r.name);
+    var statusCls = checkedIn ? 'in' : 'out';
+    var statusTxt = checkedIn ? '✓ Checked in' : 'Tap to check in';
+    return '<div class="result-item" onclick="selectRef(\'' + escapeAttr(r.name) + '\')">'
+         + '<div class="result-name">' + escapeHtml(r.name) + '</div>'
+         + '<div class="result-status ' + statusCls + '">' + statusTxt + '</div>'
+         + '</div>';
+  }).join('');
+  if (matches.length > capped.length) {
+    resultsEl.innerHTML += '<div class="empty" style="padding:18px 12px;">Showing first ' + capped.length + ' of ' + matches.length + '. Type more letters to narrow.</div>';
+  }
+  resultsEl.classList.add('show');
+}
+
+function isCheckedIn(name) {
+  if (!name) return false;
+  var n = name.toLowerCase().trim();
+  return S.checkins.some(function(c) {
+    return (c.refName || '').toLowerCase().trim() === n;
+  });
+}
+
+function clearSearch() {
+  var input = document.getElementById('search');
+  input.value = '';
+  document.getElementById('clear-btn').classList.remove('show');
+  document.getElementById('results').classList.remove('show');
+  input.focus();
+}
+
+// ── CONFIRMATION SHEET ───────────────────────────────────────
+function selectRef(name) {
+  var key = name.toLowerCase().trim();
+  var entry = S.refIndex[key];
+  if (!entry) return;
+  S.selectedRef = entry;
+
+  var checkedIn = isCheckedIn(name);
+  var atVenueGames = entry.games.filter(function(g) {
+    return !S.venue || (g.venue || '').toLowerCase() === S.venue.toLowerCase();
+  });
+
+  var html = '';
+
+  if (checkedIn) {
+    // Already checked in — show confirmation + game list, no re-check-in
+    html += '<div class="success">';
+    html += '<div class="success-icon">✓</div>';
+    html += '<div class="success-title">Already Checked In</div>';
+    html += '<div class="success-sub">' + escapeHtml(entry.name) + '</div>';
+    html += '<div class="success-detail">You\'re all set. Find your Site Coordinator if you need anything.</div>';
+    html += '</div>';
+    if (atVenueGames.length > 0) {
+      html += '<div class="sheet-games">';
+      atVenueGames.slice(0, 8).forEach(function(g) {
+        html += '<div class="sheet-game">'
+             + '<div class="sheet-game-info"><span class="role">' + escapeHtml(g.role) + '</span>' + escapeHtml(g.field) + '</div>'
+             + '<div class="sheet-game-time">' + escapeHtml(g.time) + '</div>'
+             + '</div>';
+      });
+      if (atVenueGames.length > 8) {
+        html += '<div class="sheet-no-games">+ ' + (atVenueGames.length - 8) + ' more games today</div>';
+      }
+      html += '</div>';
+    }
+    html += '<button class="btn-done" onclick="closeSheet()">DONE</button>';
+  } else {
+    html += '<div class="sheet-title">Confirm Check-In</div>';
+    html += '<div class="sheet-name">' + escapeHtml(entry.name) + '</div>';
+
+    if (atVenueGames.length > 0) {
+      html += '<div class="sheet-games">';
+      atVenueGames.slice(0, 8).forEach(function(g) {
+        html += '<div class="sheet-game">'
+             + '<div class="sheet-game-info"><span class="role">' + escapeHtml(g.role) + '</span>' + escapeHtml(g.field) + '</div>'
+             + '<div class="sheet-game-time">' + escapeHtml(g.time) + '</div>'
+             + '</div>';
+      });
+      if (atVenueGames.length > 8) {
+        html += '<div class="sheet-no-games">+ ' + (atVenueGames.length - 8) + ' more games today</div>';
+      }
+      html += '</div>';
+    } else {
+      html += '<div class="sheet-games"><div class="sheet-no-games">No games found for ' + escapeHtml(entry.name) + ' at this venue today. They may be assigned elsewhere — confirm with your SC before checking in.</div></div>';
+    }
+
+    // CR refs see the attestation step first; everyone else (AR/4TH/HQ) submits directly
+    var attestNeeded = needsAttestation(atVenueGames);
+    if (attestNeeded) {
+      html += '<button class="btn-confirm" id="confirm-btn" onclick="showAttestStep()">✓ CHECK ME IN</button>';
+    } else {
+      html += '<button class="btn-confirm" id="confirm-btn" onclick="submitCheckin()">✓ CHECK ME IN</button>';
+    }
+    html += '<button class="btn-cancel" onclick="closeSheet()">Not me — go back</button>';
+  }
+
+  document.getElementById('sheet-content').innerHTML = html;
+  openSheet();
+}
+
+function openSheet() {
+  document.getElementById('overlay').classList.add('show');
+  setTimeout(function() { document.getElementById('sheet').classList.add('show'); }, 10);
+}
+function closeSheet() {
+  document.getElementById('sheet').classList.remove('show');
+  setTimeout(function() {
+    document.getElementById('overlay').classList.remove('show');
+    document.getElementById('sheet-content').innerHTML = '';
+  }, 300);
+  S.selectedRef = null;
+}
+
+// ── ATTESTATION STEP ─────────────────────────────────────────
+// Shown when a CR ref hits CHECK ME IN. Adds friction: a red STOP
+// banner, a required checkbox attesting cards are in hand, and a
+// locked FINALIZE CHECK-IN button (different color from the green
+// step-1 button) that only enables once the checkbox is ticked.
+function showAttestStep() {
+  if (!S.selectedRef) return;
+  var atVenueGames = (S.selectedRef.games || []).filter(function(g) {
+    return !S.venue || (g.venue || '').toLowerCase() === S.venue.toLowerCase();
+  });
+  var crs = crGamesFor(atVenueGames);
+
+  var html = '<div class="sheet-title">Almost there...</div>';
+  html += '<div class="sheet-name">' + escapeHtml(S.selectedRef.name) + '</div>';
+  html += '<div class="attest-warn">'
+       +   '<span class="stop-l">⚠ STOP</span>'
+       +   'Pick up your game card(s) from the Site Coordinator <strong>before</strong> tapping the button below.'
+       + '</div>';
+  html += '<div class="attest-sub">You\'re the Center Referee on these games:</div>';
+  html += '<div class="sheet-games">';
+  crs.forEach(function(g) {
+    html += '<div class="sheet-game attest-game">'
+         + '<div class="sheet-game-info"><span class="role">CR</span>' + escapeHtml(g.field) + '</div>'
+         + '<div class="sheet-game-time">' + escapeHtml(g.time) + '</div>'
+         + '</div>';
+  });
+  html += '</div>';
+  html += '<label class="attest-check-wrap" id="attest-wrap" for="attest-check">'
+       +   '<input type="checkbox" id="attest-check" onclick="toggleAttest()">'
+       +   '<span class="attest-check-label">I have my game card' + (crs.length > 1 ? 's' : '') + ' in hand right now.</span>'
+       + '</label>';
+  html += '<div class="attest-hint" id="attest-hint">Confirm the box to unlock</div>';
+  html += '<button class="btn-finalize" id="finalize-btn" disabled onclick="submitCheckin()">Finalize check-in</button>';
+  html += '<button class="btn-cancel" onclick="selectRef(S.selectedRef.name)">← Back</button>';
+
+  document.getElementById('sheet-content').innerHTML = html;
+}
+
+// Called when the attestation checkbox is toggled. Unlocks (or re-locks)
+// the FINALIZE button and updates the wrapper styling + hint.
+function toggleAttest() {
+  var cb   = document.getElementById('attest-check');
+  var btn  = document.getElementById('finalize-btn');
+  var wrap = document.getElementById('attest-wrap');
+  var hint = document.getElementById('attest-hint');
+  if (!cb || !btn || !wrap) return;
+  if (cb.checked) {
+    btn.disabled = false;
+    btn.classList.add('unlocked');
+    wrap.classList.add('checked');
+    if (hint) hint.classList.add('hidden');
+  } else {
+    btn.disabled = true;
+    btn.classList.remove('unlocked');
+    wrap.classList.remove('checked');
+    if (hint) hint.classList.remove('hidden');
+  }
+}
+
+// ── SUBMIT ───────────────────────────────────────────────────
+function submitCheckin() {
+  if (!S.selectedRef) return;
+  // Disable whichever button submitted us (confirm-btn for direct AR/4TH path,
+  // finalize-btn for the CR attestation path)
+  var btn = document.getElementById('finalize-btn') || document.getElementById('confirm-btn');
+  var btnId = btn ? btn.id : null;
+  var origText = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Checking in...'; }
+
+  var payload = {
+    refName:     S.selectedRef.name,
+    date:        S.date,
+    checkedInBy: 'self',
+    venue:       S.venue || ''
+  };
+
+  apiPost('checkinQR', payload, function(r) {
+    if (r && r.status === 'ok') {
+      // Add to local checkins so re-search shows ✓
+      S.checkins.push({ refName: S.selectedRef.name });
+
+      // Replace sheet content with success
+      var name = S.selectedRef.name;
+      var gameInfo = '';
+      var atVenueGames = (S.selectedRef.games || []).filter(function(g) {
+        return !S.venue || (g.venue || '').toLowerCase() === S.venue.toLowerCase();
+      });
+      if (atVenueGames.length > 0) {
+        var first = atVenueGames[0];
+        gameInfo = first.role + ' • ' + first.field + ' • ' + first.time;
+      }
+
+      // Rotating pump-up message (random per check-in)
+      var pumpups = [
+        'Go crush it out there!',
+        'Have a great game!',
+        'Make the right call!',
+        'Trust your training!',
+        'Own the field today!',
+        'Be the calm in the chaos!',
+        'Set the standard!',
+        'Whistle ready — let\'s go!',
+        'Bring your A-game!',
+        'You\'ve got this!'
+      ];
+      var pump = pumpups[Math.floor(Math.random() * pumpups.length)];
+
+      var html = '<div class="success">'
+               + '<div class="success-icon">✓</div>'
+               + '<div class="success-title">Checked In!</div>'
+               + '<div class="success-sub">' + escapeHtml(name) + '</div>'
+               + '<div class="success-pump">' + escapeHtml(pump) + '</div>'
+               + (gameInfo ? '<div class="success-detail">First game: ' + escapeHtml(gameInfo) + '</div>' : '')
+               + '<div class="success-detail" style="margin-top:10px;">'
+               + (S.venue ? 'Welcome to ' + escapeHtml(S.venue) + '. ' : '')
+               + 'Find your SC for your game card if you\'re the CR.</div>'
+               + '</div>'
+               + '<button class="btn-done" onclick="closeSheet(); clearSearch();">CHECK IN ANOTHER</button>';
+      document.getElementById('sheet-content').innerHTML = html;
+
+      // Optional haptic
+      if (navigator.vibrate) navigator.vibrate([60, 40, 60]);
+    } else {
+      // Restore the button that submitted us with its original label
+      if (btn) {
+        btn.disabled = false;
+        btn.textContent = origText || (btnId === 'finalize-btn' ? 'Finalize check-in' : '✓ CHECK ME IN');
+      }
+      showToast((r && r.message) || 'Check-in failed. Try again.', true);
+    }
+  });
+}
+
+// ── API ──────────────────────────────────────────────────────
+function apiGet(action, params, cb) {
+  var url = SCRIPT_URL + '?action=' + encodeURIComponent(action);
+  for (var k in params) {
+    url += '&' + encodeURIComponent(k) + '=' + encodeURIComponent(params[k]);
+  }
+  fetch(url, { method: 'GET' })
+    .then(function(r) { return r.json(); })
+    .then(cb)
+    .catch(function(e) { cb({ status: 'error', message: e.toString() }); });
+}
+function apiPost(action, payload, cb) {
+  fetch(SCRIPT_URL + '?action=' + encodeURIComponent(action), {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(function(r) { return r.json(); })
+    .then(cb)
+    .catch(function(e) { cb({ status: 'error', message: e.toString() }); });
+}
+
+// ── HELPERS ──────────────────────────────────────────────────
+function showLoading(msg) {
+  document.getElementById('loading-text').textContent = msg || 'Loading...';
+  document.getElementById('loading').classList.add('show');
+}
+function hideLoading() {
+  document.getElementById('loading').classList.remove('show');
+}
+function showToast(msg, isError) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.toggle('error', !!isError);
+  t.classList.add('show');
+  setTimeout(function() { t.classList.remove('show'); }, 3000);
+}
+// ── ROLE / ATTESTATION HELPERS ───────────────────────────────
+// A ref needs to pick up game cards only if they're the Center Referee
+// on at least one game. HQ assignments (SC/CM/STANDBY positions) use
+// different role labels — they never equal 'CR' — so role === 'CR'
+// alone is sufficient to identify a card-needing game.
+function needsAttestation(games) {
+  if (!games || !games.length) return false;
+  return games.some(function(g) { return g.role === 'CR'; });
+}
+
+function crGamesFor(games) {
+  if (!games || !games.length) return [];
+  return games.filter(function(g) { return g.role === 'CR'; });
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, function(c) {
+    return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+  });
+}
+function escapeAttr(s) {
+  return String(s).replace(/'/g, "\\'").replace(/"/g, '&quot;');
+}
+
+init();
+</script>
+</body>
+</html>
