@@ -1,0 +1,109 @@
+/* ══════════════════════════════════════════════════════════════
+   RUSHFEST COACH APP CONFIG
+   Drop this file into /app/rushfest-app-config.js in the fork.
+   Add ONE line to app/index.html, BEFORE the main <script> block:
+       <script src="rushfest-app-config.js"></script>
+   Also wrap the RATINGS block in app/index.html (lines 928-934):
+       <div data-feature="coachRatings">   <!-- add this open tag -->
+         <div class="sec-lbl">RATINGS ...
+         <div class="ratings-card"> ...
+       </div>                              <!-- and this close tag -->
+   Same wrapper on GAME DIFFICULTY block if you want it hidden too.
+   ══════════════════════════════════════════════════════════════ */
+(function(){
+  'use strict';
+
+  window.TOURNAMENT_CONFIG = {
+    eventTitle:        'RushFest 2026',
+    eventShort:        'RushFest',
+    coachRole:         'Mentor',
+    commandCenterName: 'RushFest Command Center',
+    commandCenterAbbrev: 'RCC',
+    coachingMode:      'feedback-only',
+
+    features: {
+      coachRatings:    false,   // hide 1-4 rating buttons
+      coachDifficulty: false,   // hide game difficulty selector
+      coachFlags:      true,    // keep quick-flag chips (Needs Observation etc)
+      coachVoice:      true,    // keep voice input
+      coachAI:         true,    // keep AI rewrite
+      coachPrivateNotes: false, // strip private notes field (feedback-only = public only)
+      coachHandoff:    false    // no "file scored observation" handoff link
+    }
+  };
+
+  window.featureOn = function(key){
+    var f = (window.TOURNAMENT_CONFIG.features) || {};
+    return (key in f) ? !!f[key] : true;
+  };
+
+  /* Hide any element marked data-feature="<key>" when that feature is off.
+     Runs on DOM ready. Idempotent. */
+  function applyFeatureGuards(){
+    document.querySelectorAll('[data-feature]').forEach(function(el){
+      var key = el.getAttribute('data-feature');
+      if (!window.featureOn(key)) {
+        el.style.display = 'none';
+        el.setAttribute('aria-hidden', 'true');
+      }
+    });
+  }
+
+  /* Rewrite visible brand strings driven by config.
+     Anchors: [data-brand-title], [data-cc-abbrev], [data-coach-role]. */
+  function applyBrandLabels(){
+    document.querySelectorAll('[data-brand-title]').forEach(function(el){
+      el.textContent = window.TOURNAMENT_CONFIG.eventTitle;
+    });
+    document.querySelectorAll('[data-cc-abbrev]').forEach(function(el){
+      el.textContent = window.TOURNAMENT_CONFIG.commandCenterAbbrev;
+    });
+    document.querySelectorAll('[data-coach-role]').forEach(function(el){
+      el.textContent = window.TOURNAMENT_CONFIG.coachRole;
+    });
+  }
+
+  /* Payload sanitizer. Wrap this around every payload before fetch/POST:
+       payload = window.stripByMode(payload);
+     Removes ratings, difficulty, private notes when feedback-only mode is on.
+     Safe on payloads that never had these fields.  */
+  window.stripByMode = function(payload){
+    if (!payload || typeof payload !== 'object') return payload;
+    var out = {};
+    for (var k in payload) { if (payload.hasOwnProperty(k)) out[k] = payload[k]; }
+
+    if (!window.featureOn('coachRatings')) {
+      delete out.perf;
+      delete out.prof;
+      delete out.coachability;
+      delete out.pres;
+    }
+    if (!window.featureOn('coachDifficulty')) {
+      delete out.difficulty;
+      delete out.diff;
+    }
+    if (!window.featureOn('coachPrivateNotes')) {
+      delete out.privNotes;
+    }
+    /* Mark the type so downstream Google Sheet knows this came from
+       a feedback-only tier. Preserves 'quick' vs 'full' distinction. */
+    if (out.type && out.type === 'full') out.type = 'feedback';
+    return out;
+  };
+
+  /* Run guards on DOM ready. */
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function(){
+      applyFeatureGuards();
+      applyBrandLabels();
+    });
+  } else {
+    applyFeatureGuards();
+    applyBrandLabels();
+  }
+
+  /* Expose reappliers for post-render calls (e.g. after tab switches
+     that inject markup). Call from app code if new nodes appear. */
+  window.applyRushFestGuards = applyFeatureGuards;
+  window.applyRushFestLabels = applyBrandLabels;
+})();
