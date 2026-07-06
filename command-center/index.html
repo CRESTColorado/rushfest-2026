@@ -4982,68 +4982,140 @@ body.dark .cmsg-section-title { color: rgba(255,255,255,.55); }
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwqEFEa8IABiKK7Ikxp0k9dsVb_a8-TScA6pwbJTMhpXQKfckL_bEsoDAiEOGM-RLk/exec';
 
 /* ══════════════════════════════════════════════════════════════
-   TOURNAMENT_CONFIG . single source of truth for event-specific values.
-   When duplicating this BCC for a new event, change this block first.
+   TOURNAMENT_CONFIG. Single source of truth for event-specific values.
+   When cloning this repo for a new event, change ONLY this block.
    Everything else (footers, dashboard headers, event pill, field
-   counts, post-event detection) reads from here on boot.
+   counts, brand assets, coaching visibility, post-event detection)
+   reads from here on boot.
    ══════════════════════════════════════════════════════════════ */
 var TOURNAMENT_CONFIG = {
-  // Display name shown in footers and as the dashboard title context
-  eventTitle:    '2026 USYS Presidents Cup',
-  eventSubtitle: 'NW Regional Qualifier',
+  // ── IDENTITY ─────────────────────────────────────────────────
+  eventTitle:    'RushFest 2026',              // TODO Jeff: confirm exact title
+  eventSubtitle: 'Summer Classic',             // TODO Jeff: confirm
+  dashSubtitle:  'RushFest · Aurora',          // TODO Jeff: venue city
+  eventDateRange: 'JULY 7 – 10, 2026',         // TODO Jeff: confirm dates
+  eventVenue:     'TBD · Aurora, Colorado',    // TODO Jeff: venue name
+  pinEyebrow:     'RushFest 2026',             // shown on PIN screen
+  pinSubtitle:    'Aurora · Staff Only',       // shown under PIN eyebrow
 
-  // Dashboard subtitle (left of the page header)
-  dashSubtitle:  'Boise · Simplot Sports Complex',
+  // ── SCHEDULE ─────────────────────────────────────────────────
+  startDate: '2026-07-07',                     // TODO Jeff: confirm
+  endDate:   '2026-07-10',                     // TODO Jeff: confirm
+  postEventSubtitle: 'Tournament close-out · ',
 
-  // Event pill on the dashboard hero (date range + venue)
-  eventDateRange: 'JUNE 19 – 22, 2026',
-  eventVenue:     'Simplot Sports Complex · Boise, Idaho',
+  // ── SCALE ────────────────────────────────────────────────────
+  fieldCount: 20,                              // TODO Jeff: confirm field count
+  crewSlots: 3,                                // 3-person crews for RushFest rec
+  rankingSystem: 'none',                       // 'src' | 'tier' | 'none'
+  releaseMode: 'per-day',                      // 'per-day' | 'all-at-once' | 'progressive'
+  coachRole: 'Coach',                          // label used in UI (NRC / Mentor / Coach)
 
-  // Used for post-event auto-detect. YYYY-MM-DD. Inclusive.
-  // When today's date > endDate, the dashboard switches to summary mode.
-  startDate: '2026-06-19',
-  endDate:   '2026-06-22',
+  // ── BRAND ────────────────────────────────────────────────────
+  brandWatermark: '../assets/rushfest-white.webp',  // TODO Jeff: drop asset in repo
+  brandLogo:      '../assets/rushfest-logo.png',    // TODO Jeff: drop asset in repo
+  brandPrimary:   '#243859',                        // TODO Jeff: RushFest navy?
+  brandAccent:    '#ecbf3e',                        // TODO Jeff: RushFest gold?
 
-  // Field count label ("of N fields")
-  fieldCount: 20,
+  // ── FEATURE FLAGS ────────────────────────────────────────────
+  // Set false to hide the dashboard card + block the underlying screen.
+  // RushFest = full ops MINUS coaching pipeline.
+  features: {
+    checkIn:        false,   // Boise-style arrivals check-in. Off for RushFest (local rec).
+    rulesQuiz:      true,    // Rules completion tracking
+    gameCheckIn:    true,    // Pre-game check-in
+    switchLog:      true,    // Switch tracking
+    hqRoster:       true,    // Everything-view for admins
+    gameCounts:    true,    // Game counts per official
+    earningsVerify: true,    // Payment verification
+    bulletins:      true,    // Broadcast messages
+    assignmentsGlance: true, // Assignments dashboard
+    fieldUtilization:  true, // Field usage tracking
+    openings:       true,    // Formerly "Gaps"
+    closeout:       true,    // Budget close-out screen
 
-  // Post-event summary label shown on the dashboard subtitle when closed
-  postEventSubtitle: 'Tournament close-out · '
+    // Coaching pipeline. ALL OFF for RushFest.
+    coachMessages:  false,   // Coach-to-ref inbox
+    feedbackGlance: false,   // Feedback dashboard
+    notesReview:    false,   // Quick-notes review screen
+    coachAssignment: false,  // Coach-to-game assignment column
+
+    // Closeout sub-modules. RushFest has no travel/NRC, so these off.
+    closeoutNRC:      false,
+    closeoutPerDiem:  false,
+    closeoutTravel:   false,
+    closeoutGameFees: true,
+    closeoutAdmin:    true,
+    closeoutOther:    true
+  },
+
+  // ── PAYER DEFAULTS ───────────────────────────────────────────
+  // Section key : default payer for closeout dropdowns.
+  payerDefaults: {
+    gameFees:  'Tournament',     // RushFest pays its own game fees
+    travel:    'Tournament',
+    nrc:       'Tournament',
+    admin:     'Tournament',
+    perDiem:   'Tournament',
+    other:     'Tournament'
+  },
+  payerOptions: ['Tournament', 'Host Club', 'Sponsor', 'Other'],
+
+  // ── BUDGET ───────────────────────────────────────────────────
+  defaultBudget: 0             // TODO Jeff: RushFest budget target if known
 };
 
 // Computed once on boot. true when today > TOURNAMENT_CONFIG.endDate.
 var IS_POST_EVENT = (function() {
   try {
-    var today = new Date().toISOString().slice(0, 10);  // YYYY-MM-DD local-ish
+    var today = new Date().toISOString().slice(0, 10);
     return today > TOURNAMENT_CONFIG.endDate;
   } catch (e) { return false; }
 })();
 
+// Convenience accessor for feature flags. Missing flag defaults to true
+// (fail-open) so a stale config doesn't hide a screen accidentally.
+function featureOn(key) {
+  var f = TOURNAMENT_CONFIG.features || {};
+  return (key in f) ? !!f[key] : true;
+}
+
 // Apply TOURNAMENT_CONFIG values to every hardcoded spot in the markup.
-// Runs once on boot. Idempotent. Safe to call again if config ever changes
-// mid-session (unlikely but free).
+// Runs once on boot. Idempotent.
 function applyTournamentBranding() {
-  // Page footers ("2026 USYS Presidents Cup • <screen name>")
+  // Page footers
   var titleStrong = TOURNAMENT_CONFIG.eventTitle;
   document.querySelectorAll('.app-footer strong').forEach(function(el) {
     el.textContent = titleStrong;
   });
 
-  // Dashboard subtitle. In post-event mode, prepend the close-out indicator.
+  // Dashboard subtitle
   var subEl = document.getElementById('dash-sub');
   if (subEl) {
-    if (IS_POST_EVENT) {
-      subEl.textContent = TOURNAMENT_CONFIG.postEventSubtitle + TOURNAMENT_CONFIG.dashSubtitle;
-    } else {
-      subEl.textContent = TOURNAMENT_CONFIG.dashSubtitle;
-    }
+    subEl.textContent = IS_POST_EVENT
+      ? TOURNAMENT_CONFIG.postEventSubtitle + TOURNAMENT_CONFIG.dashSubtitle
+      : TOURNAMENT_CONFIG.dashSubtitle;
   }
 
-  // Event pill (date range + venue)
+  // Event pill
   var pdEl = document.querySelector('.event-pill-date');
   if (pdEl) pdEl.textContent = TOURNAMENT_CONFIG.eventDateRange;
   var ppEl = document.querySelector('.event-pill-place');
   if (ppEl) ppEl.textContent = TOURNAMENT_CONFIG.eventVenue;
+
+  // PIN screen eyebrow + subtitle
+  var pinEye = document.querySelector('.pin-eyebrow');
+  if (pinEye) pinEye.textContent = TOURNAMENT_CONFIG.pinEyebrow;
+  var pinSub = document.querySelector('.pin-sub');
+  if (pinSub) pinSub.textContent = TOURNAMENT_CONFIG.pinSubtitle;
+
+  // Brand assets (watermark + logo)
+  var wm = document.querySelector('.brand-watermark, [data-brand-watermark]');
+  if (wm && TOURNAMENT_CONFIG.brandWatermark) {
+    wm.style.backgroundImage = "url('" + TOURNAMENT_CONFIG.brandWatermark + "')";
+  }
+  document.querySelectorAll('img[data-brand-logo], .pin-logo img').forEach(function(el) {
+    if (TOURNAMENT_CONFIG.brandLogo) el.src = TOURNAMENT_CONFIG.brandLogo;
+  });
 
   // Field count label
   var fuLblEl = document.querySelector('[id="dash-fu-num"]');
@@ -5052,15 +5124,45 @@ function applyTournamentBranding() {
     if (lblSibling) { lblSibling.textContent = 'of ' + TOURNAMENT_CONFIG.fieldCount + ' fields'; }
   }
 
-  // Post-event mode toggle on dashboard root + event pill tone
+  // FEATURE FLAG GUARDS. Hide the dashboard card AND block the underlying
+  // screen navigation. Map: feature key -> [dashboard card selector, screen id].
+  var featureMap = {
+    checkIn:         ['[onclick*="openBoiseCheckin"]',    'screen-boise'],
+    coachMessages:   ['[onclick*="openCoachMsg"]',         'screen-coachmsg'],
+    feedbackGlance:  ['[onclick*="openFeedbackGlance"]',   'screen-feedback'],
+    notesReview:     ['[onclick*="openNotesReview"]',      'screen-notesreview']
+  };
+  Object.keys(featureMap).forEach(function(key) {
+    if (featureOn(key)) return;
+    var sel = featureMap[key];
+    document.querySelectorAll(sel[0]).forEach(function(card) {
+      card.style.display = 'none';
+      card.setAttribute('data-feature-off', key);
+    });
+    var scr = document.getElementById(sel[1]);
+    if (scr) scr.setAttribute('data-feature-off', key);
+  });
+
+  // Closeout sub-section guards. Hide the section wrappers when off.
+  var coMap = {
+    closeoutNRC:      'co-nrc-section',
+    closeoutPerDiem:  'co-perdiem-section',
+    closeoutTravel:   'co-travel-section',
+    closeoutGameFees: 'co-gamefees-section',
+    closeoutAdmin:    'co-admin-section',
+    closeoutOther:    'co-other-section'
+  };
+  Object.keys(coMap).forEach(function(key) {
+    if (featureOn(key)) return;
+    var el = document.getElementById(coMap[key]);
+    if (el) el.style.display = 'none';
+  });
+
+  // Post-event mode toggle
   var dash = document.getElementById('screen-dashboard');
-  if (dash) {
-    dash.classList.toggle('dashboard-post-event', IS_POST_EVENT);
-  }
+  if (dash) dash.classList.toggle('dashboard-post-event', IS_POST_EVENT);
   var pill = document.querySelector('#screen-dashboard .event-pill');
-  if (pill) {
-    pill.classList.toggle('event-pill-closed', IS_POST_EVENT);
-  }
+  if (pill) pill.classList.toggle('event-pill-closed', IS_POST_EVENT);
 }
 
 var S = {
